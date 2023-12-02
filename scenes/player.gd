@@ -2,6 +2,7 @@ class_name Player
 
 var health: int = 10
 var max_health:int = 10
+var block:int = 0
 var abilities: Array[Ability]
 var dice: Array
 var relics: Array[Relic]

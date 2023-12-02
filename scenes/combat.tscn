@@ -106,6 +106,16 @@ theme_override_fonts/font = ExtResource("8_tih6j")
 theme_override_font_sizes/font_size = 42
 text = "77/77"
 
+[node name="PlayerBlock" type="Label" parent="Combatscreen"]
+modulate = Color(0.121569, 0.117647, 0.121569, 1)
+offset_left = -603.0
+offset_top = -470.0
+offset_right = -455.0
+offset_bottom = -418.0
+theme_override_fonts/font = ExtResource("8_tih6j")
+theme_override_font_sizes/font_size = 42
+text = "0"
+
 [node name="MonsterHealth" type="Label" parent="Combatscreen"]
 modulate = Color(0.121569, 0.117647, 0.121569, 1)
 offset_left = 768.0
@@ -115,6 +125,16 @@ offset_bottom = -409.0
 theme_override_fonts/font = ExtResource("8_tih6j")
 theme_override_font_sizes/font_size = 42
 text = "77/77"
+
+[node name="MonsterBlock" type="Label" parent="Combatscreen"]
+modulate = Color(0.121569, 0.117647, 0.121569, 1)
+offset_left = 624.0
+offset_top = -459.0
+offset_right = 772.0
+offset_bottom = -407.0
+theme_override_fonts/font = ExtResource("8_tih6j")
+theme_override_font_sizes/font_size = 42
+text = "0"
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 z_index = 10

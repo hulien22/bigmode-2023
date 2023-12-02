@@ -60,6 +60,7 @@ func process_new_turn():
 	
 	# select monster intent
 	monster_intent = monster.get_next_move(turn_counter)
+	print_debug("monster intent: ", monster_intent.name_)
 	
 	$Combatscreen/RerollButton.disabled = false
 	$Combatscreen/RerollButton.text = "ROLL"
@@ -119,19 +120,19 @@ func process_ability(ability: Ability):
 			AbilityEffect.TYPE.DAMAGE:
 				var dmg = effect.process_value(occurences)
 				# process other statuses (eg strength)
-				change_health(effect.target_, dmg)
+				inflict_damage(effect.target_, dmg)
 			AbilityEffect.TYPE.SHIELD:
 				var amt = effect.process_value(occurences)
 				# process other statuses (eg strength)
-#				change_health(effect.target_, dmg)
+				change_block(effect.target_, amt)
 			AbilityEffect.TYPE.VULNERABLE:
 				var amt = effect.process_value(occurences)
 				# process other statuses (eg strength)
-#				change_health(effect.target_, dmg)
+#				change_health(effect.target_, amt)
 			AbilityEffect.TYPE.STRENGTH:
 				var amt = effect.process_value(occurences)
 				# process other statuses (eg strength)
-#				change_health(effect.target_, dmg)
+#				change_health(effect.target_, amt)
 
 func process_end_turn():
 	state = CombatState.END_TURN
@@ -146,14 +147,36 @@ func process_relics():
 func render_health():
 	$Combatscreen/PlayerHealth.text = str(GameState.player.health) + "/" + str(GameState.player.max_health)
 	$Combatscreen/MonsterHealth.text = str(monster.health) + "/" + str(monster.max_health)
+	$Combatscreen/PlayerBlock.text = str(GameState.player.block)
+	$Combatscreen/MonsterBlock.text = str(monster.block)
 
 func change_health(target: AbilityEffect.TARGET, amount: int):
 	if target == AbilityEffect.TARGET.PLAYER:
-		GameState.player.health -= amount
+		GameState.player.health += amount
 	else:
-		monster.health -= amount
+		monster.health += amount
 	#animate?
 	render_health()
+
+func change_block(target: AbilityEffect.TARGET, amount: int):
+	if target == AbilityEffect.TARGET.PLAYER:
+		GameState.player.block += amount
+	else:
+		monster.block += amount
+	#animate?
+	render_health()
+
+func inflict_damage(target: AbilityEffect.TARGET, dmg: int):
+	var cur_block = GameState.player.block 
+	if target == AbilityEffect.TARGET.MONSTER:
+		cur_block = monster.block
+	
+	if cur_block > dmg:
+		change_block(target, -dmg)
+	else:
+		change_health(target, cur_block - dmg)
+		change_block(target, -cur_block)
+	
 
 func disable_abilities_and_rerollbtn():
 	$Combatscreen/RerollButton.disabled = true

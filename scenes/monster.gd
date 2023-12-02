@@ -5,6 +5,7 @@ enum MonsterType {SLIME}
 var name_: String
 var health: int
 var max_health: int
+var block: int = 0
 var starting_abilities: Array[Ability]
 var repeat_abilities: Array[Ability]
 
