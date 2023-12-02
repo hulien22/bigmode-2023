@@ -1,0 +1,182 @@
+[gd_scene load_steps=10 format=3 uid="uid://d4iyuyqqpvbyn"]
+
+[ext_resource type="Script" path="res://scenes/combat_all3d.gd" id="1_ajxtj"]
+[ext_resource type="PackedScene" uid="uid://do6bmme07wvfm" path="res://scenes/die.tscn" id="2_i706d"]
+[ext_resource type="PackedScene" uid="uid://b6saihwe3kkpu" path="res://scenes/combat2d.tscn" id="4_qg7i1"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_1eocf"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_30wrq"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_f641m"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yeaim"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_f641m")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j8jhk"]
+albedo_color = Color(0.356863, 1, 1, 1)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_i2ejp"]
+friction = 0.0
+bounce = 1.0
+
+[node name="combat" type="CanvasLayer"]
+script = ExtResource("1_ajxtj")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="combat2d" parent="SubViewport" instance=ExtResource("4_qg7i1")]
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.763713, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 128.996, 0)
+current = true
+fov = 5.0
+
+[node name="Camera3D2" type="Camera3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 30, 0)
+fov = 20.0
+
+[node name="Camera3D3" type="Camera3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 8.825, 0)
+current = true
+size = 0.001
+
+[node name="Dice" type="Node3D" parent="Node3D"]
+
+[node name="die" parent="Node3D/Dice" instance=ExtResource("2_i706d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0222104, 0, -0.0811584)
+
+[node name="die2" parent="Node3D/Dice" instance=ExtResource("2_i706d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0222104, 0, -0.0811584)
+
+[node name="die4" parent="Node3D/Dice" instance=ExtResource("2_i706d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0222104, 0, -0.0811584)
+
+[node name="die3" parent="Node3D/Dice" instance=ExtResource("2_i706d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0222104, 0, -0.0811584)
+
+[node name="die5" parent="Node3D/Dice" instance=ExtResource("2_i706d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0222104, 0, -0.0811584)
+
+[node name="die6" parent="Node3D/Dice" instance=ExtResource("2_i706d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0222104, 0, -0.0811584)
+
+[node name="die7" parent="Node3D/Dice" instance=ExtResource("2_i706d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0222104, 0, -0.0811584)
+
+[node name="die8" parent="Node3D/Dice" instance=ExtResource("2_i706d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0222104, 0, -0.0811584)
+
+[node name="die9" parent="Node3D/Dice" instance=ExtResource("2_i706d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0222104, 0, -0.0811584)
+
+[node name="die10" parent="Node3D/Dice" instance=ExtResource("2_i706d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0222104, 0, -0.0811584)
+
+[node name="die11" parent="Node3D/Dice" instance=ExtResource("2_i706d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0222104, 0, -0.0811584)
+
+[node name="die12" parent="Node3D/Dice" instance=ExtResource("2_i706d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0222104, 0, -0.0811584)
+
+[node name="ground" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(50, 0, 0, 0, 1, 0, 0, 0, 50, 0, 0, 0)
+visible = false
+transparency = 0.66
+mesh = SubResource("PlaneMesh_1eocf")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Node3D/ground"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/ground/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_30wrq")
+
+[node name="viewport_canvas" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(12.08, 0, 0, 0, 0.755, 0, 0, 0, 6.795, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_yeaim")
+mesh = SubResource("PlaneMesh_1eocf")
+
+[node name="Walls" type="Node3D" parent="Node3D"]
+
+[node name="ground2" type="MeshInstance3D" parent="Node3D/Walls"]
+transform = Transform3D(50, 0, 0, 0, -4.37114e-08, -50, 0, 1, -2.18557e-06, 0, 0.763713, -5)
+visible = false
+material_override = SubResource("StandardMaterial3D_j8jhk")
+mesh = SubResource("PlaneMesh_1eocf")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Node3D/Walls/ground2"]
+physics_material_override = SubResource("PhysicsMaterial_i2ejp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/Walls/ground2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_30wrq")
+
+[node name="ground3" type="MeshInstance3D" parent="Node3D/Walls"]
+transform = Transform3D(-50, -8.74228e-08, 1.91069e-13, 0, -4.37114e-08, -50, 4.37114e-06, -1, 2.18557e-06, 0, 0.763713, 5)
+visible = false
+material_override = SubResource("StandardMaterial3D_j8jhk")
+mesh = SubResource("PlaneMesh_1eocf")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Node3D/Walls/ground3"]
+physics_material_override = SubResource("PhysicsMaterial_i2ejp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/Walls/ground3/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_30wrq")
+
+[node name="ground4" type="MeshInstance3D" parent="Node3D/Walls"]
+transform = Transform3D(2.18557e-06, 1, -4.37114e-06, 50, -4.37114e-08, 0, -1.91069e-13, -8.74228e-08, -50, -9, 0.763713, 0)
+visible = false
+material_override = SubResource("StandardMaterial3D_j8jhk")
+mesh = SubResource("PlaneMesh_1eocf")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Node3D/Walls/ground4"]
+physics_material_override = SubResource("PhysicsMaterial_i2ejp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/Walls/ground4/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_30wrq")
+
+[node name="ground5" type="MeshInstance3D" parent="Node3D/Walls"]
+transform = Transform3D(-2.18557e-06, -1, 0, 50, -4.37114e-08, 0, 0, 0, 50, 9, 0.763713, 0)
+visible = false
+material_override = SubResource("StandardMaterial3D_j8jhk")
+mesh = SubResource("PlaneMesh_1eocf")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Node3D/Walls/ground5"]
+physics_material_override = SubResource("PhysicsMaterial_i2ejp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/Walls/ground5/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_30wrq")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+visible = false
+light_energy = 5.0
+shadow_enabled = true
+distance_fade_enabled = true
+omni_range = 100.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 0)
+visible = false
+shadow_enabled = true
+
+[node name="Spotlight3D" type="SpotLight3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 0.325568, 0.945519, 0, -0.945519, 0.325568, 0, 20, 6.87516)
+light_energy = 30.0
+shadow_enabled = true
+distance_fade_enabled = true
+distance_fade_begin = 60.0
+distance_fade_shadow = 60.0
+spot_range = 60.0

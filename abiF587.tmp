@@ -1,0 +1,30 @@
+{
+	"abilities" : [
+		["Strike", "Deal X damage", [
+			[1, 0, "x"]
+		]],
+		["Strike+", "Deal X+1 damage", [
+			[1, 0, "x+1"]
+		]],
+		["Block", "Gain X shield", [
+			[0, 1, "x"]
+		]],
+		["Block+", "Gain X+1 shield", [
+			[0, 1, "x+1"]
+		]],
+		["Smash", "Deal 2X damage, but gain vulnerable", [
+			[1, 0, "2 * x"],
+			[0, 2, "1"]
+		]],
+		["Smash+", "Deal 2(X+1) damage, but gain vulnerable", [
+			[1, 0, "2 * (x + 1)"],
+			[0, 2, "1"]
+		]],
+		["Power Up", "Gain 1 STR", [
+			[0, 3, "1"]
+		]],
+		["Power Up+", "Gain 2 STR", [
+			[0, 3, "2"]
+		]]
+	]
+}

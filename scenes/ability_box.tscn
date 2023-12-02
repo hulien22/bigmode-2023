@@ -1,0 +1,109 @@
+[gd_scene load_steps=18 format=3 uid="uid://c6lxdy6ovq4ad"]
+
+[ext_resource type="Script" path="res://scenes/ability_box.gd" id="1_x2f1s"]
+[ext_resource type="Texture2D" uid="uid://cs3eeohyx6klj" path="res://art/sketchd6_1.png" id="2_56qcc"]
+[ext_resource type="Texture2D" uid="uid://edobajndt52v" path="res://art/d6face1.png" id="2_hnvlb"]
+[ext_resource type="Texture2D" uid="uid://bapne5epnud2l" path="res://art/paper-strip.png" id="2_mntcw"]
+[ext_resource type="Texture2D" uid="uid://bk8streos5gvy" path="res://art/sketchd6_2.png" id="3_5sr8d"]
+[ext_resource type="Texture2D" uid="uid://vpuun47enty3" path="res://art/d6face2.png" id="3_s86ol"]
+[ext_resource type="Texture2D" uid="uid://df510egndmct8" path="res://art/sketchd6_3.png" id="4_1bu3n"]
+[ext_resource type="Texture2D" uid="uid://wgfj75q3hq3g" path="res://art/d6face3.png" id="4_k30jd"]
+[ext_resource type="Texture2D" uid="uid://dcg07p7gdqnhr" path="res://art/d6face4.png" id="5_62c4r"]
+[ext_resource type="Texture2D" uid="uid://dqborn71nac2k" path="res://art/sketchd6_4.png" id="5_yjjv7"]
+[ext_resource type="Texture2D" uid="uid://bxuyhbwwd4mwr" path="res://art/d6face5.png" id="6_414tt"]
+[ext_resource type="Texture2D" uid="uid://dxlobxkouy03" path="res://art/sketchd6_5.png" id="6_vncpt"]
+[ext_resource type="Texture2D" uid="uid://bpabjrlhylca0" path="res://art/sketchd6_6.png" id="7_uq8oe"]
+[ext_resource type="Texture2D" uid="uid://qld0u0gm35ji" path="res://art/d6face6.png" id="7_vwbg5"]
+[ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="14_br0um"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vk0qy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_56qcc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_5sr8d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_1bu3n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_yjjv7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_vncpt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_uq8oe")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gscsd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_hnvlb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_s86ol")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_k30jd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_62c4r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_414tt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_vwbg5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="ability_box" type="Node2D"]
+script = ExtResource("1_x2f1s")
+
+[node name="ColorRect" type="Button" parent="."]
+offset_left = -57.0
+offset_top = -55.0
+offset_right = 630.0
+offset_bottom = 58.0
+scale = Vector2(0.922844, 1.0122)
+
+[node name="Paper-strip" type="Sprite2D" parent="."]
+position = Vector2(260, 1)
+scale = Vector2(1, 0.72)
+texture = ExtResource("2_mntcw")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_vk0qy")
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = SubResource("SpriteFrames_gscsd")
+
+[node name="Label" type="Label" parent="."]
+modulate = Color(0.0392157, 0.0392157, 0.0392157, 1)
+offset_left = 56.0
+offset_top = -43.0
+offset_right = 592.0
+offset_bottom = 46.0
+theme_override_fonts/font = ExtResource("14_br0um")
+theme_override_font_sizes/font_size = 70
+text = "Power Up"
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 1
+uppercase = true
+
+[connection signal="mouse_entered" from="ColorRect" to="." method="_on_color_rect_mouse_entered"]
+[connection signal="mouse_exited" from="ColorRect" to="." method="_on_color_rect_mouse_exited"]
+[connection signal="pressed" from="ColorRect" to="." method="_on_color_rect_pressed"]

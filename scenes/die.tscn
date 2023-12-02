@@ -1,0 +1,30 @@
+[gd_scene load_steps=7 format=3 uid="uid://do6bmme07wvfm"]
+
+[ext_resource type="Script" path="res://scenes/die.gd" id="1_dlvqf"]
+[ext_resource type="Texture2D" uid="uid://b63b1o2njserm" path="res://art/d6.png" id="1_r8rlt"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gc1ih"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0s0wh"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_es5m1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2txfm"]
+resource_local_to_scene = true
+albedo_texture = ExtResource("1_r8rlt")
+
+[node name="die" type="RigidBody3D"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+collision_layer = 3
+physics_material_override = SubResource("PhysicsMaterial_gc1ih")
+max_contacts_reported = 1
+contact_monitor = true
+script = ExtResource("1_dlvqf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_0s0wh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("BoxMesh_es5m1")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_2txfm")

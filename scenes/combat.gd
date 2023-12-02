@@ -1,0 +1,162 @@
+extends Node2D
+class_name Combat
+
+enum CombatState {START_COMBAT, NEW_TURN, ROLLING, ABILITY_SELECTED, PLAYER_ABILITY, MONSTER_ABILITY, END_TURN, END_COMBAT}
+
+var state: CombatState = CombatState.START_COMBAT
+
+var ability_boxes:Array[AbilityBox]
+
+@export
+var dice_mgr:DiceManager
+
+var monster: Monster
+var turn_counter:int
+var rerolls:int
+var monster_intent:Ability
+
+var occurences:int = 0
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	monster = Monster.new()
+	monster.init_slime()
+	ability_boxes = [$Combatscreen/Abilities/ability_box1, $Combatscreen/Abilities/ability_box2, \
+					$Combatscreen/Abilities/ability_box3, $Combatscreen/Abilities/ability_box4, \
+					$Combatscreen/Abilities/ability_box5, $Combatscreen/Abilities/ability_box6]
+	for ab in ability_boxes:
+		ab.connect("ability_clicked", _on_ability_clicked)
+	$Combatscreen/RerollButton.connect("pressed", _on_reroll_button_pressed)
+	dice_mgr.connect("complete_roll", _on_complete_roll)
+	render_health()
+	process_start_combat()
+
+func process_start_combat():
+	$Combatscreen/Abilities/ability_box1.init(1, GameState.player.abilities[0])
+	$Combatscreen/Abilities/ability_box2.init(2, GameState.player.abilities[1])
+	$Combatscreen/Abilities/ability_box3.init(3, GameState.player.abilities[2])
+	$Combatscreen/Abilities/ability_box4.init(4, GameState.player.abilities[3])
+	$Combatscreen/Abilities/ability_box5.init(5, GameState.player.abilities[4])
+	$Combatscreen/Abilities/ability_box6.init(6, GameState.player.abilities[5])
+	disable_abilities_and_rerollbtn()
+	for d in GameState.player.dice:
+		dice_mgr.add_die(d[0], d[1])
+	turn_counter = -1
+	rerolls = 3
+	
+	process_new_turn()
+	#todo timer between states? to play anims or smth
+
+
+func process_new_turn():
+	state = CombatState.NEW_TURN
+	turn_counter += 1
+	print_debug("starting turn ", turn_counter)
+	
+	# process relics
+	process_relics()
+	
+	# process statuses on player and monster
+	
+	# select monster intent
+	monster_intent = monster.get_next_move(turn_counter)
+	
+	$Combatscreen/RerollButton.disabled = false
+	$Combatscreen/RerollButton.text = "ROLL"
+	$Combatscreen/ModeVal.text = "?"
+	
+
+func _on_complete_roll(results):
+	print_debug(results)
+	occurences = results.max()
+	var modes:Array = []
+	for i in results.size():
+		if results[i] == occurences:
+			modes.append(i+1)
+			ability_boxes[i].set_enabled(true)
+		else:
+			ability_boxes[i].set_enabled(false)
+	$Combatscreen/ModeVal.text = ",".join(modes)
+	
+	if rerolls > 0:
+		$Combatscreen/RerollButton.disabled = false
+		$Combatscreen/RerollButton.text = "REROLL (" + str(rerolls) + ")"
+
+func _on_reroll_button_pressed():
+	if state == CombatState.NEW_TURN:
+		dice_mgr.reset_dice()
+		state = CombatState.ROLLING
+	else:
+		rerolls -= 1
+		$Combatscreen/RerollButton.text = "REROLL (" + str(rerolls) + ")"
+	dice_mgr.drop_all_dice()
+	disable_abilities_and_rerollbtn()
+
+func _on_ability_clicked(val):
+	disable_abilities_and_rerollbtn()
+	dice_mgr.fade_away_dice()
+	if state != CombatState.ROLLING:
+		return
+	state = CombatState.ABILITY_SELECTED
+	print_debug("selected ability ", ability_boxes[val-1].ability.name_)
+
+	state = CombatState.PLAYER_ABILITY
+	process_ability(ability_boxes[val-1].ability)
+	# check if anyone died
+	
+	process_monster_turn()
+
+func process_monster_turn():
+	state = CombatState.MONSTER_ABILITY
+	process_ability(monster_intent)
+	# check if anyone died
+	
+	process_end_turn()
+
+func process_ability(ability: Ability):
+	for effect in ability.effects_:
+		match effect.type_:
+			AbilityEffect.TYPE.DAMAGE:
+				var dmg = effect.process_value(occurences)
+				# process other statuses (eg strength)
+				change_health(effect.target_, dmg)
+			AbilityEffect.TYPE.SHIELD:
+				var amt = effect.process_value(occurences)
+				# process other statuses (eg strength)
+#				change_health(effect.target_, dmg)
+			AbilityEffect.TYPE.VULNERABLE:
+				var amt = effect.process_value(occurences)
+				# process other statuses (eg strength)
+#				change_health(effect.target_, dmg)
+			AbilityEffect.TYPE.STRENGTH:
+				var amt = effect.process_value(occurences)
+				# process other statuses (eg strength)
+#				change_health(effect.target_, dmg)
+
+func process_end_turn():
+	state = CombatState.END_TURN
+	process_relics()
+	
+	process_new_turn()
+
+func process_relics():
+	for r in GameState.player.relics:
+		r.process_relic(self)
+
+func render_health():
+	$Combatscreen/PlayerHealth.text = str(GameState.player.health) + "/" + str(GameState.player.max_health)
+	$Combatscreen/MonsterHealth.text = str(monster.health) + "/" + str(monster.max_health)
+
+func change_health(target: AbilityEffect.TARGET, amount: int):
+	if target == AbilityEffect.TARGET.PLAYER:
+		GameState.player.health -= amount
+	else:
+		monster.health -= amount
+	#animate?
+	render_health()
+
+func disable_abilities_and_rerollbtn():
+	$Combatscreen/RerollButton.disabled = true
+	$Combatscreen/ModeVal.text = "?"
+	for ab in ability_boxes:
+		ab.set_enabled(false)

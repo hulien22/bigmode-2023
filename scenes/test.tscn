@@ -1,0 +1,135 @@
+[gd_scene load_steps=6 format=3 uid="uid://ung88iji6u77"]
+
+[ext_resource type="PackedScene" uid="uid://do6bmme07wvfm" path="res://scenes/die.tscn" id="1_vwhed"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ytfrp"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_qnyct"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7g3aa"]
+albedo_color = Color(0.384314, 1, 1, 1)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_lqtqj"]
+friction = 0.0
+bounce = 1.0
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.541723, 0.840557, 0, -0.840557, 0.541723, 0, 10, 7.30907)
+
+[node name="Camera3D2" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 8.64, 0)
+current = true
+
+[node name="die" parent="." instance=ExtResource("1_vwhed")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.18422, 2.70666, -0.580519)
+
+[node name="ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(50, 0, 0, 0, 1, 0, 0, 0, 50, 0, 0, 0)
+mesh = SubResource("PlaneMesh_ytfrp")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ground"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ground/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_qnyct")
+
+[node name="ground2" type="MeshInstance3D" parent="."]
+transform = Transform3D(50, 0, 0, 0, -4.37114e-08, -50, 0, 1, -2.18557e-06, 0, 0, -5.57816)
+material_override = SubResource("StandardMaterial3D_7g3aa")
+mesh = SubResource("PlaneMesh_ytfrp")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ground2"]
+physics_material_override = SubResource("PhysicsMaterial_lqtqj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ground2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_qnyct")
+
+[node name="ground3" type="MeshInstance3D" parent="."]
+transform = Transform3D(-50, -8.74228e-08, 1.91069e-13, 0, -4.37114e-08, -50, 4.37114e-06, -1, 2.18557e-06, 0, 0, 5.90682)
+material_override = SubResource("StandardMaterial3D_7g3aa")
+mesh = SubResource("PlaneMesh_ytfrp")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ground3"]
+physics_material_override = SubResource("PhysicsMaterial_lqtqj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ground3/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_qnyct")
+
+[node name="ground4" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.18557e-06, 1, -4.37114e-06, 50, -4.37114e-08, 0, -1.91069e-13, -8.74228e-08, -50, -4.61744, 0, 0)
+material_override = SubResource("StandardMaterial3D_7g3aa")
+mesh = SubResource("PlaneMesh_ytfrp")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ground4"]
+physics_material_override = SubResource("PhysicsMaterial_lqtqj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ground4/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_qnyct")
+
+[node name="ground5" type="MeshInstance3D" parent="."]
+transform = Transform3D(-2.18557e-06, -1, 0, 50, -4.37114e-08, 0, 0, 0, 50, 5.43051, 0, 0)
+material_override = SubResource("StandardMaterial3D_7g3aa")
+mesh = SubResource("PlaneMesh_ytfrp")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ground5"]
+physics_material_override = SubResource("PhysicsMaterial_lqtqj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ground5/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_qnyct")
+
+[node name="die2" parent="." instance=ExtResource("1_vwhed")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.495419, 0.611594, 1.12675)
+
+[node name="die3" parent="." instance=ExtResource("1_vwhed")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.06568, 1.08876, -0.696086)
+
+[node name="die4" parent="." instance=ExtResource("1_vwhed")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.77466, 1.08876, -2.40082)
+
+[node name="die5" parent="." instance=ExtResource("1_vwhed")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.82732, 1.08876, 2.30174)
+
+[node name="die6" parent="." instance=ExtResource("1_vwhed")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.21703, 1.08876, 0.677003)
+
+[node name="die7" parent="." instance=ExtResource("1_vwhed")]
+transform = Transform3D(-0.817115, 0, -0.576475, 0, 1, 0, 0.576475, 0, -0.817115, -1.42106, 0.611594, -3.59149)
+
+[node name="die8" parent="." instance=ExtResource("1_vwhed")]
+transform = Transform3D(-0.817115, 0, -0.576475, 0, 1, 0, 0.576475, 0, -0.817115, -2.47044, 1.08876, -1.85441)
+
+[node name="die9" parent="." instance=ExtResource("1_vwhed")]
+transform = Transform3D(-0.817115, 0, -0.576475, 0, 1, 0, 0.576475, 0, -0.817115, -2.82013, 1.08876, 0.478576)
+
+[node name="die10" parent="." instance=ExtResource("1_vwhed")]
+transform = Transform3D(-0.817115, 0, -0.576475, 0, 1, 0, 0.576475, 0, -0.817115, 0.317784, 1.08876, -3.86491)
+
+[node name="die11" parent="." instance=ExtResource("1_vwhed")]
+transform = Transform3D(-0.817115, 0, -0.576475, 0, 1, 0, 0.576475, 0, -0.817115, -0.703394, 1.08876, -1.4753)
+
+[node name="die12" parent="." instance=ExtResource("1_vwhed")]
+transform = Transform3D(0.340921, 0, -0.940092, 0, 1, 0, 0.940092, 0, 0.340921, -1.48554, 0.611594, 1.4519)
+
+[node name="die13" parent="." instance=ExtResource("1_vwhed")]
+transform = Transform3D(0.340921, 0, -0.940092, 0, 1, 0, 0.940092, 0, 0.340921, -2.70584, 1.08876, 3.24674)
+
+[node name="die14" parent="." instance=ExtResource("1_vwhed")]
+transform = Transform3D(0.340921, 0, -0.940092, 0, 1, 0, 0.940092, 0, 0.340921, -0.547316, 1.08876, 4.19851)
+
+[node name="die15" parent="." instance=ExtResource("1_vwhed")]
+transform = Transform3D(0.340921, 0, -0.940092, 0, 1, 0, 0.940092, 0, 0.340921, 1.4155, 1.08876, 3.03168)
+
+[node name="die16" parent="." instance=ExtResource("1_vwhed")]
+transform = Transform3D(0.340921, 0, -0.940092, 0, 1, 0, 0.940092, 0, 0.340921, -3.10895, 1.08876, 1.85481)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.689, 0)
+light_energy = 16.0
+shadow_enabled = true
+distance_fade_enabled = true
+distance_fade_shadow = 9000.0
+omni_range = 4096.0
+
+[node name="Node2D" type="Node2D" parent="."]
