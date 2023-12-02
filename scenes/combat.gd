@@ -15,6 +15,10 @@ var turn_counter:int
 var rerolls:int
 var monster_intent:Ability
 
+
+# player statuses followed by monster statuses
+var statuses:Array[Array] = [[], []]
+
 var occurences:int = 0
 
 # Called when the node enters the scene tree for the first time.
@@ -43,6 +47,7 @@ func process_start_combat():
 		dice_mgr.add_die(d[0], d[1])
 	turn_counter = -1
 	rerolls = 3
+	statuses = [[], []]
 	
 	process_new_turn()
 	#todo timer between states? to play anims or smth
@@ -105,6 +110,8 @@ func _on_ability_clicked(val):
 	process_ability(ability_boxes[val-1].ability)
 	# check if anyone died
 	
+	var tmr = get_tree().create_timer(0.5)
+	await tmr.timeout
 	process_monster_turn()
 
 func process_monster_turn():
@@ -119,7 +126,7 @@ func process_ability(ability: Ability):
 		match effect.type_:
 			AbilityEffect.TYPE.DAMAGE:
 				var dmg = effect.process_value(occurences)
-				# process other statuses (eg strength)
+				# process other statuses (eg strength, weaknesses)
 				inflict_damage(effect.target_, dmg)
 			AbilityEffect.TYPE.SHIELD:
 				var amt = effect.process_value(occurences)
@@ -128,15 +135,22 @@ func process_ability(ability: Ability):
 			AbilityEffect.TYPE.VULNERABLE:
 				var amt = effect.process_value(occurences)
 				# process other statuses (eg strength)
-#				change_health(effect.target_, amt)
+				add_status(effect.target_, AbilityEffect.TYPE.VULNERABLE, amt)
 			AbilityEffect.TYPE.STRENGTH:
 				var amt = effect.process_value(occurences)
 				# process other statuses (eg strength)
-#				change_health(effect.target_, amt)
+				add_status(effect.target_, AbilityEffect.TYPE.STRENGTH, amt)
 
 func process_end_turn():
 	state = CombatState.END_TURN
 	process_relics()
+	
+	print_debug("player statuses:")
+	for s in statuses[0]:
+		print_debug(s.as_string())
+	print_debug("monster statuses:")
+	for s in statuses[1]:
+		print_debug(s.as_string())
 	
 	process_new_turn()
 
@@ -176,10 +190,16 @@ func inflict_damage(target: AbilityEffect.TARGET, dmg: int):
 	else:
 		change_health(target, cur_block - dmg)
 		change_block(target, -cur_block)
-	
 
 func disable_abilities_and_rerollbtn():
 	$Combatscreen/RerollButton.disabled = true
 	$Combatscreen/ModeVal.text = "?"
 	for ab in ability_boxes:
 		ab.set_enabled(false)
+
+func add_status(target: AbilityEffect.TARGET, type: AbilityEffect.TYPE, amt: int):
+	for s in statuses[target]:
+		if s.type == type:
+			s.add_amount(amt)
+			return
+	statuses[target].append(Status.new(type, amt))
