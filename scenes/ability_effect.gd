@@ -25,3 +25,15 @@ func is_status_inflict() -> bool:
 			return true
 		_:
 			return false
+
+static func get_status_desc(t:TYPE) -> String:
+	match t:
+		TYPE.SHIELD:
+			return "Shield: Blocks damage, lasts between turns"
+		TYPE.VULNERABLE:
+			return "Vulnerable: Take double damage"
+		TYPE.STRENGTH:
+			return "Strength: Deal extra damage"
+		_:
+			return ""
+		

@@ -142,9 +142,9 @@ func process_monster_turn():
 	
 	process_end_turn()
 
-func process_ability(ability: Ability, check_if_inflict_later: bool):
+func process_ability(ability: Ability, inflict_status_later: bool):
 	for effect in ability.effects_:
-		if check_if_inflict_later && effect.is_status_inflict():
+		if inflict_status_later && effect.is_status_inflict() && effect.target_ == AbilityEffect.TARGET.PLAYER:
 			statuses_to_inflict.append(effect)
 			continue
 		process_effect(effect)

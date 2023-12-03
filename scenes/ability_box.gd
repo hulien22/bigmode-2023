@@ -15,7 +15,15 @@ func init(v:int, a:Ability):
 func updateSprites():
 	$Display/AnimatedSprite2D.frame = value - 1
 	$Display/Label.text = ability.name_
+	var extras:String = ""
+	for e in ability.effects_:
+		var s: String = AbilityEffect.get_status_desc(e.type_)
+		if !s.is_empty():
+			extras += "\n" + s
 	$Display/Description/Label2.text = ability.desc_
+	if !extras.is_empty():
+		$Display/Description/Label2.text += "\n---" + extras
+	
 	update_color()
 	set_enabled(false)
 

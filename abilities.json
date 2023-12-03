@@ -12,18 +12,18 @@
 		["Block+", "Gain X+1 shield", [
 			[0, 1, "x+1"]
 		]],
-		["Smash", "Deal 2X damage, but gain vulnerable", [
+		["Smash", "Deal 2X damage, but gain Vulnerable 1", [
 			[1, 0, "2 * x"],
 			[0, 2, 1]
 		]],
-		["Smash+", "Deal 2(X+1) damage, but gain vulnerable", [
+		["Smash+", "Deal 2(X+1) damage, but gain Vulnerable 1", [
 			[1, 0, "2 * (x + 1)"],
 			[0, 2, 1]
 		]],
-		["Power Up", "Gain 1 STR", [
+		["Power Up", "Gain 1 Strength", [
 			[0, 3, 1]
 		]],
-		["Power Up+", "Gain 2 STR", [
+		["Power Up+", "Gain 2 Strength", [
 			[0, 3, 2]
 		]]
 	],
@@ -37,7 +37,7 @@
 		["Strengthen", "Gain 1 STR", [
 			[1, 3, 1]
 		]],
-		["Distract", "Make the player vulnerable", [
+		["Distract", "Make the player Vulnerable 1", [
 			[0, 2, 1]
 		]]
 	]
