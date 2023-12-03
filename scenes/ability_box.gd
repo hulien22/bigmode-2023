@@ -56,3 +56,4 @@ func _on_color_rect_mouse_exited():
 func _on_color_rect_pressed():
 	ability_clicked.emit(value)
 	$Display/Description.visible = false
+	SfxHandler.play_sfx(SfxHandler.PAPER_HIT_SFX, self, 1)

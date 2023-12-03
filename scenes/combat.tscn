@@ -174,7 +174,7 @@ theme_override_font_sizes/font_size = 42
 text = "0"
 
 [node name="test" type="Node2D" parent="Combatscreen"]
-position = Vector2(-1136, -553)
+position = Vector2(-1123, -553)
 
 [node name="Eye" type="Sprite2D" parent="Combatscreen/test"]
 position = Vector2(320, 338)
