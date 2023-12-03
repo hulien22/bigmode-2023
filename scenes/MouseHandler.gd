@@ -5,6 +5,7 @@ signal toggle_all(val, set_locked)
 var mouse = Vector2()
 
 var is_mouse_down:bool = false
+var is_right_mouse_down:bool = false
 
 var enable_mouse = false;
 var last_obj_rid = 0
@@ -35,6 +36,16 @@ func _process(delta):
 				SfxHandler.play_sfx(SfxHandler.GROUND_SFX, self, 1)
 	elif is_mouse_down:
 		is_mouse_down = false
+	
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+		if !is_right_mouse_down:
+			is_right_mouse_down = true
+			var die = selection.get("collider", null)
+			if die:
+				Events.emit_signal("tooltip_obj_clicked", die, 0, ToolTip.DISPLAY.DICE_FACES)
+				SfxHandler.play_sfx(SfxHandler.PAPER_HIT_SFX, self, 1)
+	elif is_right_mouse_down:
+		is_right_mouse_down = false
 
 func process_mouse_hover(selection: Dictionary):
 	var sel_rid = selection.get("collider_id", 0)

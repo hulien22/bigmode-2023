@@ -40,6 +40,7 @@ func _process(delta):
 func _ready():
 	visible = false;
 	Events.connect("tooltip_obj_entered", tooltip_obj_entered)
+	Events.connect("tooltip_obj_clicked", tooltip_obj_clicked)
 	Events.connect("tooltip_obj_exited", tooltip_obj_exited)
 
 
@@ -54,6 +55,7 @@ func tooltip_obj_entered(obj: Object, time_to_show_sec:float, display:DISPLAY):
 			DISPLAY.DICE_FACES:
 				$DieSprite.texture = obj.face_texture
 				$DieSprite.visible = true
+				$DieSprite.modulate = obj.die_color
 				boundary_box = Vector2(300,200);
 			DISPLAY.ABILITY:
 				$ColorRect.visible = true
@@ -62,6 +64,11 @@ func tooltip_obj_entered(obj: Object, time_to_show_sec:float, display:DISPLAY):
 				$Label.visible = true
 				boundary_box = Vector2(300,200);
 
+func tooltip_obj_clicked(obj: Object, time_to_show_sec:float, display:DISPLAY):
+	if obj != last_touch_object:
+		tooltip_obj_entered(obj, time_to_show_sec, display)
+	else:
+		tooltip_obj_exited(obj)
 
 func tooltip_obj_exited(obj: Object):
 	if obj == last_touch_object:
