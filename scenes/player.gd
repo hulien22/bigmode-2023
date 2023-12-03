@@ -21,5 +21,10 @@ func init_warrior():
 			[[1,2,6,5,3,4], Color.PURPLE],
 			[[1,2,6,5,3,4], Color.GOLD],
 			[[1,2,6,5,3,4], Color.LIGHT_GREEN]]
+	dice = [[[5,5,5,5,5,5], Color.LIGHT_SEA_GREEN],
+			[[5,5,5,5,5,5], Color.CRIMSON],
+			[[5,5,5,5,5,5], Color.PURPLE],
+			[[5,5,5,5,5,5], Color.GOLD],
+			[[5,5,5,5,5,5], Color.LIGHT_GREEN]]
 	relics = []
 

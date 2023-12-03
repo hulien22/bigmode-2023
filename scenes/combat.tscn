@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://ccl2kenwh73ve"]
+[gd_scene load_steps=29 format=3 uid="uid://ccl2kenwh73ve"]
 
 [ext_resource type="Script" path="res://scenes/combat.gd" id="1_lnnkv"]
 [ext_resource type="Texture2D" uid="uid://bbdqmbw0615rc" path="res://art/prototyping/combatscreen_no_combat.png" id="2_cwvdc"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bcjsnplk3an3m" path="res://art/icons/heart.png" id="5_ywhs2"]
 [ext_resource type="Texture2D" uid="uid://b2qdpbjqr6bdq" path="res://art/icons/shield.png" id="6_jpmv3"]
 [ext_resource type="PackedScene" uid="uid://c6lxdy6ovq4ad" path="res://scenes/ability_box.tscn" id="6_vs2ql"]
+[ext_resource type="PackedScene" uid="uid://dif8l4ujy70y3" path="res://scenes/statusholder.tscn" id="7_kw3kg"]
 [ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="8_tih6j"]
 [ext_resource type="Shader" path="res://scenes/screen.gdshader" id="8_w723f"]
 [ext_resource type="PackedScene" uid="uid://x3clfwsacs1s" path="res://scenes/relic.tscn" id="10_u2m6l"]
@@ -64,6 +65,12 @@ texture = ExtResource("5_ywhs2")
 [node name="Shield2" type="Sprite2D" parent="Combatscreen/Node2D"]
 position = Vector2(590, -435)
 texture = ExtResource("6_jpmv3")
+
+[node name="PlayerStatusHolder" parent="Combatscreen/Node2D" instance=ExtResource("7_kw3kg")]
+position = Vector2(-793, -157)
+
+[node name="MonsterStatusHolder" parent="Combatscreen/Node2D" instance=ExtResource("7_kw3kg")]
+position = Vector2(-790, -38)
 
 [node name="RerollButton" type="Button" parent="Combatscreen"]
 offset_left = 379.0

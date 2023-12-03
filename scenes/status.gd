@@ -1,4 +1,3 @@
-extends Node2D
 class_name Status
 
 var type: AbilityEffect.TYPE
@@ -18,4 +17,6 @@ func add_amount(a: int):
 
 func as_string():
 	return str(type) + " " + str(amount)
+
+# func right click display tooltip
 

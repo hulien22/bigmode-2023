@@ -76,6 +76,7 @@ func process_new_turn():
 		reduce_statuses(AbilityEffect.TARGET.MONSTER)
 		# animate status changes
 	statuses_to_inflict.clear()
+	animate_status_changes()
 	
 	print("player statuses:")
 	for s in statuses[0]:
@@ -129,6 +130,9 @@ func _on_ability_clicked(val):
 
 	state = CombatState.PLAYER_ABILITY
 	process_ability(ability_boxes[val-1].ability, false)
+	
+	animate_status_changes()
+	
 	# check if anyone died
 	
 	var tmr = get_tree().create_timer(0.5)
@@ -138,6 +142,8 @@ func _on_ability_clicked(val):
 func process_monster_turn():
 	state = CombatState.MONSTER_ABILITY
 	process_ability(monster_intent, true)
+	animate_status_changes()
+	
 	# check if anyone died
 	
 	process_end_turn()
@@ -237,8 +243,12 @@ func reduce_statuses(target: AbilityEffect.TARGET):
 			statuses[target][i].add_amount(-1)
 			# animate and wait?
 			if statuses[target][i].amount == 0:
-				statuses[target][i].free()
+#				statuses[target][i].free()
 				statuses[target].remove_at(i)
+
+func animate_status_changes():
+	$Combatscreen/Node2D/PlayerStatusHolder.update_statuses(statuses[0])
+	$Combatscreen/Node2D/MonsterStatusHolder.update_statuses(statuses[1])
 
 func compute_damage(base_dmg: int, source: AbilityEffect.TARGET, target: AbilityEffect.TARGET) -> int:
 	var dmg = base_dmg
