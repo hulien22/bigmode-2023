@@ -1,7 +1,7 @@
 extends Node2D
 class_name ToolTip
 
-enum DISPLAY {DICE_FACES, ABILITY}
+enum DISPLAY {DICE_FACES, ABILITY, STATUS}
 
 var last_time_touching: float = 0;
 var time_before_show: float = 0;
@@ -61,6 +61,11 @@ func tooltip_obj_entered(obj: Object, time_to_show_sec:float, display:DISPLAY):
 				$ColorRect.visible = true
 				var a:Ability = obj.ability
 				$Label.text = a.name_ + "\n" + a.desc_
+				$Label.visible = true
+				boundary_box = Vector2(300,200);
+			DISPLAY.STATUS:
+				$ColorRect.visible = true
+				$Label.text = AbilityEffect.get_status_desc(obj.type)
 				$Label.visible = true
 				boundary_box = Vector2(300,200);
 

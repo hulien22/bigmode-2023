@@ -17,6 +17,7 @@ func init(s: Status):
 		_:
 			$holder/Icon.frame = 10
 	$holder/Value.text = str(amount)
+	$holder/Description/Label2.text = AbilityEffect.get_status_desc(type)
 
 func anim_remove(t: float):
 	var tween = get_tree().create_tween()
@@ -31,3 +32,13 @@ func anim_spawn(t:float):
 	$holder.scale = Vector2.ONE * 1.5
 	tween.tween_property($holder, "scale", Vector2.ONE, t)
 
+
+func _on_color_rect_mouse_entered():
+	$holder.scale = Vector2.ONE * 1.2
+	$holder/Description.visible = true
+#	Events.emit_signal("tooltip_obj_entered", self, 0, ToolTip.DISPLAY.STATUS)
+
+func _on_color_rect_mouse_exited():
+	$holder.scale = Vector2.ONE
+	$holder/Description.visible = false
+#	Events.emit_signal("tooltip_obj_exited", self)
