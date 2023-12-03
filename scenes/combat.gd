@@ -69,12 +69,12 @@ func process_new_turn():
 	
 	# process statuses on player and monster
 	if turn_counter > 0:
+		# get copy of statuses before hand
 		reduce_statuses(AbilityEffect.TARGET.PLAYER)
-		# TODO need to handle applying of monster debuffs on the player
-		# should only process them right here?
 		for s in statuses_to_inflict:
 			process_effect(s)
 		reduce_statuses(AbilityEffect.TARGET.MONSTER)
+		# animate status changes
 	statuses_to_inflict.clear()
 	
 	print("player statuses:")
@@ -154,7 +154,7 @@ func process_effect(effect: AbilityEffect):
 		AbilityEffect.TYPE.DAMAGE:
 			var dmg = effect.process_value(occurences)
 			# process other statuses (eg strength, weaknesses)
-			inflict_damage(effect.target_, dmg)
+			inflict_damage(effect.target_, compute_damage(dmg, (effect.target_ + 1) % 2, effect.target_))
 		AbilityEffect.TYPE.SHIELD:
 			var amt = effect.process_value(occurences)
 			# process other statuses (eg strength)
@@ -239,4 +239,20 @@ func reduce_statuses(target: AbilityEffect.TARGET):
 			if statuses[target][i].amount == 0:
 				statuses[target][i].free()
 				statuses[target].remove_at(i)
-			
+
+func compute_damage(base_dmg: int, source: AbilityEffect.TARGET, target: AbilityEffect.TARGET) -> int:
+	var dmg = base_dmg
+	# first go through strength modifiers
+	for s in statuses[source]:
+		match s.type:
+			AbilityEffect.TYPE.STRENGTH:
+				dmg += s.amount
+			_:
+				pass
+	for s in statuses[target]:
+		match s.type:
+			AbilityEffect.TYPE.VULNERABLE:
+				dmg *= 2
+			_:
+				pass
+	return dmg
