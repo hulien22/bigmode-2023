@@ -28,7 +28,7 @@
 		]]
 	],
 	"monster_abilities" : [
-		["Bite", "Deal 1 damage", [
+		["Bite", "Deal 2 damage", [
 			[0, 0, 2]
 		]],
 		["Defend", "Gain 2 block", [
@@ -36,6 +36,9 @@
 		]],
 		["Strengthen", "Gain 1 STR", [
 			[1, 3, 1]
+		]],
+		["Distract", "Make the player vulnerable", [
+			[0, 2, 1]
 		]]
 	]
 }

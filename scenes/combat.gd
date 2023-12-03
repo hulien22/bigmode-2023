@@ -18,6 +18,7 @@ var monster_intent:Ability
 
 # player statuses followed by monster statuses
 var statuses:Array[Array] = [[], []]
+var statuses_to_inflict: Array[AbilityEffect]
 
 var occurences:int = 0
 
@@ -52,20 +53,40 @@ func process_start_combat():
 	process_new_turn()
 	#todo timer between states? to play anims or smth
 
+# Combat Turns
+# New turn
+#  - process new turn relics
+#  - 
+
 
 func process_new_turn():
 	state = CombatState.NEW_TURN
 	turn_counter += 1
-	print_debug("starting turn ", turn_counter)
+	print("starting turn ", turn_counter)
 	
 	# process relics
 	process_relics()
 	
 	# process statuses on player and monster
+	if turn_counter > 0:
+		reduce_statuses(AbilityEffect.TARGET.PLAYER)
+		# TODO need to handle applying of monster debuffs on the player
+		# should only process them right here?
+		for s in statuses_to_inflict:
+			process_effect(s)
+		reduce_statuses(AbilityEffect.TARGET.MONSTER)
+	statuses_to_inflict.clear()
+	
+	print("player statuses:")
+	for s in statuses[0]:
+		print(s.as_string())
+	print("monster statuses:")
+	for s in statuses[1]:
+		print(s.as_string())
 	
 	# select monster intent
 	monster_intent = monster.get_next_move(turn_counter)
-	print_debug("monster intent: ", monster_intent.name_)
+	print("monster intent: ", monster_intent.name_)
 	
 	$Combatscreen/RerollButton.disabled = false
 	$Combatscreen/RerollButton.text = "ROLL"
@@ -73,7 +94,7 @@ func process_new_turn():
 	
 
 func _on_complete_roll(results):
-	print_debug(results)
+	print(results)
 	occurences = results.max()
 	var modes:Array = []
 	for i in results.size():
@@ -104,10 +125,10 @@ func _on_ability_clicked(val):
 	if state != CombatState.ROLLING:
 		return
 	state = CombatState.ABILITY_SELECTED
-	print_debug("selected ability ", ability_boxes[val-1].ability.name_)
+	print("selected ability ", ability_boxes[val-1].ability.name_)
 
 	state = CombatState.PLAYER_ABILITY
-	process_ability(ability_boxes[val-1].ability)
+	process_ability(ability_boxes[val-1].ability, false)
 	# check if anyone died
 	
 	var tmr = get_tree().create_timer(0.5)
@@ -116,41 +137,47 @@ func _on_ability_clicked(val):
 
 func process_monster_turn():
 	state = CombatState.MONSTER_ABILITY
-	process_ability(monster_intent)
+	process_ability(monster_intent, true)
 	# check if anyone died
 	
 	process_end_turn()
 
-func process_ability(ability: Ability):
+func process_ability(ability: Ability, check_if_inflict_later: bool):
 	for effect in ability.effects_:
-		match effect.type_:
-			AbilityEffect.TYPE.DAMAGE:
-				var dmg = effect.process_value(occurences)
-				# process other statuses (eg strength, weaknesses)
-				inflict_damage(effect.target_, dmg)
-			AbilityEffect.TYPE.SHIELD:
-				var amt = effect.process_value(occurences)
-				# process other statuses (eg strength)
-				change_block(effect.target_, amt)
-			AbilityEffect.TYPE.VULNERABLE:
-				var amt = effect.process_value(occurences)
-				# process other statuses (eg strength)
-				add_status(effect.target_, AbilityEffect.TYPE.VULNERABLE, amt)
-			AbilityEffect.TYPE.STRENGTH:
-				var amt = effect.process_value(occurences)
-				# process other statuses (eg strength)
-				add_status(effect.target_, AbilityEffect.TYPE.STRENGTH, amt)
+		if check_if_inflict_later && effect.is_status_inflict():
+			statuses_to_inflict.append(effect)
+			continue
+		process_effect(effect)
+
+func process_effect(effect: AbilityEffect):
+	match effect.type_:
+		AbilityEffect.TYPE.DAMAGE:
+			var dmg = effect.process_value(occurences)
+			# process other statuses (eg strength, weaknesses)
+			inflict_damage(effect.target_, dmg)
+		AbilityEffect.TYPE.SHIELD:
+			var amt = effect.process_value(occurences)
+			# process other statuses (eg strength)
+			change_block(effect.target_, amt)
+		AbilityEffect.TYPE.VULNERABLE:
+			var amt = effect.process_value(occurences)
+			# process other statuses (eg strength)
+			add_status(effect.target_, AbilityEffect.TYPE.VULNERABLE, amt, true)
+		AbilityEffect.TYPE.STRENGTH:
+			var amt = effect.process_value(occurences)
+			# process other statuses (eg strength)
+			add_status(effect.target_, AbilityEffect.TYPE.STRENGTH, amt, false)
 
 func process_end_turn():
 	state = CombatState.END_TURN
 	process_relics()
 	
-	print_debug("player statuses:")
+	print("player statuses:")
 	for s in statuses[0]:
-		print_debug(s.as_string())
-	print_debug("monster statuses:")
+		print(s.as_string())
+	print("monster statuses:")
 	for s in statuses[1]:
-		print_debug(s.as_string())
+		print(s.as_string())
 	
 	process_new_turn()
 
@@ -197,9 +224,19 @@ func disable_abilities_and_rerollbtn():
 	for ab in ability_boxes:
 		ab.set_enabled(false)
 
-func add_status(target: AbilityEffect.TARGET, type: AbilityEffect.TYPE, amt: int):
+func add_status(target: AbilityEffect.TARGET, type: AbilityEffect.TYPE, amt: int, auto_reduce:bool):
 	for s in statuses[target]:
 		if s.type == type:
 			s.add_amount(amt)
 			return
-	statuses[target].append(Status.new(type, amt))
+	statuses[target].append(Status.new(type, amt, auto_reduce))
+
+func reduce_statuses(target: AbilityEffect.TARGET):
+	for i in range(statuses[target].size() - 1, 0, -1):
+		if statuses[target][i].reduce_at_newturn:
+			statuses[target][i].add_amount(-1)
+			# animate and wait?
+			if statuses[target][i].amount == 0:
+				statuses[target][i].free()
+				statuses[target].remove_at(i)
+			

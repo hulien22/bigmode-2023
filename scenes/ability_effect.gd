@@ -18,3 +18,10 @@ func process_value(x:int) -> int:
 	expr.parse(value_, ["x"])
 	# todo replace other things
 	return expr.execute([x])
+
+func is_status_inflict() -> bool:
+	match type_:
+		TYPE.VULNERABLE:
+			return true
+		_:
+			return false

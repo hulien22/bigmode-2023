@@ -48,14 +48,14 @@ func _process(delta):
 		if abs(linear_velocity.x) < 0.001 && abs(linear_velocity.y) < 0.001 && abs(linear_velocity.z) < 0.001 && \
 			abs(angular_velocity.x) <  0.001 && abs(angular_velocity.y) <  0.001 && abs(angular_velocity.z) <  0.001:
 			if stop_time > TIME_TO_WAIT_SECS:
-#				print_debug("Stopped", linear_velocity, angular_velocity)
+#				print("Stopped", linear_velocity, angular_velocity)
 				result = get_top_val() ### TODO have die controller call this instead
 				state = DIE_STATE.RESULT
 				stop_time = 0
 			else:
 				stop_time += delta
 		elif throw_time > MAX_THROW_TIME_SECS:
-#			print_debug("Stopped -- TIMEOUT", linear_velocity, angular_velocity)
+#			print("Stopped -- TIMEOUT", linear_velocity, angular_velocity)
 			result = get_top_val() ### TODO have die controller call this instead
 			state = DIE_STATE.RESULT
 		else:
@@ -125,7 +125,7 @@ func get_top_face() -> int:
 	if 1 + transform.basis.z.y < min:
 		topval = 6
 		min = 1 + transform.basis.z.y
-#	print_debug("TOPVAL IS", topval)
+#	print("TOPVAL IS", topval)
 	return topval
 
 func get_top_val() -> int:

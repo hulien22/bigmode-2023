@@ -54,7 +54,7 @@ func get_selection() -> Dictionary:
 	var end = project_position(mouse, 1000)
 	var result = worldspace.intersect_ray(PhysicsRayQueryParameters3D.create(start, end, 0b0010))
 	return result
-#	print_debug(start, end, result)
+#	print(start, end, result)
 
 #(0, 9.588713, 0)
 #(171.9381, -990.4113, 512.9725)
