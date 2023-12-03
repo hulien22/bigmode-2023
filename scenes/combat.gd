@@ -232,7 +232,7 @@ func add_status(target: AbilityEffect.TARGET, type: AbilityEffect.TYPE, amt: int
 	statuses[target].append(Status.new(type, amt, auto_reduce))
 
 func reduce_statuses(target: AbilityEffect.TARGET):
-	for i in range(statuses[target].size() - 1, 0, -1):
+	for i in range(statuses[target].size() - 1, -1, -1):
 		if statuses[target][i].reduce_at_newturn:
 			statuses[target][i].add_amount(-1)
 			# animate and wait?

@@ -201,8 +201,11 @@ func mouse_entered():
 	scale = Vector3.ONE * 1.1
 #	SfxHandler.play_sfx(SfxHandler.PAPER_HIT_SFX, self, 1)
 	SfxHandler.play_sfx(SfxHandler.DICE_SFX, self, 1)
+	Events.emit_signal("tooltip_obj_entered", self, 0.5, ToolTip.DISPLAY.DICE_FACES)
+
 func mouse_exited():
 	scale = Vector3.ONE
+	Events.emit_signal("tooltip_obj_exited", self)
 
 func toggle_locked():
 	if state == DIE_STATE.LOCKED:

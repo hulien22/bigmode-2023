@@ -5,7 +5,6 @@ signal ability_clicked(val)
 
 var value:int
 var ability:Ability
-var init_scale = 0.76
 var enabled:bool = false
 
 func init(v:int, a:Ability):
@@ -14,8 +13,9 @@ func init(v:int, a:Ability):
 	updateSprites()
 
 func updateSprites():
-	$AnimatedSprite2D.frame = value - 1
-	$Label.text = ability.name_
+	$Display/AnimatedSprite2D.frame = value - 1
+	$Display/Label.text = ability.name_
+	$Display/Description/Label2.text = ability.desc_
 	update_color()
 	set_enabled(false)
 
@@ -30,15 +30,21 @@ func update_color():
 	else:
 		modulate = Color.LIGHT_GRAY;
 
+var has_mouse = false
 func _on_color_rect_mouse_entered():
 	if enabled:
-		scale = Vector2.ONE * 1.2 * init_scale
+		$Display.scale = Vector2.ONE * 1.2
 		z_index = 1
 		SfxHandler.play_sfx(SfxHandler.PAPER_SFX, self, 1)
+#	Events.emit_signal("tooltip_obj_entered", self, 0.5, ToolTip.DISPLAY.ABILITY)
+	$Display/Description.visible = true
 
 func _on_color_rect_mouse_exited():
-	scale = Vector2.ONE * init_scale
+	$Display.scale = Vector2.ONE
 	z_index = 0
+#	Events.emit_signal("tooltip_obj_exited", self)
+	$Display/Description.visible = false
 
 func _on_color_rect_pressed():
 	ability_clicked.emit(value)
+	$Display/Description.visible = false

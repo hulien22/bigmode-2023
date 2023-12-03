@@ -21,6 +21,7 @@ SfxHandler="*res://sfx_handler.gd"
 DiceConstructor="*res://dice_constructor.gd"
 Global="*res://global.gd"
 GameState="*res://game_state.gd"
+Events="*res://events.gd"
 
 [display]
 

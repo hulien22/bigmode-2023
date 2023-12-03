@@ -78,19 +78,21 @@ offset_right = 630.0
 offset_bottom = 58.0
 scale = Vector2(0.922844, 1.0122)
 
-[node name="Paper-strip" type="Sprite2D" parent="."]
+[node name="Display" type="Node2D" parent="."]
+
+[node name="Paper-strip" type="Sprite2D" parent="Display"]
 position = Vector2(260, 1)
 scale = Vector2(1, 0.72)
 texture = ExtResource("2_mntcw")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Display"]
 sprite_frames = SubResource("SpriteFrames_vk0qy")
 
-[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Display"]
 visible = false
 sprite_frames = SubResource("SpriteFrames_gscsd")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="Display"]
 modulate = Color(0.0392157, 0.0392157, 0.0392157, 1)
 offset_left = 56.0
 offset_top = -43.0
@@ -103,6 +105,40 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 1
 uppercase = true
+
+[node name="Description" type="Node2D" parent="Display"]
+visible = false
+
+[node name="ColorRect3" type="ColorRect" parent="Display/Description"]
+offset_left = -771.0
+offset_top = -102.0
+offset_right = -99.0
+offset_bottom = 145.0
+mouse_filter = 2
+color = Color(0.235294, 0.231373, 0.196078, 0.521569)
+
+[node name="ColorRect2" type="ColorRect" parent="Display/Description"]
+offset_left = -766.0
+offset_top = -106.0
+offset_right = -94.0
+offset_bottom = 141.0
+mouse_filter = 2
+color = Color(0.847059, 0.843137, 0.807843, 1)
+
+[node name="Label2" type="Label" parent="Display/Description"]
+modulate = Color(0.14902, 0.14902, 0.14902, 1)
+offset_left = -738.0
+offset_top = -94.0
+offset_right = -130.0
+offset_bottom = 123.0
+theme_override_fonts/font = ExtResource("14_br0um")
+theme_override_font_sizes/font_size = 24
+text = "Deal X damage
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
 
 [connection signal="mouse_entered" from="ColorRect" to="." method="_on_color_rect_mouse_entered"]
 [connection signal="mouse_exited" from="ColorRect" to="." method="_on_color_rect_mouse_exited"]

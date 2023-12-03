@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://hac8sfncsjsb"]
+
+[ext_resource type="Script" path="res://scenes/tooltip.gd" id="1_wiu0o"]
+[ext_resource type="Texture2D" uid="uid://bapne5epnud2l" path="res://art/paper-strip.png" id="2_wwmvc"]
+[ext_resource type="Texture2D" uid="uid://cs3uv5tht6lxy" path="res://art/d6_nums.png" id="3_tjykg"]
+[ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="4_sacvj"]
+
+[node name="tooltip" type="Node2D"]
+z_index = 10
+script = ExtResource("1_wiu0o")
+
+[node name="Paper-strip" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(150, 107)
+scale = Vector2(1.44979, 1.44979)
+texture = ExtResource("2_wwmvc")
+
+[node name="DieSprite" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(150, 100)
+texture = ExtResource("3_tjykg")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+offset_right = 300.0
+offset_bottom = 199.0
+mouse_filter = 2
+color = Color(0.847059, 0.843137, 0.807843, 1)
+
+[node name="Label" type="Label" parent="."]
+visible = false
+modulate = Color(0.14902, 0.14902, 0.14902, 1)
+offset_right = 299.0
+offset_bottom = 199.0
+theme_override_fonts/font = ExtResource("4_sacvj")
+theme_override_font_sizes/font_size = 24
+text = "BITE
+Deal X damage
+asdalksdjalkdjasdalksdjalkdjasdalksdjalkdjasdalksdjalkdjasdalksdjalkdjasdalksdjalkdjasdalksdjalkdjasdalksdjalkdj"
+autowrap_mode = 3
+clip_text = true

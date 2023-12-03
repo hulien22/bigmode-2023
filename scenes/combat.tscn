@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ccl2kenwh73ve"]
+[gd_scene load_steps=13 format=3 uid="uid://ccl2kenwh73ve"]
 
 [ext_resource type="Script" path="res://scenes/combat.gd" id="1_lnnkv"]
 [ext_resource type="Texture2D" uid="uid://bbdqmbw0615rc" path="res://art/prototyping/combatscreen_no_combat.png" id="2_cwvdc"]
@@ -10,6 +10,7 @@
 [ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="8_tih6j"]
 [ext_resource type="Shader" path="res://scenes/screen.gdshader" id="8_w723f"]
 [ext_resource type="PackedScene" uid="uid://x3clfwsacs1s" path="res://scenes/relic.tscn" id="10_u2m6l"]
+[ext_resource type="PackedScene" uid="uid://hac8sfncsjsb" path="res://scenes/tooltip.tscn" id="11_wnkdn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hvqtu"]
 shader = ExtResource("8_w723f")
@@ -161,3 +162,5 @@ material = SubResource("ShaderMaterial_hvqtu")
 
 [node name="relic" parent="." instance=ExtResource("10_u2m6l")]
 position = Vector2(58, 120)
+
+[node name="tooltip" parent="." instance=ExtResource("11_wnkdn")]
