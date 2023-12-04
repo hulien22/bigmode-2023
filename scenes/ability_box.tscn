@@ -72,6 +72,7 @@ animations = [{
 script = ExtResource("1_x2f1s")
 
 [node name="ColorRect" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
 offset_left = -57.0
 offset_top = -55.0
 offset_right = 630.0

@@ -12,11 +12,11 @@
 		["Block+", "Gain X+1 shield", [
 			[0, 1, "x+1"]
 		]],
-		["Smash", "Deal 2X damage, but gain Vulnerable 1", [
+		["Wide Swing", "Deal 2X damage, but gain Vulnerable 1", [
 			[1, 0, "2 * x"],
 			[0, 2, 1]
 		]],
-		["Smash+", "Deal 2(X+1) damage, but gain Vulnerable 1", [
+		["Wide Swing+", "Deal 2(X+1) damage, but gain Vulnerable 1", [
 			[1, 0, "2 * (x + 1)"],
 			[0, 2, 1]
 		]],
@@ -25,7 +25,27 @@
 		]],
 		["Power Up+", "Gain 2 Strength", [
 			[0, 3, 2]
-		]]
+		]],
+		["Rolling Tumble", "Deal [# of rerolls remaining] damage", [
+			[1, 0, "r"]
+		]],
+		["Rolling Tumble+", "Deal [(# of rerolls remaining) * 2] damage", [
+			[1, 0, "2 * r"]
+		]],
+		["Dice Throw", "Deal [die face] damage", [
+			[1, 0, "f"]
+		]],
+		["Dice Throw+", "Deal [(die face) + 2] damage", [
+			[1, 0, "f + 2"]
+		]],
+		["Healing Potion", "Heal 3 health (once per combat)", [
+		]],
+		["Healing Potion+", "Heal 6 health (once per combat)", [
+		]],
+		["Loot", "Gain 1 gold (once per combat)", [
+		]],
+		["Loot+", "Gain 2 gold (once per combat)", [
+		]],
 	],
 	"monster_abilities" : [
 		["Bite", "Deal 2 damage", [

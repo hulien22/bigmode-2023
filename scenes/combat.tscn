@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://ccl2kenwh73ve"]
+[gd_scene load_steps=30 format=3 uid="uid://ccl2kenwh73ve"]
 
 [ext_resource type="Script" path="res://scenes/combat.gd" id="1_lnnkv"]
 [ext_resource type="Texture2D" uid="uid://bbdqmbw0615rc" path="res://art/prototyping/combatscreen_no_combat.png" id="2_cwvdc"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bvte37tu0gakb" path="res://art/prototyping/realtabletest.png" id="4_dmkne"]
 [ext_resource type="Texture2D" uid="uid://cbkae02juionm" path="res://art/prototyping/monster.png" id="4_ydnap"]
 [ext_resource type="PackedScene" uid="uid://clmylfodosp03" path="res://scenes/dice_mgr.tscn" id="5_6o5ce"]
+[ext_resource type="Texture2D" uid="uid://cpy0266ipvs8r" path="res://art/prototyping/realtabletest3.png" id="5_rgkb0"]
 [ext_resource type="Texture2D" uid="uid://bcjsnplk3an3m" path="res://art/icons/heart.png" id="5_ywhs2"]
 [ext_resource type="Texture2D" uid="uid://b2qdpbjqr6bdq" path="res://art/icons/shield.png" id="6_jpmv3"]
 [ext_resource type="PackedScene" uid="uid://c6lxdy6ovq4ad" path="res://scenes/ability_box.tscn" id="6_vs2ql"]
@@ -49,6 +50,9 @@ texture = ExtResource("3_r2h8u")
 
 [node name="Realtabletest2" type="Sprite2D" parent="Combatscreen/Node2D"]
 texture = ExtResource("4_dmkne")
+
+[node name="Realtabletest3" type="Sprite2D" parent="Combatscreen/Node2D"]
+texture = ExtResource("5_rgkb0")
 
 [node name="Heart" type="Sprite2D" parent="Combatscreen/Node2D"]
 position = Vector2(-813, -439)

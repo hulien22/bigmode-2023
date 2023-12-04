@@ -5,7 +5,7 @@ enum DIE_STATE {THROWING, RESULT, LOCKED};
 
 var state:DIE_STATE = DIE_STATE.RESULT;
 var throw_time = 0.0
-const MAX_THROW_TIME_SECS = 5.0
+const MAX_THROW_TIME_SECS = 3.0 #5.0
 var stop_time = 0.0;
 const TIME_TO_WAIT_SECS = 0.3;
 var result = 1

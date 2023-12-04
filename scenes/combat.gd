@@ -78,6 +78,9 @@ func process_new_turn():
 	statuses_to_inflict.clear()
 	animate_status_changes()
 	
+	# trying this
+	rerolls = 2
+	
 	print("player statuses:")
 	for s in statuses[0]:
 		print(s.as_string())

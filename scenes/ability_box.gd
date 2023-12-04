@@ -35,8 +35,10 @@ func set_enabled(en:bool):
 func update_color():
 	if enabled:
 		modulate = Color.WHITE;
+		modulate.a = 1
 	else:
 		modulate = Color.LIGHT_GRAY;
+		modulate.a = 0.8
 
 var has_mouse = false
 func _on_color_rect_mouse_entered():
