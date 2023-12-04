@@ -16,8 +16,13 @@ func init(s: Status):
 			$holder/Icon.frame = 16
 		_:
 			$holder/Icon.frame = 10
-	$holder/Value.text = str(amount)
+	if amount == 0:
+		$holder/Value.text = ""
+	else:
+		$holder/Value.text = str(amount)
 	$holder/Description/Label2.text = AbilityEffect.get_status_desc(type)
+	
+	#todo shift description left/right until fit on screen
 
 func anim_remove(t: float):
 	var tween = get_tree().create_tween()

@@ -13,7 +13,7 @@ func init_slime():
 	max_health = 10
 	health = 10
 	name_ = "Slime"
-	starting_abilities = []
+	starting_abilities = [Global.monster_abilities[2]]
 	repeat_abilities = [Global.monster_abilities[0], Global.monster_abilities[1], Global.monster_abilities[2]]
 #	repeat_abilities = [Global.monster_abilities[3]]
 

@@ -94,7 +94,7 @@ func process_new_turn():
 	
 	$Combatscreen/RerollButton.disabled = false
 	$Combatscreen/RerollButton.text = "ROLL"
-	$Combatscreen/ModeVal.text = "?"
+	$Combatscreen/ModeVal.text = "Mode: ?"
 	
 
 func _on_complete_roll(results):
@@ -107,7 +107,7 @@ func _on_complete_roll(results):
 			ability_boxes[i].set_enabled(true)
 		else:
 			ability_boxes[i].set_enabled(false)
-	$Combatscreen/ModeVal.text = ",".join(modes)
+	$Combatscreen/ModeVal.text = "Mode: " + ",".join(modes)
 	
 	if rerolls > 0:
 		$Combatscreen/RerollButton.disabled = false
@@ -229,7 +229,7 @@ func inflict_damage(target: AbilityEffect.TARGET, dmg: int):
 
 func disable_abilities_and_rerollbtn():
 	$Combatscreen/RerollButton.disabled = true
-	$Combatscreen/ModeVal.text = "?"
+	$Combatscreen/ModeVal.text = "Mode: ?"
 	for ab in ability_boxes:
 		ab.set_enabled(false)
 

@@ -7,6 +7,8 @@ var cur_statuses: Array[StatusObj] = []
 var status_width: float = 90.0
 var padding: float = 10.0
 
+@export var dir:int = 1
+
 func update_statuses(new_statuses: Array):
 	# update our current statuses, keep track of which ones to play some kind of animation for
 	# first check if any statuses are removed
@@ -36,7 +38,7 @@ func update_statuses(new_statuses: Array):
 	for i in new_statuses.size():
 		var obj = STATUSOBJ_SCENE.instantiate()
 		obj.init(new_statuses[i])
-		obj.position.x = i * (status_width + padding)
+		obj.position.x = i * (status_width + padding) * dir
 		cur_statuses.append(obj)
 		add_child(obj)
 		if needs_anim[i]:
