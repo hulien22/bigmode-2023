@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://dgqr05ill80fi"]
+
+[ext_resource type="Texture2D" uid="uid://cpy0266ipvs8r" path="res://art/prototyping/realtabletest3.png" id="1_s5cwp"]
+[ext_resource type="Script" path="res://scenes/door_choice.gd" id="1_wxmqc"]
+[ext_resource type="PackedScene" uid="uid://celrm1ptr8kir" path="res://scenes/door.tscn" id="2_exyw8"]
+
+[node name="door_choice" type="Node2D"]
+script = ExtResource("1_wxmqc")
+
+[node name="Realtabletest3" type="Sprite2D" parent="."]
+position = Vector2(960, 540)
+texture = ExtResource("1_s5cwp")
+
+[node name="TwoDoors" type="Node2D" parent="."]
+visible = false
+
+[node name="door" parent="TwoDoors" instance=ExtResource("2_exyw8")]
+position = Vector2(697, 736)
+
+[node name="door2" parent="TwoDoors" instance=ExtResource("2_exyw8")]
+position = Vector2(1252, 735)
+
+[node name="OneDoor" type="Node2D" parent="."]
+visible = false
+
+[node name="door" parent="OneDoor" instance=ExtResource("2_exyw8")]
+position = Vector2(974, 736)

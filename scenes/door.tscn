@@ -1,0 +1,61 @@
+[gd_scene load_steps=9 format=3 uid="uid://celrm1ptr8kir"]
+
+[ext_resource type="Texture2D" uid="uid://du25qhwo265h0" path="res://art/doors/door.png" id="1_km3x3"]
+[ext_resource type="Script" path="res://scenes/door.gd" id="1_tb2nq"]
+[ext_resource type="Texture2D" uid="uid://dlykr1gklixmi" path="res://art/doors/dooropen.png" id="2_jwqn2"]
+[ext_resource type="Texture2D" uid="uid://beadn6txbq5s1" path="res://art/icons/sword.png" id="4_tg02c"]
+[ext_resource type="Texture2D" uid="uid://coe7kceohvvpq" path="res://art/icons/die.png" id="5_syf8w"]
+[ext_resource type="Texture2D" uid="uid://bnxxyd3r1dwl1" path="res://art/icons/fire.png" id="6_nf4jj"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g6332"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_km3x3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_jwqn2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0b2le"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_tg02c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_syf8w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_nf4jj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="door" type="Node2D"]
+script = ExtResource("1_tb2nq")
+
+[node name="Button" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_left = -142.0
+offset_top = -194.0
+offset_right = 148.0
+offset_bottom = 196.0
+focus_mode = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_g6332")
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -269)
+sprite_frames = SubResource("SpriteFrames_0b2le")
+
+[connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="Button" to="." method="_on_button_mouse_exited"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

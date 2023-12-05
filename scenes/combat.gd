@@ -53,11 +53,6 @@ func process_start_combat():
 	process_new_turn()
 	#todo timer between states? to play anims or smth
 
-# Combat Turns
-# New turn
-#  - process new turn relics
-#  - 
-
 
 func process_new_turn():
 	state = CombatState.NEW_TURN
@@ -134,20 +129,28 @@ func _on_ability_clicked(val):
 	state = CombatState.PLAYER_ABILITY
 	process_ability(ability_boxes[val-1].ability, false)
 	
-	animate_status_changes()
+#	animate_status_changes()
 	
 	# check if anyone died
 	
-	var tmr = get_tree().create_timer(0.5)
-	await tmr.timeout
+	$Combatscreen/character.play_attack()
+	await wait_secs(0.5)
+	animate_status_changes()
+	render_health()
+	await wait_secs(0.5)
 	process_monster_turn()
 
 func process_monster_turn():
 	state = CombatState.MONSTER_ABILITY
 	process_ability(monster_intent, true)
-	animate_status_changes()
 	
 	# check if anyone died
+	
+	$Combatscreen/character2.play_attack()
+	await wait_secs(0.5)
+	animate_status_changes()
+	render_health()
+	await wait_secs(0.5)
 	
 	process_end_turn()
 
@@ -157,6 +160,7 @@ func process_ability(ability: Ability, inflict_status_later: bool):
 			statuses_to_inflict.append(effect)
 			continue
 		process_effect(effect)
+	#TODO: return type of animation to play (instead of just attack always)
 
 func process_effect(effect: AbilityEffect):
 	match effect.type_:
@@ -206,7 +210,7 @@ func change_health(target: AbilityEffect.TARGET, amount: int):
 	else:
 		monster.health += amount
 	#animate?
-	render_health()
+#	render_health()
 
 func change_block(target: AbilityEffect.TARGET, amount: int):
 	if target == AbilityEffect.TARGET.PLAYER:
@@ -214,7 +218,7 @@ func change_block(target: AbilityEffect.TARGET, amount: int):
 	else:
 		monster.block += amount
 	#animate?
-	render_health()
+#	render_health()
 
 func inflict_damage(target: AbilityEffect.TARGET, dmg: int):
 	var cur_block = GameState.player.block 
@@ -250,8 +254,8 @@ func reduce_statuses(target: AbilityEffect.TARGET):
 				statuses[target].remove_at(i)
 
 func animate_status_changes():
-	$Combatscreen/Node2D/PlayerStatusHolder.update_statuses(statuses[0])
-	$Combatscreen/Node2D/MonsterStatusHolder.update_statuses(statuses[1])
+	$Combatscreen/Statuses/PlayerStatusHolder.update_statuses(statuses[0])
+	$Combatscreen/Statuses/MonsterStatusHolder.update_statuses(statuses[1])
 
 func compute_damage(base_dmg: int, source: AbilityEffect.TARGET, target: AbilityEffect.TARGET) -> int:
 	var dmg = base_dmg
@@ -269,3 +273,8 @@ func compute_damage(base_dmg: int, source: AbilityEffect.TARGET, target: Ability
 			_:
 				pass
 	return dmg
+
+func wait_secs(s: float):
+	var tmr = get_tree().create_timer(s)
+	await tmr.timeout
+	

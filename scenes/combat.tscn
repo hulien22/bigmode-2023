@@ -1,7 +1,6 @@
-[gd_scene load_steps=32 format=3 uid="uid://ccl2kenwh73ve"]
+[gd_scene load_steps=31 format=3 uid="uid://ccl2kenwh73ve"]
 
 [ext_resource type="Script" path="res://scenes/combat.gd" id="1_lnnkv"]
-[ext_resource type="Texture2D" uid="uid://bbdqmbw0615rc" path="res://art/prototyping/combatscreen_no_combat.png" id="2_cwvdc"]
 [ext_resource type="Texture2D" uid="uid://yfhqg1amblqt" path="res://art/prototyping/realtabletest2.png" id="3_r2h8u"]
 [ext_resource type="PackedScene" uid="uid://3m5ea5q8mf5e" path="res://scenes/character.tscn" id="3_yoqcy"]
 [ext_resource type="Texture2D" uid="uid://bvte37tu0gakb" path="res://art/prototyping/realtabletest.png" id="4_dmkne"]
@@ -41,45 +40,55 @@ shader_parameter/saturation = 1.0
 script = ExtResource("1_lnnkv")
 dice_mgr = NodePath("SubViewportContainer/SubViewport/DiceMgr")
 
-[node name="Combatscreen" type="Sprite2D" parent="."]
+[node name="BG" type="Node2D" parent="."]
+
+[node name="Realtabletest" type="Sprite2D" parent="BG"]
+visible = false
 position = Vector2(960, 540)
-texture = ExtResource("2_cwvdc")
-
-[node name="Node2D" type="Node2D" parent="Combatscreen"]
-
-[node name="Realtabletest" type="Sprite2D" parent="Combatscreen/Node2D"]
 texture = ExtResource("3_r2h8u")
 
-[node name="Realtabletest2" type="Sprite2D" parent="Combatscreen/Node2D"]
+[node name="Realtabletest2" type="Sprite2D" parent="BG"]
+visible = false
+position = Vector2(960, 540)
 texture = ExtResource("4_dmkne")
 
-[node name="Realtabletest3" type="Sprite2D" parent="Combatscreen/Node2D"]
+[node name="Realtabletest3" type="Sprite2D" parent="BG"]
+position = Vector2(960, 540)
 texture = ExtResource("5_rgkb0")
 
-[node name="Line" type="Sprite2D" parent="Combatscreen/Node2D"]
-position = Vector2(-1, 6)
+[node name="Line" type="Sprite2D" parent="BG"]
+position = Vector2(959, 546)
 texture = ExtResource("6_bi8rb")
 
-[node name="Heart" type="Sprite2D" parent="Combatscreen/Node2D"]
-position = Vector2(-813, -439)
+[node name="PlayerUI" type="Node2D" parent="."]
+
+[node name="Heart" type="Sprite2D" parent="PlayerUI"]
+position = Vector2(147, 101)
 texture = ExtResource("5_ywhs2")
 
-[node name="Shield" type="Sprite2D" parent="Combatscreen/Node2D"]
-position = Vector2(-641, -439)
+[node name="Shield" type="Sprite2D" parent="PlayerUI"]
+position = Vector2(319, 101)
 texture = ExtResource("6_jpmv3")
 
-[node name="Heart2" type="Sprite2D" parent="Combatscreen/Node2D"]
-position = Vector2(737, -434)
+[node name="MonsterUI" type="Node2D" parent="."]
+
+[node name="Heart2" type="Sprite2D" parent="MonsterUI"]
+position = Vector2(1697, 106)
 texture = ExtResource("5_ywhs2")
 
-[node name="Shield2" type="Sprite2D" parent="Combatscreen/Node2D"]
-position = Vector2(590, -435)
+[node name="Shield2" type="Sprite2D" parent="MonsterUI"]
+position = Vector2(1550, 105)
 texture = ExtResource("6_jpmv3")
 
-[node name="PlayerStatusHolder" parent="Combatscreen/Node2D" instance=ExtResource("7_kw3kg")]
+[node name="Combatscreen" type="Node2D" parent="."]
+position = Vector2(960, 540)
+
+[node name="Statuses" type="Node2D" parent="Combatscreen"]
+
+[node name="PlayerStatusHolder" parent="Combatscreen/Statuses" instance=ExtResource("7_kw3kg")]
 position = Vector2(-793, -307)
 
-[node name="MonsterStatusHolder" parent="Combatscreen/Node2D" instance=ExtResource("7_kw3kg")]
+[node name="MonsterStatusHolder" parent="Combatscreen/Statuses" instance=ExtResource("7_kw3kg")]
 position = Vector2(823, -296)
 dir = -1
 
@@ -95,7 +104,8 @@ text = "ROLL"
 
 [node name="character" parent="Combatscreen" instance=ExtResource("3_yoqcy")]
 position = Vector2(-140, -357)
-scale = Vector2(-1, 1)
+rotation = -3.14159
+scale = Vector2(1, -1)
 sprite_ = ExtResource("12_fr28w")
 
 [node name="character2" parent="Combatscreen" instance=ExtResource("3_yoqcy")]
