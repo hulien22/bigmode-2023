@@ -109,7 +109,7 @@ uppercase = true
 
 [node name="Description" type="Node2D" parent="Display"]
 visible = false
-z_index = 1
+z_index = 11
 
 [node name="ColorRect3" type="ColorRect" parent="Display/Description"]
 offset_left = -610.0
@@ -126,6 +126,14 @@ offset_right = -94.0
 offset_bottom = 98.0
 mouse_filter = 2
 color = Color(0.847059, 0.843137, 0.807843, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="Display/Description"]
+offset_left = -601.0
+offset_top = -96.0
+offset_right = -94.0
+offset_bottom = 98.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.0745098)
 
 [node name="Label2" type="Label" parent="Display/Description"]
 modulate = Color(0.14902, 0.14902, 0.14902, 1)

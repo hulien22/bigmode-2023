@@ -10,13 +10,17 @@ func _ready():
 	$TwoDoors/door.connect("door_selected", door_picked.bind(0))
 	$TwoDoors/door2.connect("door_selected", door_picked.bind(1))
 
-func init(d: Array[GameState.GameScene]):
+func init(d: Array[GameState.GameScene], text: String):
+	doors = d
 	if d.size() == 1:
 		#TODO set the icons of the doors first
 		$OneDoor.visible = true
+		$TwoDoors.visible = false
 	else:
 		$TwoDoors.visible = true
-	doors = d
+		$OneDoor.visible = false
+	$Text.text = text
 
 func door_picked(i: int):
 	door_selected.emit(doors[i])
+

@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://dgqr05ill80fi"]
+[gd_scene load_steps=5 format=3 uid="uid://dgqr05ill80fi"]
 
 [ext_resource type="Texture2D" uid="uid://cpy0266ipvs8r" path="res://art/prototyping/realtabletest3.png" id="1_s5cwp"]
 [ext_resource type="Script" path="res://scenes/door_choice.gd" id="1_wxmqc"]
+[ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="2_6h8ak"]
 [ext_resource type="PackedScene" uid="uid://celrm1ptr8kir" path="res://scenes/door.tscn" id="2_exyw8"]
 
 [node name="door_choice" type="Node2D"]
@@ -10,7 +11,25 @@ script = ExtResource("1_wxmqc")
 [node name="Realtabletest3" type="Sprite2D" parent="."]
 visible = false
 position = Vector2(960, 540)
+scale = Vector2(1, 1)
 texture = ExtResource("1_s5cwp")
+
+[node name="Text" type="Label" parent="."]
+modulate = Color(0.121569, 0.117647, 0.121569, 1)
+offset_left = 201.0
+offset_top = 331.0
+offset_right = 1729.0
+offset_bottom = 697.0
+rotation = -0.00178233
+theme_override_fonts/font = ExtResource("2_6h8ak")
+theme_override_font_sizes/font_size = 50
+text = "After a long trek you finally made it to the dungeon entrance..
+You take a deep breath and prepare to enter through the front door
+You can feel the excitement
+and ayouialaskd
+alskdjaslkdjasldkjaslkdj"
+horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="TwoDoors" type="Node2D" parent="."]
 visible = false
@@ -22,7 +41,7 @@ position = Vector2(697, 736)
 position = Vector2(1252, 735)
 
 [node name="OneDoor" type="Node2D" parent="."]
-visible = false
+position = Vector2(0, 100)
 
 [node name="door" parent="OneDoor" instance=ExtResource("2_exyw8")]
 position = Vector2(974, 736)

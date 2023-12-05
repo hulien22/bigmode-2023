@@ -34,18 +34,18 @@ func set_enabled(en:bool):
 
 func update_color():
 	if enabled:
-		modulate = Color.WHITE;
+		modulate = Color.LIGHT_GREEN;
 		modulate.a = 1
 	else:
-		modulate = Color.LIGHT_GRAY;
-		modulate.a = 0.8
+		modulate = Color.WHITE;
+#		modulate.a = 0.8
 
 var has_mouse = false
 func _on_color_rect_mouse_entered():
-	if enabled:
-		$Display.scale = Vector2.ONE * 1.2
-		z_index = 1
-		SfxHandler.play_sfx(SfxHandler.PAPER_SFX, self, 1)
+#	if enabled:
+	$Display.scale = Vector2.ONE * 1.2
+	z_index = 1
+	SfxHandler.play_sfx(SfxHandler.PAPER_SFX, self, 1)
 #	Events.emit_signal("tooltip_obj_entered", self, 0.5, ToolTip.DISPLAY.ABILITY)
 	$Display/Description.visible = true
 

@@ -17,7 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://x3clfwsacs1s" path="res://scenes/relic.tscn" id="10_u2m6l"]
 [ext_resource type="PackedScene" uid="uid://hac8sfncsjsb" path="res://scenes/tooltip.tscn" id="11_wnkdn"]
 [ext_resource type="Texture2D" uid="uid://bbaywftojs0o3" path="res://art/characters/warrior.png" id="12_fr28w"]
-[ext_resource type="Texture2D" uid="uid://hg6ri7opwn1o" path="res://art/characters/slime.png" id="13_5itwo"]
+[ext_resource type="Texture2D" uid="uid://civkrev2pbvki" path="res://art/characters/giant.png" id="12_xl2x6"]
 [ext_resource type="PackedScene" uid="uid://dgqr05ill80fi" path="res://scenes/door_choice.tscn" id="15_12ci6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hvqtu"]
@@ -133,7 +133,7 @@ text = "0"
 
 [node name="character2" parent="MonsterUI" instance=ExtResource("3_yoqcy")]
 position = Vector2(1103, 184)
-sprite_ = ExtResource("13_5itwo")
+sprite_ = ExtResource("12_xl2x6")
 
 [node name="Abilities" type="Node2D" parent="."]
 y_sort_enabled = true

@@ -35,7 +35,7 @@ func go_to_scene(gs: GameState.GameScene):
 	match gs:
 		GameState.GameScene.INTRO:
 			var doors:Array[GameState.GameScene] = [GameState.GameScene.COMBAT]
-			$DoorChoiceScreen.init(doors)
+			$DoorChoiceScreen.init(doors, "After a long trek you finally made it to the dungeon entrance..\nYou take a deep breath and enter through the front door")
 			$DoorChoiceScreen.connect("door_selected", go_to_scene)
 			$DoorChoiceScreen.show()
 		GameState.GameScene.COMBAT:
@@ -126,6 +126,7 @@ func _on_complete_roll(results):
 		else:
 			ability_boxes[i].set_enabled(false)
 	$Combatscreen/ModeVal.text = "Mode: " + ",".join(modes)
+	animate_abilities_slide(true)
 	
 	if rerolls > 0:
 		$Combatscreen/RerollButton.disabled = false
@@ -256,6 +257,7 @@ func inflict_damage(target: AbilityEffect.TARGET, dmg: int):
 		change_block(target, -cur_block)
 
 func disable_abilities_and_rerollbtn():
+#	animate_abilities_slide(false)
 	$Combatscreen/RerollButton.disabled = true
 	$Combatscreen/ModeVal.text = "Mode: ?"
 	for ab in ability_boxes:
