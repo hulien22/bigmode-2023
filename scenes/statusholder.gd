@@ -16,7 +16,7 @@ func update_statuses(new_statuses: Array):
 	var need_wait:bool = false
 	var anim_time = 0.5
 	for s in cur_statuses:
-		if !contains_type(new_statuses, s.type):
+		if !StatusHolder.contains_type(new_statuses, s.type):
 			need_wait = true
 			s.anim_remove(anim_time)
 	if need_wait:

@@ -3,7 +3,7 @@ class_name Combat
 
 enum CombatState {START_COMBAT, NEW_TURN, ROLLING, ABILITY_SELECTED, PLAYER_ABILITY, MONSTER_ABILITY, END_TURN, END_COMBAT}
 
-var state: CombatState = CombatState.START_COMBAT
+var combat_state: CombatState = CombatState.START_COMBAT
 
 var ability_boxes:Array[AbilityBox]
 
@@ -15,7 +15,6 @@ var turn_counter:int
 var rerolls:int
 var monster_intent:Ability
 
-
 # player statuses followed by monster statuses
 var statuses:Array[Array] = [[], []]
 var statuses_to_inflict: Array[AbilityEffect]
@@ -24,38 +23,62 @@ var occurences:int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	ability_boxes = [$Abilities/ability_box1, $Abilities/ability_box2, \
+					$Abilities/ability_box3, $Abilities/ability_box4, \
+					$Abilities/ability_box5, $Abilities/ability_box6]
+	render_health()
+	go_to_scene(GameState.GameScene.INTRO)
+#	process_start_combat()
+
+func go_to_scene(gs: GameState.GameScene):
+	hide_all_scenes()
+	match gs:
+		GameState.GameScene.INTRO:
+			var doors:Array[GameState.GameScene] = [GameState.GameScene.COMBAT]
+			$DoorChoiceScreen.init(doors)
+			$DoorChoiceScreen.connect("door_selected", go_to_scene)
+			$DoorChoiceScreen.show()
+		GameState.GameScene.COMBAT:
+			$MonsterUI.show()
+			$Combatscreen.show()
+			process_start_combat()
+	# can do stuff with current game_scene before swapping to target one
+	GameState.game_scene = gs
+
+func hide_all_scenes():
+	$MonsterUI.hide()
+	$Combatscreen.hide()
+	$DoorChoiceScreen.hide()
+
+func process_start_combat():
+	disable_abilities_and_rerollbtn()
 	monster = Monster.new()
 	monster.init_slime()
-	ability_boxes = [$Combatscreen/Abilities/ability_box1, $Combatscreen/Abilities/ability_box2, \
-					$Combatscreen/Abilities/ability_box3, $Combatscreen/Abilities/ability_box4, \
-					$Combatscreen/Abilities/ability_box5, $Combatscreen/Abilities/ability_box6]
+	$Abilities/ability_box1.init(1, GameState.player.abilities[0])
+	$Abilities/ability_box2.init(2, GameState.player.abilities[1])
+	$Abilities/ability_box3.init(3, GameState.player.abilities[2])
+	$Abilities/ability_box4.init(4, GameState.player.abilities[3])
+	$Abilities/ability_box5.init(5, GameState.player.abilities[4])
+	$Abilities/ability_box6.init(6, GameState.player.abilities[5])
 	for ab in ability_boxes:
 		ab.connect("ability_clicked", _on_ability_clicked)
 	$Combatscreen/RerollButton.connect("pressed", _on_reroll_button_pressed)
 	dice_mgr.connect("complete_roll", _on_complete_roll)
-	render_health()
-	process_start_combat()
-
-func process_start_combat():
-	$Combatscreen/Abilities/ability_box1.init(1, GameState.player.abilities[0])
-	$Combatscreen/Abilities/ability_box2.init(2, GameState.player.abilities[1])
-	$Combatscreen/Abilities/ability_box3.init(3, GameState.player.abilities[2])
-	$Combatscreen/Abilities/ability_box4.init(4, GameState.player.abilities[3])
-	$Combatscreen/Abilities/ability_box5.init(5, GameState.player.abilities[4])
-	$Combatscreen/Abilities/ability_box6.init(6, GameState.player.abilities[5])
-	disable_abilities_and_rerollbtn()
 	for d in GameState.player.dice:
 		dice_mgr.add_die(d[0], d[1])
 	turn_counter = -1
 	rerolls = 3
 	statuses = [[], []]
 	
+	render_health()
+	animate_abilities_slide(true)
+	
 	process_new_turn()
 	#todo timer between states? to play anims or smth
 
 
 func process_new_turn():
-	state = CombatState.NEW_TURN
+	combat_state = CombatState.NEW_TURN
 	turn_counter += 1
 	print("starting turn ", turn_counter)
 	
@@ -109,9 +132,9 @@ func _on_complete_roll(results):
 		$Combatscreen/RerollButton.text = "REROLL (" + str(rerolls) + ")"
 
 func _on_reroll_button_pressed():
-	if state == CombatState.NEW_TURN:
+	if combat_state == CombatState.NEW_TURN:
 		dice_mgr.reset_dice()
-		state = CombatState.ROLLING
+		combat_state = CombatState.ROLLING
 	else:
 		rerolls -= 1
 		$Combatscreen/RerollButton.text = "REROLL (" + str(rerolls) + ")"
@@ -121,19 +144,19 @@ func _on_reroll_button_pressed():
 func _on_ability_clicked(val):
 	disable_abilities_and_rerollbtn()
 	dice_mgr.fade_away_dice()
-	if state != CombatState.ROLLING:
+	if combat_state != CombatState.ROLLING:
 		return
-	state = CombatState.ABILITY_SELECTED
+	combat_state = CombatState.ABILITY_SELECTED
 	print("selected ability ", ability_boxes[val-1].ability.name_)
 
-	state = CombatState.PLAYER_ABILITY
+	combat_state = CombatState.PLAYER_ABILITY
 	process_ability(ability_boxes[val-1].ability, false)
 	
 #	animate_status_changes()
 	
 	# check if anyone died
 	
-	$Combatscreen/character.play_attack()
+	$PlayerUI/character.play_attack()
 	await wait_secs(0.5)
 	animate_status_changes()
 	render_health()
@@ -141,12 +164,12 @@ func _on_ability_clicked(val):
 	process_monster_turn()
 
 func process_monster_turn():
-	state = CombatState.MONSTER_ABILITY
+	combat_state = CombatState.MONSTER_ABILITY
 	process_ability(monster_intent, true)
 	
 	# check if anyone died
 	
-	$Combatscreen/character2.play_attack()
+	$MonsterUI/character2.play_attack()
 	await wait_secs(0.5)
 	animate_status_changes()
 	render_health()
@@ -182,7 +205,7 @@ func process_effect(effect: AbilityEffect):
 			add_status(effect.target_, AbilityEffect.TYPE.STRENGTH, amt, false)
 
 func process_end_turn():
-	state = CombatState.END_TURN
+	combat_state = CombatState.END_TURN
 	process_relics()
 	
 	print("player statuses:")
@@ -199,10 +222,11 @@ func process_relics():
 		r.process_relic(self)
 
 func render_health():
-	$Combatscreen/PlayerHealth.text = str(GameState.player.health) + "/" + str(GameState.player.max_health)
-	$Combatscreen/MonsterHealth.text = str(monster.health) + "/" + str(monster.max_health)
-	$Combatscreen/PlayerBlock.text = str(GameState.player.block)
-	$Combatscreen/MonsterBlock.text = str(monster.block)
+	$PlayerUI/PlayerHealth.text = str(GameState.player.health) + "/" + str(GameState.player.max_health)
+	$PlayerUI/PlayerBlock.text = str(GameState.player.block)
+	if monster:
+		$MonsterUI/MonsterHealth.text = str(monster.health) + "/" + str(monster.max_health)
+		$MonsterUI/MonsterBlock.text = str(monster.block)
 
 func change_health(target: AbilityEffect.TARGET, amount: int):
 	if target == AbilityEffect.TARGET.PLAYER:
@@ -277,4 +301,15 @@ func compute_damage(base_dmg: int, source: AbilityEffect.TARGET, target: Ability
 func wait_secs(s: float):
 	var tmr = get_tree().create_timer(s)
 	await tmr.timeout
+
+func animate_abilities_slide(slide_in:bool):
+	var posn: Vector2 = Vector2(1407, 395)
+	if !slide_in:
+		posn.x += 500
+	var alpha = 1 if slide_in else 0
+	var tween = get_tree().create_tween()
+	tween.set_parallel()
+	tween.tween_property($Abilities, "position", posn, 0.5)
+#	tween.tween_property($Abilities, "modulate:a", alpha, 0.5)
+	pass
 	

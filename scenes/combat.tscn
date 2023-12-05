@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://ccl2kenwh73ve"]
+[gd_scene load_steps=21 format=3 uid="uid://ccl2kenwh73ve"]
 
 [ext_resource type="Script" path="res://scenes/combat.gd" id="1_lnnkv"]
 [ext_resource type="Texture2D" uid="uid://yfhqg1amblqt" path="res://art/prototyping/realtabletest2.png" id="3_r2h8u"]
@@ -13,22 +13,12 @@
 [ext_resource type="PackedScene" uid="uid://dif8l4ujy70y3" path="res://scenes/statusholder.tscn" id="7_kw3kg"]
 [ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="8_tih6j"]
 [ext_resource type="Shader" path="res://scenes/screen.gdshader" id="8_w723f"]
+[ext_resource type="Texture2D" uid="uid://dp4mbownqfhu3" path="res://art/icons/coin.png" id="9_10h77"]
 [ext_resource type="PackedScene" uid="uid://x3clfwsacs1s" path="res://scenes/relic.tscn" id="10_u2m6l"]
-[ext_resource type="Texture2D" uid="uid://ba3wq01kjehki" path="res://art/icons/eye.png" id="11_oib0c"]
 [ext_resource type="PackedScene" uid="uid://hac8sfncsjsb" path="res://scenes/tooltip.tscn" id="11_wnkdn"]
 [ext_resource type="Texture2D" uid="uid://bbaywftojs0o3" path="res://art/characters/warrior.png" id="12_fr28w"]
-[ext_resource type="Texture2D" uid="uid://ci5w1df2gs0ln" path="res://art/icons/drop.png" id="12_kxy1g"]
 [ext_resource type="Texture2D" uid="uid://hg6ri7opwn1o" path="res://art/characters/slime.png" id="13_5itwo"]
-[ext_resource type="Texture2D" uid="uid://coe7kceohvvpq" path="res://art/icons/die.png" id="13_pm0jd"]
-[ext_resource type="Texture2D" uid="uid://b34pyv71hlcd5" path="res://art/icons/ghost.png" id="14_rt2uq"]
-[ext_resource type="Texture2D" uid="uid://bv51kfa83eupb" path="res://art/icons/lightning.png" id="15_qlmcg"]
-[ext_resource type="Texture2D" uid="uid://cvijxmmg1r5v4" path="res://art/icons/lock.png" id="16_vthbq"]
-[ext_resource type="Texture2D" uid="uid://bl7k6ebjnpuwf" path="res://art/icons/question.png" id="17_85kjr"]
-[ext_resource type="Texture2D" uid="uid://duxt8t00exrjk" path="res://art/icons/sleep.png" id="18_hjf78"]
-[ext_resource type="Texture2D" uid="uid://cetupre532drl" path="res://art/icons/spiral.png" id="19_82to3"]
-[ext_resource type="Texture2D" uid="uid://cap6ndp74ts0x" path="res://art/icons/target.png" id="20_v3yac"]
-[ext_resource type="Texture2D" uid="uid://bjkxvjd4n0hsl" path="res://art/icons/x.png" id="21_glpv4"]
-[ext_resource type="Texture2D" uid="uid://qjwgo3m34x35" path="res://art/icons/xeye.png" id="22_uym8f"]
+[ext_resource type="PackedScene" uid="uid://dgqr05ill80fi" path="res://scenes/door_choice.tscn" id="15_12ci6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hvqtu"]
 shader = ExtResource("8_w723f")
@@ -66,19 +56,112 @@ texture = ExtResource("6_bi8rb")
 position = Vector2(147, 101)
 texture = ExtResource("5_ywhs2")
 
+[node name="PlayerHealth" type="Label" parent="PlayerUI"]
+modulate = Color(0.121569, 0.117647, 0.121569, 1)
+offset_left = 175.0
+offset_top = 70.0
+offset_right = 323.0
+offset_bottom = 122.0
+theme_override_fonts/font = ExtResource("8_tih6j")
+theme_override_font_sizes/font_size = 42
+text = "77/77"
+
 [node name="Shield" type="Sprite2D" parent="PlayerUI"]
 position = Vector2(319, 101)
 texture = ExtResource("6_jpmv3")
 
+[node name="PlayerBlock" type="Label" parent="PlayerUI"]
+modulate = Color(0.121569, 0.117647, 0.121569, 1)
+offset_left = 357.0
+offset_top = 70.0
+offset_right = 505.0
+offset_bottom = 122.0
+theme_override_fonts/font = ExtResource("8_tih6j")
+theme_override_font_sizes/font_size = 42
+text = "0"
+
+[node name="Coin" type="Sprite2D" parent="PlayerUI"]
+position = Vector2(155, 164)
+texture = ExtResource("9_10h77")
+
+[node name="PlayerCoins" type="Label" parent="PlayerUI"]
+modulate = Color(0.121569, 0.117647, 0.121569, 1)
+offset_left = 193.0
+offset_top = 139.0
+offset_right = 341.0
+offset_bottom = 191.0
+theme_override_fonts/font = ExtResource("8_tih6j")
+theme_override_font_sizes/font_size = 42
+text = "0"
+
+[node name="character" parent="PlayerUI" instance=ExtResource("3_yoqcy")]
+position = Vector2(820, 183)
+rotation = 3.14159
+scale = Vector2(1, -1)
+sprite_ = ExtResource("12_fr28w")
+
 [node name="MonsterUI" type="Node2D" parent="."]
+visible = false
 
 [node name="Heart2" type="Sprite2D" parent="MonsterUI"]
 position = Vector2(1697, 106)
 texture = ExtResource("5_ywhs2")
 
+[node name="MonsterHealth" type="Label" parent="MonsterUI"]
+modulate = Color(0.121569, 0.117647, 0.121569, 1)
+offset_left = 1728.0
+offset_top = 79.0
+offset_right = 1876.0
+offset_bottom = 131.0
+theme_override_fonts/font = ExtResource("8_tih6j")
+theme_override_font_sizes/font_size = 42
+text = "77/77"
+
 [node name="Shield2" type="Sprite2D" parent="MonsterUI"]
 position = Vector2(1550, 105)
 texture = ExtResource("6_jpmv3")
+
+[node name="MonsterBlock" type="Label" parent="MonsterUI"]
+modulate = Color(0.121569, 0.117647, 0.121569, 1)
+offset_left = 1584.0
+offset_top = 81.0
+offset_right = 1732.0
+offset_bottom = 133.0
+theme_override_fonts/font = ExtResource("8_tih6j")
+theme_override_font_sizes/font_size = 42
+text = "0"
+
+[node name="character2" parent="MonsterUI" instance=ExtResource("3_yoqcy")]
+position = Vector2(1103, 184)
+sprite_ = ExtResource("13_5itwo")
+
+[node name="Abilities" type="Node2D" parent="."]
+y_sort_enabled = true
+position = Vector2(1907, 395)
+
+[node name="ability_box1" parent="Abilities" instance=ExtResource("6_vs2ql")]
+position = Vector2(42.0002, 49)
+scale = Vector2(0.759635, 0.759635)
+
+[node name="ability_box2" parent="Abilities" instance=ExtResource("6_vs2ql")]
+position = Vector2(42.0001, 137)
+scale = Vector2(0.759635, 0.759635)
+
+[node name="ability_box3" parent="Abilities" instance=ExtResource("6_vs2ql")]
+position = Vector2(42.0002, 225)
+scale = Vector2(0.759635, 0.759635)
+
+[node name="ability_box4" parent="Abilities" instance=ExtResource("6_vs2ql")]
+position = Vector2(42.0001, 313)
+scale = Vector2(0.759635, 0.759635)
+
+[node name="ability_box5" parent="Abilities" instance=ExtResource("6_vs2ql")]
+position = Vector2(42.0001, 401)
+scale = Vector2(0.759635, 0.759635)
+
+[node name="ability_box6" parent="Abilities" instance=ExtResource("6_vs2ql")]
+position = Vector2(42.0001, 489)
+scale = Vector2(0.759635, 0.759635)
 
 [node name="Combatscreen" type="Node2D" parent="."]
 position = Vector2(960, 540)
@@ -101,44 +184,6 @@ focus_mode = 0
 theme_override_fonts/font = ExtResource("8_tih6j")
 theme_override_font_sizes/font_size = 70
 text = "ROLL"
-
-[node name="character" parent="Combatscreen" instance=ExtResource("3_yoqcy")]
-position = Vector2(-140, -357)
-rotation = -3.14159
-scale = Vector2(1, -1)
-sprite_ = ExtResource("12_fr28w")
-
-[node name="character2" parent="Combatscreen" instance=ExtResource("3_yoqcy")]
-position = Vector2(143, -356)
-sprite_ = ExtResource("13_5itwo")
-
-[node name="Abilities" type="Node2D" parent="Combatscreen"]
-y_sort_enabled = true
-position = Vector2(447, -145)
-
-[node name="ability_box1" parent="Combatscreen/Abilities" instance=ExtResource("6_vs2ql")]
-position = Vector2(42.0002, 49)
-scale = Vector2(0.759635, 0.759635)
-
-[node name="ability_box2" parent="Combatscreen/Abilities" instance=ExtResource("6_vs2ql")]
-position = Vector2(42.0001, 137)
-scale = Vector2(0.759635, 0.759635)
-
-[node name="ability_box3" parent="Combatscreen/Abilities" instance=ExtResource("6_vs2ql")]
-position = Vector2(42.0002, 225)
-scale = Vector2(0.759635, 0.759635)
-
-[node name="ability_box4" parent="Combatscreen/Abilities" instance=ExtResource("6_vs2ql")]
-position = Vector2(42.0001, 313)
-scale = Vector2(0.759635, 0.759635)
-
-[node name="ability_box5" parent="Combatscreen/Abilities" instance=ExtResource("6_vs2ql")]
-position = Vector2(42.0001, 401)
-scale = Vector2(0.759635, 0.759635)
-
-[node name="ability_box6" parent="Combatscreen/Abilities" instance=ExtResource("6_vs2ql")]
-position = Vector2(42.0001, 489)
-scale = Vector2(0.759635, 0.759635)
 
 [node name="Label" type="Label" parent="Combatscreen"]
 visible = false
@@ -163,97 +208,8 @@ text = "?
 "
 horizontal_alignment = 2
 
-[node name="PlayerHealth" type="Label" parent="Combatscreen"]
-modulate = Color(0.121569, 0.117647, 0.121569, 1)
-offset_left = -785.0
-offset_top = -470.0
-offset_right = -637.0
-offset_bottom = -418.0
-theme_override_fonts/font = ExtResource("8_tih6j")
-theme_override_font_sizes/font_size = 42
-text = "77/77"
-
-[node name="PlayerBlock" type="Label" parent="Combatscreen"]
-modulate = Color(0.121569, 0.117647, 0.121569, 1)
-offset_left = -603.0
-offset_top = -470.0
-offset_right = -455.0
-offset_bottom = -418.0
-theme_override_fonts/font = ExtResource("8_tih6j")
-theme_override_font_sizes/font_size = 42
-text = "0"
-
-[node name="MonsterHealth" type="Label" parent="Combatscreen"]
-modulate = Color(0.121569, 0.117647, 0.121569, 1)
-offset_left = 768.0
-offset_top = -461.0
-offset_right = 916.0
-offset_bottom = -409.0
-theme_override_fonts/font = ExtResource("8_tih6j")
-theme_override_font_sizes/font_size = 42
-text = "77/77"
-
-[node name="MonsterBlock" type="Label" parent="Combatscreen"]
-modulate = Color(0.121569, 0.117647, 0.121569, 1)
-offset_left = 624.0
-offset_top = -459.0
-offset_right = 772.0
-offset_bottom = -407.0
-theme_override_fonts/font = ExtResource("8_tih6j")
-theme_override_font_sizes/font_size = 42
-text = "0"
-
-[node name="test" type="Node2D" parent="Combatscreen"]
+[node name="DoorChoiceScreen" parent="." instance=ExtResource("15_12ci6")]
 visible = false
-position = Vector2(-1123, -553)
-
-[node name="Eye" type="Sprite2D" parent="Combatscreen/test"]
-position = Vector2(320, 338)
-texture = ExtResource("11_oib0c")
-
-[node name="Drop" type="Sprite2D" parent="Combatscreen/test"]
-position = Vector2(384, 338)
-texture = ExtResource("12_kxy1g")
-
-[node name="Die" type="Sprite2D" parent="Combatscreen/test"]
-position = Vector2(456, 340)
-texture = ExtResource("13_pm0jd")
-
-[node name="Ghost" type="Sprite2D" parent="Combatscreen/test"]
-position = Vector2(528, 339)
-texture = ExtResource("14_rt2uq")
-
-[node name="Lightning" type="Sprite2D" parent="Combatscreen/test"]
-position = Vector2(597, 342)
-texture = ExtResource("15_qlmcg")
-
-[node name="Lock" type="Sprite2D" parent="Combatscreen/test"]
-position = Vector2(656, 344)
-texture = ExtResource("16_vthbq")
-
-[node name="Question" type="Sprite2D" parent="Combatscreen/test"]
-position = Vector2(722, 341)
-texture = ExtResource("17_85kjr")
-
-[node name="Sleep" type="Sprite2D" parent="Combatscreen/test"]
-position = Vector2(782, 348)
-texture = ExtResource("18_hjf78")
-
-[node name="Spiral" type="Sprite2D" parent="Combatscreen/test"]
-position = Vector2(857, 348)
-texture = ExtResource("19_82to3")
-
-[node name="Target" type="Sprite2D" parent="Combatscreen/test"]
-position = Vector2(926, 341)
-texture = ExtResource("20_v3yac")
-
-[node name="X" type="Sprite2D" parent="Combatscreen/test"]
-position = Vector2(988, 350)
-texture = ExtResource("21_glpv4")
-
-[node name="Xeye" type="Sprite2D" parent="Combatscreen/test"]
-position = Vector2(1072, 341)
-texture = ExtResource("22_uym8f")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 z_index = 10
