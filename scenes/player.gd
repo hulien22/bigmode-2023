@@ -3,6 +3,7 @@ class_name Player
 var health: int = 10
 var max_health:int = 10
 var block:int = 0
+var coins:int = 0
 var abilities: Array[Ability]
 var dice: Array
 var relics: Array[Relic]
@@ -10,6 +11,7 @@ var relics: Array[Relic]
 func init_warrior():
 	max_health = 10
 	health = 10
+	coins = 5
 	abilities = [Global.abilities[0],
 				 Global.abilities[0], 
 				 Global.abilities[2], 

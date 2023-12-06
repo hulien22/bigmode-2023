@@ -38,7 +38,7 @@ func go_to_scene(gs: GameState.GameScene):
 	hide_all_scenes()
 	match gs:
 		GameState.GameScene.INTRO:
-			var doors:Array[GameState.GameScene] = [GameState.GameScene.COMBAT]
+			var doors:Array[GameState.GameScene] = [GameState.GameScene.DICE_SHOP]
 #			var doors:Array[GameState.GameScene] = [GameState.GameScene.SELECT_ABILITY]
 			$DoorChoiceScreen.init(doors, "After a long trek you finally made it to the dungeon entrance..\nYou take a deep breath and enter through the front door")
 			$DoorChoiceScreen.connect("door_selected", _on_door_selected)
@@ -63,7 +63,18 @@ func go_to_scene(gs: GameState.GameScene):
 			$AbilityChoiceScreen.connect("gg_go_next", generate_next_door_scene)
 			$AbilityChoiceScreen.show()
 			animate_abilities_slide(true)
-			
+		GameState.GameScene.LOOT:
+			$LootScreen.init(2, null)
+			$LootScreen.connect("gg_go_next", go_to_scene.bind(GameState.GameScene.SELECT_ABILITY))
+			$LootScreen.connect("add_coins", add_coins)
+			$LootScreen.show()
+			animate_abilities_slide(false)
+		GameState.GameScene.DICE_SHOP:
+			$DiceShopScreen.connect("gg_go_next", end_dice_shop)
+			$DiceShopScreen.show()
+			animate_abilities_slide(false)
+			#start dice rolls
+			init_dice_shop()
 
 
 func hide_all_scenes():
@@ -71,13 +82,18 @@ func hide_all_scenes():
 	$Combatscreen.hide()
 	$DoorChoiceScreen.hide()
 	$AbilityChoiceScreen.hide()
+	$LootScreen.hide()
+	$DiceShopScreen.hide()
+
 
 func generate_next_door_scene():
 	go_to_scene(GameState.GameScene.DOORS)
 
+
 func _on_door_selected(gs: GameState.GameScene):
 	go_to_scene(gs)
 	GameState.level += 1
+
 
 func process_start_combat():
 	disable_abilities_and_rerollbtn()
@@ -94,6 +110,9 @@ func process_start_combat():
 	for ab in ability_boxes:
 		ab.connect("ability_clicked", _on_ability_clicked)
 	$Combatscreen/RerollButton.connect("pressed", _on_reroll_button_pressed)
+	dice_mgr.line_up_dice_after_roll = true
+	dice_mgr.mouse_handler.remove_on_select = false
+	dice_mgr.dice_box_rect = Rect2(-7, -1.5, 9.5, 5.5)
 	dice_mgr.connect("complete_roll", _on_complete_roll)
 	dice_mgr.dice.clear()
 	for d in GameState.player.dice:
@@ -101,6 +120,7 @@ func process_start_combat():
 	turn_counter = -1
 	rerolls = 3
 	statuses = [[], []]
+	GameState.player.block = 0
 	
 	render_health()
 	animate_abilities_slide(true)
@@ -269,14 +289,22 @@ func combat_win():
 	
 	for ab in ability_boxes:
 		ab.disconnect("ability_clicked", _on_ability_clicked)
+	$Combatscreen/RerollButton.disconnect("pressed", _on_reroll_button_pressed)
+	dice_mgr.disconnect("complete_roll", _on_complete_roll)
+	dice_mgr.dice.clear()
+	turn_counter = -1
+	rerolls = 3
+	statuses = [[], []]
+	GameState.player.block = 0
 	
 	$MonsterUI/character2.play_fade_die()
+	animate_status_changes()
 	await wait_secs(0.5)
 	
 	#generate loot scene
 		# coins, and relic
 	# which will then generate the ability screen
-	go_to_scene(GameState.GameScene.SELECT_ABILITY)
+	go_to_scene(GameState.GameScene.LOOT)
 
 func combat_loss():
 	print("YOU DIED")
@@ -378,4 +406,29 @@ func animate_abilities_slide(slide_in:bool):
 	tween.tween_property($Abilities, "position", posn, 0.5)
 #	tween.tween_property($Abilities, "modulate:a", alpha, 0.5)
 	pass
-	
+
+func add_coins(amt: int):
+	GameState.player.coins += amt
+	$PlayerUI/PlayerCoins.text = str(GameState.player.coins)
+	$PlayerUI/PlayerCoins.scale = Vector2.ONE * 1.5
+	var tween = get_tree().create_tween()
+	tween.tween_property($PlayerUI/PlayerCoins, "scale", Vector2.ONE, 0.5)
+
+func init_dice_shop():
+	$DiceShopScreen/NextButton.disabled = true
+	dice_mgr.line_up_dice_after_roll = true
+	dice_mgr.dice_box_rect = Rect2(-7, -1.5, 4, 5.5)
+	dice_mgr.connect("complete_roll", dice_shop_on_complete_roll)
+	dice_mgr.mouse_handler.remove_on_select = true
+	dice_mgr.dice.clear()
+	for i in 5:
+		dice_mgr.add_die(DiceConstructor.generate_random_die(), DiceConstructor.generate_random_die_color())
+	dice_mgr.drop_all_dice()
+
+func dice_shop_on_complete_roll(_results):
+	$DiceShopScreen/NextButton.disabled = false
+
+func end_dice_shop():
+	dice_mgr.fade_away_dice()
+	dice_mgr.dice.clear()
+	generate_next_door_scene()

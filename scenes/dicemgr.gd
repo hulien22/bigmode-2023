@@ -9,15 +9,20 @@ var state: STATE = STATE.HIDDEN
 const DIE_SCENE = preload("res://scenes/die.tscn")
 var dice:Array
 
+var mouse_handler: MouseHandler
+
 # TODO Tweak to further camera
 #var dice_box_rect:Rect2 = Rect2(-9, -2.5, 10.5, 7.5)
 var dice_box_rect:Rect2 = Rect2(-7, -2, 9.5, 6)
 
 var die_spacing:float = 1.5
 
+var line_up_dice_after_roll: bool = true
+
 func _ready():
 	$Camera3D2.connect("toggle_all", _on_toggle_all)
 	$AnimTimer.connect("timeout", _on_animtimer_timeout)
+	mouse_handler = $Camera3D2
 #	for x in 5:
 #		add_die()
 
@@ -30,17 +35,20 @@ func _process(delta):
 		if are_all_dice_stopped():
 			state = STATE.ANIMATING
 			# Move dice over
-			var next_die_posn:Vector3 = Vector3(dice_box_rect.position.x, 0.5, dice_box_rect.position.y)
-			for d in dice:
-				d.enable(false)
-				d.rotate_upwards()
-				d.animate_slide_to(next_die_posn)
-				next_die_posn.x += die_spacing
-				if (next_die_posn.x > dice_box_rect.end.x):
-					next_die_posn.x = dice_box_rect.position.x
-					next_die_posn.z += die_spacing
-			# Trigger state transition after all animations complete
-			$AnimTimer.start(0.5)
+			if line_up_dice_after_roll:
+				var next_die_posn:Vector3 = Vector3(dice_box_rect.position.x, 0.5, dice_box_rect.position.y)
+				for d in dice:
+					d.enable(false)
+					d.rotate_upwards()
+					d.animate_slide_to(next_die_posn)
+					next_die_posn.x += die_spacing
+					if (next_die_posn.x > dice_box_rect.end.x):
+						next_die_posn.x = dice_box_rect.position.x
+						next_die_posn.z += die_spacing
+				# Trigger state transition after all animations complete
+				$AnimTimer.start(0.5)
+			else:
+				$AnimTimer.start(0.1)
 
 func can_drop() -> bool:
 	return state == STATE.HIDDEN || state == STATE.SELECTING
@@ -88,5 +96,6 @@ func reset_dice():
 
 func fade_away_dice():
 	for d in dice:
-		d.fade_away()
+		if d != null:
+			d.fade_away()
 	state = STATE.HIDDEN

@@ -1,0 +1,102 @@
+[gd_scene load_steps=6 format=3 uid="uid://chht5vf7n33tl"]
+
+[ext_resource type="Script" path="res://scenes/loot.gd" id="1_4atpw"]
+[ext_resource type="Texture2D" uid="uid://cpy0266ipvs8r" path="res://art/prototyping/realtabletest3.png" id="2_v73s8"]
+[ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="3_c46e1"]
+[ext_resource type="Texture2D" uid="uid://dp4mbownqfhu3" path="res://art/icons/coin.png" id="4_jch7k"]
+[ext_resource type="PackedScene" uid="uid://x3clfwsacs1s" path="res://scenes/relic.tscn" id="5_rt4dt"]
+
+[node name="LootScreen" type="Node2D"]
+script = ExtResource("1_4atpw")
+
+[node name="Realtabletest3" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(960, 540)
+texture = ExtResource("2_v73s8")
+
+[node name="Text" type="Label" parent="."]
+modulate = Color(0.121569, 0.117647, 0.121569, 1)
+offset_left = 201.0
+offset_top = 331.0
+offset_right = 1729.0
+offset_bottom = 697.0
+rotation = -0.00178233
+theme_override_fonts/font = ExtResource("3_c46e1")
+theme_override_font_sizes/font_size = 50
+text = "You defeated the monster and find some loot!"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Coins" type="Node2D" parent="."]
+position = Vector2(953, 498)
+rotation = -0.00178233
+scale = Vector2(1, 1)
+
+[node name="Text2" type="Label" parent="Coins"]
+modulate = Color(0.121569, 0.117647, 0.121569, 1)
+offset_left = -41.9243
+offset_top = -27.6524
+offset_right = 241.076
+offset_bottom = 33.3476
+rotation = -0.00178233
+theme_override_fonts/font = ExtResource("3_c46e1")
+theme_override_font_sizes/font_size = 50
+text = "10 coins"
+
+[node name="Coin" type="Sprite2D" parent="Coins"]
+position = Vector2(-88.2227, -1.60995)
+rotation = 0.00178233
+scale = Vector2(1, 1)
+texture = ExtResource("4_jch7k")
+
+[node name="Button" type="Button" parent="Coins"]
+modulate = Color(1, 1, 1, 0)
+offset_left = -154.924
+offset_top = -42.6524
+offset_right = 195.076
+offset_bottom = 44.3476
+
+[node name="Relic" type="Node2D" parent="."]
+position = Vector2(954, 663)
+rotation = -0.00178233
+scale = Vector2(1, 1)
+
+[node name="Text2" type="Label" parent="Relic"]
+modulate = Color(0.121569, 0.117647, 0.121569, 1)
+offset_left = -45.9225
+offset_top = -28.6595
+offset_right = 237.077
+offset_bottom = 32.3405
+rotation = -0.00178233
+theme_override_fonts/font = ExtResource("3_c46e1")
+theme_override_font_sizes/font_size = 50
+text = "10 coins"
+
+[node name="relic" parent="Relic" instance=ExtResource("5_rt4dt")]
+position = Vector2(-100.221, -2.63132)
+rotation = 0.00178233
+scale = Vector2(1, 1)
+
+[node name="Button" type="Button" parent="Relic"]
+modulate = Color(1, 1, 1, 0)
+offset_left = -158.923
+offset_top = -43.6595
+offset_right = 191.077
+offset_bottom = 43.3405
+
+[node name="NextButton" type="Button" parent="."]
+offset_left = 838.0
+offset_top = 933.0
+offset_right = 1082.0
+offset_bottom = 1056.0
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_c46e1")
+theme_override_font_sizes/font_size = 70
+text = "Skip"
+
+[connection signal="mouse_entered" from="Coins/Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="Coins/Button" to="." method="_on_button_mouse_exited"]
+[connection signal="pressed" from="Coins/Button" to="." method="_on_button_pressed"]
+[connection signal="mouse_entered" from="Relic/Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="Relic/Button" to="." method="_on_button_mouse_exited"]
+[connection signal="pressed" from="Relic/Button" to="." method="_on_button_pressed"]

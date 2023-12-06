@@ -35,3 +35,14 @@ func stack_images(imgs:Array) -> Image:
 		false,
 		imgs[0].get_format(),
 		data)
+
+func generate_random_die() -> Array:
+	var a = []
+	for i in 6:
+		a.append(randi_range(1,6))
+	return a
+
+
+const DICE_COLORS: Array[Color] = [Color.CORNFLOWER_BLUE, Color.CHARTREUSE, Color.HOT_PINK, Color.TOMATO]
+func generate_random_die_color() -> Color:
+	return DICE_COLORS[randi_range(0, DICE_COLORS.size() - 1)]

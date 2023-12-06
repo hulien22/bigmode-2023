@@ -1,6 +1,9 @@
 extends Camera3D
+class_name MouseHandler
 
 signal toggle_all(val, set_locked) 
+
+var remove_on_select:bool = false
 
 var mouse = Vector2()
 
@@ -26,13 +29,24 @@ func _process(delta):
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		if !is_mouse_down:
 			is_mouse_down = true
-			# TODO also check if shift is clicked -- will toggle all of one number
+			
 			var die = selection.get("collider", null)
 			if die:
-				if Input.is_key_pressed(KEY_SHIFT):
-					toggle_all.emit(die.get_top_val(), !die.is_locked())
+				if !remove_on_select:
+					if Input.is_key_pressed(KEY_SHIFT):
+						toggle_all.emit(die.get_top_val(), !die.is_locked())
+					else:
+						die.toggle_locked()
 				else:
-					die.toggle_locked()
+					if GameState.player.coins < 2:
+						print("not enough money")
+						#TODO play err sound?
+						return
+					GameState.player.coins -= 2
+					GameState.player.dice.append([die.faces, die.die_color])
+					last_obj = null
+					last_obj_rid = 0
+					die.queue_free()
 				SfxHandler.play_sfx(SfxHandler.GROUND_SFX, self, 1)
 	elif is_mouse_down:
 		is_mouse_down = false
@@ -53,7 +67,7 @@ func process_mouse_hover(selection: Dictionary):
 		var obj = selection.get("collider", null)
 		if obj:
 			obj.mouse_entered()
-		if last_obj_rid > 0:
+		if last_obj_rid > 0 && last_obj:
 			last_obj.mouse_exited()
 		last_obj_rid = sel_rid
 		last_obj = obj
