@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://cpsnkglumgydc"]
+
+[ext_resource type="Script" path="res://scenes/ability_choice.gd" id="1_guqx4"]
+[ext_resource type="Texture2D" uid="uid://cpy0266ipvs8r" path="res://art/prototyping/realtabletest3.png" id="2_e2r21"]
+[ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="3_csaho"]
+[ext_resource type="PackedScene" uid="uid://c6lxdy6ovq4ad" path="res://scenes/ability_box.tscn" id="4_e4q6j"]
+
+[node name="ability_choice" type="Node2D"]
+script = ExtResource("1_guqx4")
+
+[node name="Realtabletest3" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(960, 540)
+texture = ExtResource("2_e2r21")
+
+[node name="Text" type="Label" parent="."]
+modulate = Color(0.121569, 0.117647, 0.121569, 1)
+offset_left = 201.0
+offset_top = 331.0
+offset_right = 1729.0
+offset_bottom = 697.0
+rotation = -0.00178233
+theme_override_fonts/font = ExtResource("3_csaho")
+theme_override_font_sizes/font_size = 50
+text = "After a long trek you finally made it to the dungeon entrance..
+You take a deep breath and prepare to enter through the front door
+You can feel the excitement
+and ayouialaskd
+alskdjaslkdjasldkjaslkdj"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Abilities" type="Node2D" parent="."]
+y_sort_enabled = true
+position = Vector2(735, 424)
+
+[node name="ability_box1" parent="Abilities" instance=ExtResource("4_e4q6j")]
+position = Vector2(42.0002, 49)
+scale = Vector2(0.759635, 0.759635)
+
+[node name="ability_box2" parent="Abilities" instance=ExtResource("4_e4q6j")]
+position = Vector2(42.0001, 208)
+scale = Vector2(0.759635, 0.759635)
+
+[node name="ability_box3" parent="Abilities" instance=ExtResource("4_e4q6j")]
+position = Vector2(42.0002, 377)
+scale = Vector2(0.759635, 0.759635)
+
+[node name="NextButton" type="Button" parent="."]
+offset_left = 838.0
+offset_top = 933.0
+offset_right = 1082.0
+offset_bottom = 1056.0
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_csaho")
+theme_override_font_sizes/font_size = 70
+text = "Skip"

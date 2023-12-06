@@ -8,6 +8,7 @@ var max_health: int
 var block: int = 0
 var starting_abilities: Array[Ability]
 var repeat_abilities: Array[Ability]
+var image: CompressedTexture2D
 
 func init_slime():
 	max_health = 10
@@ -15,6 +16,7 @@ func init_slime():
 	name_ = "Slime"
 	starting_abilities = [Global.monster_abilities[2]]
 	repeat_abilities = [Global.monster_abilities[0], Global.monster_abilities[1], Global.monster_abilities[2]]
+	image = preload("res://art/characters/slime.png")
 #	repeat_abilities = [Global.monster_abilities[3]]
 
 

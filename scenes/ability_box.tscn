@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c6lxdy6ovq4ad"]
+[gd_scene load_steps=19 format=3 uid="uid://c6lxdy6ovq4ad"]
 
 [ext_resource type="Script" path="res://scenes/ability_box.gd" id="1_x2f1s"]
 [ext_resource type="Texture2D" uid="uid://cs3eeohyx6klj" path="res://art/sketchd6_1.png" id="2_56qcc"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bapne5epnud2l" path="res://art/paper-strip.png" id="2_mntcw"]
 [ext_resource type="Texture2D" uid="uid://bk8streos5gvy" path="res://art/sketchd6_2.png" id="3_5sr8d"]
 [ext_resource type="Texture2D" uid="uid://vpuun47enty3" path="res://art/d6face2.png" id="3_s86ol"]
+[ext_resource type="Texture2D" uid="uid://dlccmt7vud8x4" path="res://art/sketchd6_0.png" id="3_uukow"]
 [ext_resource type="Texture2D" uid="uid://df510egndmct8" path="res://art/sketchd6_3.png" id="4_1bu3n"]
 [ext_resource type="Texture2D" uid="uid://wgfj75q3hq3g" path="res://art/d6face3.png" id="4_k30jd"]
 [ext_resource type="Texture2D" uid="uid://dcg07p7gdqnhr" path="res://art/d6face4.png" id="5_62c4r"]
@@ -19,6 +20,9 @@
 [sub_resource type="SpriteFrames" id="SpriteFrames_vk0qy"]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_uukow")
+}, {
 "duration": 1.0,
 "texture": ExtResource("2_56qcc")
 }, {

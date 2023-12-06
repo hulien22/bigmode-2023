@@ -12,6 +12,9 @@ func _ready():
 
 func init(d: Array[GameState.GameScene], text: String):
 	doors = d
+	$OneDoor/door.init()
+	$TwoDoors/door.init()
+	$TwoDoors/door2.init()
 	if d.size() == 1:
 		#TODO set the icons of the doors first
 		$OneDoor.visible = true

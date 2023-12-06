@@ -3,6 +3,9 @@ class_name Door
 
 signal door_selected()
 
+func init():
+	$AnimatedSprite2D.frame = 0
+
 func _on_button_pressed():
 	door_selected.emit()
 

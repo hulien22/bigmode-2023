@@ -13,7 +13,7 @@ func init(v:int, a:Ability):
 	updateSprites()
 
 func updateSprites():
-	$Display/AnimatedSprite2D.frame = value - 1
+	$Display/AnimatedSprite2D.frame = value
 	$Display/Label.text = ability.name_
 	var extras:String = ""
 	for e in ability.effects_:
@@ -25,7 +25,7 @@ func updateSprites():
 		$Display/Description/Label2.text += "\n---" + extras
 	
 	update_color()
-	set_enabled(false)
+#	set_enabled(false)
 
 func set_enabled(en:bool):
 	enabled = en

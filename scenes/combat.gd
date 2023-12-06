@@ -26,44 +26,76 @@ func _ready():
 	ability_boxes = [$Abilities/ability_box1, $Abilities/ability_box2, \
 					$Abilities/ability_box3, $Abilities/ability_box4, \
 					$Abilities/ability_box5, $Abilities/ability_box6]
+	monster = Monster.new()
 	render_health()
 	go_to_scene(GameState.GameScene.INTRO)
+	for i in 6:
+		ability_boxes[i].init(i+1, GameState.player.abilities[i])
 #	process_start_combat()
 
 func go_to_scene(gs: GameState.GameScene):
+	GameState.game_scene = gs
 	hide_all_scenes()
 	match gs:
 		GameState.GameScene.INTRO:
 			var doors:Array[GameState.GameScene] = [GameState.GameScene.COMBAT]
+#			var doors:Array[GameState.GameScene] = [GameState.GameScene.SELECT_ABILITY]
 			$DoorChoiceScreen.init(doors, "After a long trek you finally made it to the dungeon entrance..\nYou take a deep breath and enter through the front door")
-			$DoorChoiceScreen.connect("door_selected", go_to_scene)
+			$DoorChoiceScreen.connect("door_selected", _on_door_selected)
 			$DoorChoiceScreen.show()
+			animate_abilities_slide(false)
+		GameState.GameScene.DOORS:
+			var doors:Array[GameState.GameScene] = GameState.generate_next_doors()
+			if doors.size() == 1:
+				$DoorChoiceScreen.init(doors, "You find yourself in front of a large door")
+			else:
+				$DoorChoiceScreen.init(doors, "You find yourself in front of two doors\nPick a door")
+			$DoorChoiceScreen.connect("door_selected", _on_door_selected)
+			$DoorChoiceScreen.show()
+			animate_abilities_slide(false)
 		GameState.GameScene.COMBAT:
 			$MonsterUI.show()
 			$Combatscreen.show()
 			process_start_combat()
-	# can do stuff with current game_scene before swapping to target one
-	GameState.game_scene = gs
+		GameState.GameScene.SELECT_ABILITY:
+			var new_abs:Array[Ability] = [Global.abilities[2], Global.abilities[3], Global.abilities[6]]
+			$AbilityChoiceScreen.init(ability_boxes, new_abs)
+			$AbilityChoiceScreen.connect("gg_go_next", generate_next_door_scene)
+			$AbilityChoiceScreen.show()
+			animate_abilities_slide(true)
+			
+
 
 func hide_all_scenes():
 	$MonsterUI.hide()
 	$Combatscreen.hide()
 	$DoorChoiceScreen.hide()
+	$AbilityChoiceScreen.hide()
+
+func generate_next_door_scene():
+	go_to_scene(GameState.GameScene.DOORS)
+
+func _on_door_selected(gs: GameState.GameScene):
+	go_to_scene(gs)
+	GameState.level += 1
 
 func process_start_combat():
 	disable_abilities_and_rerollbtn()
-	monster = Monster.new()
 	monster.init_slime()
-	$Abilities/ability_box1.init(1, GameState.player.abilities[0])
-	$Abilities/ability_box2.init(2, GameState.player.abilities[1])
-	$Abilities/ability_box3.init(3, GameState.player.abilities[2])
-	$Abilities/ability_box4.init(4, GameState.player.abilities[3])
-	$Abilities/ability_box5.init(5, GameState.player.abilities[4])
-	$Abilities/ability_box6.init(6, GameState.player.abilities[5])
+	$MonsterUI/character2.init(monster.image)
+	for i in 6:
+		ability_boxes[i].init(i+1, GameState.player.abilities[i])
+#	$Abilities/ability_box1.init(1, GameState.player.abilities[0])
+#	$Abilities/ability_box2.init(2, GameState.player.abilities[1])
+#	$Abilities/ability_box3.init(3, GameState.player.abilities[2])
+#	$Abilities/ability_box4.init(4, GameState.player.abilities[3])
+#	$Abilities/ability_box5.init(5, GameState.player.abilities[4])
+#	$Abilities/ability_box6.init(6, GameState.player.abilities[5])
 	for ab in ability_boxes:
 		ab.connect("ability_clicked", _on_ability_clicked)
 	$Combatscreen/RerollButton.connect("pressed", _on_reroll_button_pressed)
 	dice_mgr.connect("complete_roll", _on_complete_roll)
+	dice_mgr.dice.clear()
 	for d in GameState.player.dice:
 		dice_mgr.add_die(d[0], d[1])
 	turn_counter = -1
@@ -162,19 +194,32 @@ func _on_ability_clicked(val):
 	animate_status_changes()
 	render_health()
 	await wait_secs(0.5)
+	
+	if monster.health <= 0:
+		combat_win()
+		return
+	if GameState.player.health <= 0:
+		combat_loss()
+		return
+	
 	process_monster_turn()
 
 func process_monster_turn():
 	combat_state = CombatState.MONSTER_ABILITY
 	process_ability(monster_intent, true)
 	
-	# check if anyone died
-	
 	$MonsterUI/character2.play_attack()
 	await wait_secs(0.5)
 	animate_status_changes()
 	render_health()
 	await wait_secs(0.5)
+	
+	if monster.health <= 0:
+		combat_win()
+		return
+	if GameState.player.health <= 0:
+		combat_loss()
+		return
 	
 	process_end_turn()
 
@@ -218,6 +263,25 @@ func process_end_turn():
 	
 	process_new_turn()
 
+func combat_win():
+	print("MONSTER DIED")
+	combat_state = CombatState.END_COMBAT
+	
+	for ab in ability_boxes:
+		ab.disconnect("ability_clicked", _on_ability_clicked)
+	
+	$MonsterUI/character2.play_fade_die()
+	await wait_secs(0.5)
+	
+	#generate loot scene
+		# coins, and relic
+	# which will then generate the ability screen
+	go_to_scene(GameState.GameScene.SELECT_ABILITY)
+
+func combat_loss():
+	print("YOU DIED")
+	pass
+
 func process_relics():
 	for r in GameState.player.relics:
 		r.process_relic(self)
@@ -225,7 +289,7 @@ func process_relics():
 func render_health():
 	$PlayerUI/PlayerHealth.text = str(GameState.player.health) + "/" + str(GameState.player.max_health)
 	$PlayerUI/PlayerBlock.text = str(GameState.player.block)
-	if monster:
+	if monster && GameState.game_scene == GameState.GameScene.COMBAT:
 		$MonsterUI/MonsterHealth.text = str(monster.health) + "/" + str(monster.max_health)
 		$MonsterUI/MonsterBlock.text = str(monster.block)
 

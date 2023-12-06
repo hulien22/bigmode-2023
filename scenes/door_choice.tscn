@@ -11,7 +11,6 @@ script = ExtResource("1_wxmqc")
 [node name="Realtabletest3" type="Sprite2D" parent="."]
 visible = false
 position = Vector2(960, 540)
-scale = Vector2(1, 1)
 texture = ExtResource("1_s5cwp")
 
 [node name="Text" type="Label" parent="."]
