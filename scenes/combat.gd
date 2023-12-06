@@ -28,9 +28,12 @@ func _ready():
 					$Abilities/ability_box5, $Abilities/ability_box6]
 	monster = Monster.new()
 	render_health()
+	add_coins(0)
 	go_to_scene(GameState.GameScene.INTRO)
 	for i in 6:
 		ability_boxes[i].init(i+1, GameState.player.abilities[i])
+	
+	Events.connect("coins_updated", anim_coins)
 #	process_start_combat()
 
 func go_to_scene(gs: GameState.GameScene):
@@ -64,7 +67,8 @@ func go_to_scene(gs: GameState.GameScene):
 			$AbilityChoiceScreen.show()
 			animate_abilities_slide(true)
 		GameState.GameScene.LOOT:
-			$LootScreen.init(2, null)
+			var c = 2 if monster == null else monster.coins_dropped
+			$LootScreen.init(c, null)
 			$LootScreen.connect("gg_go_next", go_to_scene.bind(GameState.GameScene.SELECT_ABILITY))
 			$LootScreen.connect("add_coins", add_coins)
 			$LootScreen.show()
@@ -164,7 +168,7 @@ func process_new_turn():
 	
 	$Combatscreen/RerollButton.disabled = false
 	$Combatscreen/RerollButton.text = "ROLL"
-	$Combatscreen/ModeVal.text = "Mode: ?"
+	$Combatscreen/ModeVal.text = "Mode: ? | X=?"
 	
 
 func _on_complete_roll(results):
@@ -177,7 +181,7 @@ func _on_complete_roll(results):
 			ability_boxes[i].set_enabled(true)
 		else:
 			ability_boxes[i].set_enabled(false)
-	$Combatscreen/ModeVal.text = "Mode: " + ",".join(modes)
+	$Combatscreen/ModeVal.text = "Mode=" + ",".join(modes) + " | X=" + str(occurences)
 	animate_abilities_slide(true)
 	
 	if rerolls > 0:
@@ -351,7 +355,7 @@ func inflict_damage(target: AbilityEffect.TARGET, dmg: int):
 func disable_abilities_and_rerollbtn():
 #	animate_abilities_slide(false)
 	$Combatscreen/RerollButton.disabled = true
-	$Combatscreen/ModeVal.text = "Mode: ?"
+	$Combatscreen/ModeVal.text = "Mode: ? | X=?"
 	for ab in ability_boxes:
 		ab.set_enabled(false)
 
@@ -409,6 +413,9 @@ func animate_abilities_slide(slide_in:bool):
 
 func add_coins(amt: int):
 	GameState.player.coins += amt
+	anim_coins()
+
+func anim_coins():
 	$PlayerUI/PlayerCoins.text = str(GameState.player.coins)
 	$PlayerUI/PlayerCoins.scale = Vector2.ONE * 1.5
 	var tween = get_tree().create_tween()
@@ -417,6 +424,7 @@ func add_coins(amt: int):
 func init_dice_shop():
 	$DiceShopScreen/NextButton.disabled = true
 	dice_mgr.line_up_dice_after_roll = true
+#	dice_mgr.line_up_dice_after_roll = false
 	dice_mgr.dice_box_rect = Rect2(-7, -1.5, 4, 5.5)
 	dice_mgr.connect("complete_roll", dice_shop_on_complete_roll)
 	dice_mgr.mouse_handler.remove_on_select = true

@@ -48,6 +48,8 @@ func _process(delta):
 				# Trigger state transition after all animations complete
 				$AnimTimer.start(0.5)
 			else:
+				for d in dice:
+					d.enable(false)
 				$AnimTimer.start(0.1)
 
 func can_drop() -> bool:

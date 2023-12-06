@@ -47,6 +47,7 @@ func _process(delta):
 					last_obj = null
 					last_obj_rid = 0
 					die.queue_free()
+					Events.emit_signal("coins_updated")
 				SfxHandler.play_sfx(SfxHandler.GROUND_SFX, self, 1)
 	elif is_mouse_down:
 		is_mouse_down = false
