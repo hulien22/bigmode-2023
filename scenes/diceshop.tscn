@@ -4,9 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://cpy0266ipvs8r" path="res://art/prototyping/realtabletest3.png" id="2_rt6fx"]
 [ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="3_5puu7"]
 [ext_resource type="PackedScene" uid="uid://3m5ea5q8mf5e" path="res://scenes/character.tscn" id="3_22kap"]
-[ext_resource type="Texture2D" uid="uid://canavrt88q2vv" path="res://art/characters/diceshop.png" id="4_bnq0h"]
+[ext_resource type="Texture2D" uid="uid://sn62swogegbj" path="res://art/characters/ritual.png" id="4_nbf2k"]
 
-[node name="DiceShop" type="Node2D"]
+[node name="DiceShop2" type="Node2D"]
 script = ExtResource("1_55gts")
 
 [node name="Realtabletest3" type="Sprite2D" parent="."]
@@ -16,7 +16,7 @@ texture = ExtResource("2_rt6fx")
 
 [node name="character2" parent="." instance=ExtResource("3_22kap")]
 position = Vector2(1103, 184)
-sprite_ = ExtResource("4_bnq0h")
+sprite_ = ExtResource("4_nbf2k")
 
 [node name="Text" type="Label" parent="."]
 modulate = Color(0.121569, 0.117647, 0.121569, 1)
@@ -27,13 +27,11 @@ offset_bottom = 758.0
 rotation = -0.00178233
 theme_override_fonts/font = ExtResource("3_5puu7")
 theme_override_font_sizes/font_size = 50
-text = "Buy some dice?
+text = "You find a strange ritual circle glowing with power..
 
-2 coins each
+Your dice tremble in fear...
 
-Click to purchase
-
-Right click to view sides"
+Choose a die to sacrifice?"
 horizontal_alignment = 1
 autowrap_mode = 3
 
@@ -45,4 +43,4 @@ offset_bottom = 1056.0
 focus_mode = 0
 theme_override_fonts/font = ExtResource("3_5puu7")
 theme_override_font_sizes/font_size = 70
-text = "Next"
+text = "Skip"

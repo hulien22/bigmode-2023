@@ -32,22 +32,29 @@ func _process(delta):
 			
 			var die = selection.get("collider", null)
 			if die:
-				if !remove_on_select:
-					if Input.is_key_pressed(KEY_SHIFT):
-						toggle_all.emit(die.get_top_val(), !die.is_locked())
-					else:
-						die.toggle_locked()
-				else:
-					if GameState.player.coins < 2:
-						print("not enough money")
-						#TODO play err sound?
-						return
-					GameState.player.coins -= 2
-					GameState.player.dice.append([die.faces, die.die_color])
-					last_obj = null
-					last_obj_rid = 0
-					die.queue_free()
-					Events.emit_signal("coins_updated")
+				match GameState.game_scene:
+					GameState.GameScene.COMBAT:
+						if Input.is_key_pressed(KEY_SHIFT):
+							toggle_all.emit(die.get_top_val(), !die.is_locked())
+						else:
+							die.toggle_locked()
+					GameState.GameScene.DICE_SHOP:
+						if GameState.player.coins < 2:
+							print("not enough money")
+							#TODO play err sound?
+							return
+						GameState.player.coins -= 2
+						GameState.player.dice.append([die.faces, die.die_color])
+						last_obj = null
+						last_obj_rid = 0
+						die.queue_free()
+						Events.emit_signal("coins_updated")
+					GameState.GameScene.RITUAL:
+						last_obj = null
+						last_obj_rid = 0
+						Events.emit_signal("sacrificed_die", die.index)
+						die.queue_free()
+						
 				SfxHandler.play_sfx(SfxHandler.GROUND_SFX, self, 1)
 	elif is_mouse_down:
 		is_mouse_down = false

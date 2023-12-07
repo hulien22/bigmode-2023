@@ -67,7 +67,7 @@ func drop_all_dice():
 #todo die type? or type of die or smth
 func add_die(faces:Array, die_color:Color):
 	var d = DIE_SCENE.instantiate()
-	d.init(faces, die_color)
+	d.init(faces, die_color, dice.size())
 	d.enable(false)
 	d.visible = false;
 	$Dice.add_child(d)

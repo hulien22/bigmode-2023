@@ -36,6 +36,7 @@ func _ready():
 	Events.connect("coins_updated", anim_coins)
 	Events.connect("health_updated", render_health)
 	Events.connect("abilities_updated", update_abilities)
+	Events.connect("sacrificed_die", sacrificed_die)
 #	process_start_combat()
 
 func go_to_scene(gs: GameState.GameScene):
@@ -43,7 +44,7 @@ func go_to_scene(gs: GameState.GameScene):
 	hide_all_scenes()
 	match gs:
 		GameState.GameScene.INTRO:
-			var doors:Array[GameState.GameScene] = [GameState.GameScene.REST]
+			var doors:Array[GameState.GameScene] = [GameState.GameScene.COMBAT]
 #			var doors:Array[GameState.GameScene] = [GameState.GameScene.SELECT_ABILITY]
 			$DoorChoiceScreen.init(doors, "After a long trek you finally made it to the dungeon entrance..\nYou take a deep breath and enter through the front door")
 			$DoorChoiceScreen.connect("door_selected", _on_door_selected)
@@ -86,6 +87,11 @@ func go_to_scene(gs: GameState.GameScene):
 			$RestScreen.show()
 			$RestScreen.connect("begin_upgrade", process_upgrade)
 			animate_abilities_slide(false)
+		GameState.GameScene.RITUAL:
+			$RitualScreen.connect("gg_go_next", end_ritual_scene)
+			$RitualScreen.show()
+			init_ritual_scene()
+			animate_abilities_slide(false)
 
 
 func hide_all_scenes():
@@ -96,6 +102,7 @@ func hide_all_scenes():
 	$LootScreen.hide()
 	$DiceShopScreen.hide()
 	$RestScreen.hide()
+	$RitualScreen.hide()
 
 
 func generate_next_door_scene():
@@ -446,6 +453,7 @@ func init_dice_shop():
 
 func dice_shop_on_complete_roll(_results):
 	$DiceShopScreen/NextButton.disabled = false
+	dice_mgr.disconnect("complete_roll", dice_shop_on_complete_roll)
 
 func end_dice_shop():
 	dice_mgr.fade_away_dice()
@@ -467,4 +475,31 @@ func end_rest_scene():
 	for ab in ability_boxes:
 		ab.disconnect("ability_clicked", show_preview)
 	generate_next_door_scene()
-	
+
+func init_ritual_scene():
+	$RestScreen/NextButton.disabled = true
+	dice_mgr.line_up_dice_after_roll = true
+#	dice_mgr.line_up_dice_after_roll = false
+	dice_mgr.dice_box_rect = Rect2(-7, -1.5, 9.5, 5.5)
+	dice_mgr.connect("complete_roll", ritual_screen_on_roll_complete)
+	dice_mgr.mouse_handler.remove_on_select = true
+	dice_mgr.dice.clear()
+	for d in GameState.player.dice:
+		dice_mgr.add_die(d[0], d[1])
+	dice_mgr.drop_all_dice()
+
+func ritual_screen_on_roll_complete(_results):
+	$RestScreen/NextButton.disabled = false
+	dice_mgr.disconnect("complete_roll", ritual_screen_on_roll_complete)
+
+func sacrificed_die(index:int):
+	GameState.player.dice.remove_at(index)
+	$RitualScreen.sacrificed_die()
+	await wait_secs(0.2)
+	dice_mgr.fade_away_dice()
+	dice_mgr.dice.clear()
+
+func end_ritual_scene():
+	dice_mgr.fade_away_dice()
+	dice_mgr.dice.clear()
+	generate_next_door_scene()

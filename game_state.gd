@@ -1,6 +1,6 @@
 extends Node
 
-enum GameScene {INTRO, DOORS, COMBAT, LOOT, SELECT_ABILITY, DICE_SHOP, REST}
+enum GameScene {INTRO, DOORS, COMBAT, LOOT, SELECT_ABILITY, DICE_SHOP, REST, RITUAL}
 
 var game_scene: GameScene
 var level: int = 0

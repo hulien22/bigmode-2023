@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=3 uid="uid://cb57lhpjwpcfx"]
+
+[ext_resource type="Script" path="res://scenes/ritual.gd" id="1_xx4u2"]
+[ext_resource type="Texture2D" uid="uid://cpy0266ipvs8r" path="res://art/prototyping/realtabletest3.png" id="2_gdndg"]
+[ext_resource type="PackedScene" uid="uid://3m5ea5q8mf5e" path="res://scenes/character.tscn" id="3_c1i3m"]
+[ext_resource type="Texture2D" uid="uid://sn62swogegbj" path="res://art/characters/ritual.png" id="4_nx2nx"]
+[ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="5_tufhi"]
+
+[node name="DiceShop" type="Node2D"]
+script = ExtResource("1_xx4u2")
+
+[node name="Realtabletest3" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(960, 540)
+texture = ExtResource("2_gdndg")
+
+[node name="character2" parent="." instance=ExtResource("3_c1i3m")]
+position = Vector2(1103, 184)
+sprite_ = ExtResource("4_nx2nx")
+
+[node name="Text" type="Label" parent="."]
+modulate = Color(0.121569, 0.117647, 0.121569, 1)
+offset_left = 201.0
+offset_top = 331.0
+offset_right = 1729.0
+offset_bottom = 758.0
+rotation = -0.00178233
+theme_override_fonts/font = ExtResource("5_tufhi")
+theme_override_font_sizes/font_size = 50
+text = "You find a ritual circle glowing with power
+
+Your dice tremble in fear
+
+Sacrifice a die?"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="NextButton" type="Button" parent="."]
+offset_left = 838.0
+offset_top = 933.0
+offset_right = 1082.0
+offset_bottom = 1056.0
+focus_mode = 0
+theme_override_fonts/font = ExtResource("5_tufhi")
+theme_override_font_sizes/font_size = 70
+text = "Skip"

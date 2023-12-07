@@ -21,6 +21,7 @@ var last_velocity:Vector3
 var die_color = Color.WHITE
 var faces = [1,2,6,5,3,4]
 var face_texture:ImageTexture
+var index:int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -33,9 +34,10 @@ func _ready():
 	connect("body_entered", Callable(on_collision))
 #	drop();
 
-func init(f: Array, c: Color):
+func init(f: Array, c: Color, i:int):
 	faces = f
 	die_color = c
+	index = i
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
