@@ -1,0 +1,108 @@
+[gd_scene load_steps=7 format=3 uid="uid://duxix8w6sngbf"]
+
+[ext_resource type="Script" path="res://scenes/restroom.gd" id="1_r0q62"]
+[ext_resource type="Texture2D" uid="uid://cpy0266ipvs8r" path="res://art/prototyping/realtabletest3.png" id="2_vbdg6"]
+[ext_resource type="PackedScene" uid="uid://3m5ea5q8mf5e" path="res://scenes/character.tscn" id="3_xbg4k"]
+[ext_resource type="Texture2D" uid="uid://dd301jum6wy26" path="res://art/characters/fireplace.png" id="4_xbu6v"]
+[ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="5_fsq1d"]
+[ext_resource type="PackedScene" uid="uid://c6lxdy6ovq4ad" path="res://scenes/ability_box.tscn" id="6_8jsup"]
+
+[node name="Rest" type="Node2D"]
+script = ExtResource("1_r0q62")
+
+[node name="Realtabletest3" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(960, 540)
+texture = ExtResource("2_vbdg6")
+
+[node name="character2" parent="." instance=ExtResource("3_xbg4k")]
+position = Vector2(1103, 184)
+sprite_ = ExtResource("4_xbu6v")
+
+[node name="Text" type="Label" parent="."]
+modulate = Color(0.121569, 0.117647, 0.121569, 1)
+offset_left = 201.0
+offset_top = 331.0
+offset_right = 1729.0
+offset_bottom = 758.0
+rotation = -0.00178233
+theme_override_fonts/font = ExtResource("5_fsq1d")
+theme_override_font_sizes/font_size = 50
+text = "You find a nice empty room to catch your breath.."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Rest" type="Node2D" parent="."]
+position = Vector2(651, 576)
+rotation = -0.00178233
+scale = Vector2(1, 1)
+
+[node name="Text2" type="Label" parent="Rest"]
+modulate = Color(0.121569, 0.117647, 0.121569, 1)
+offset_left = -41.9243
+offset_top = -27.6524
+offset_right = 241.076
+offset_bottom = 33.3476
+rotation = -0.00178233
+theme_override_fonts/font = ExtResource("5_fsq1d")
+theme_override_font_sizes/font_size = 50
+text = "Rest"
+
+[node name="Button" type="Button" parent="Rest"]
+modulate = Color(1, 1, 1, 0)
+offset_left = -154.924
+offset_top = -42.6524
+offset_right = 195.076
+offset_bottom = 44.3476
+
+[node name="Upgrade" type="Node2D" parent="."]
+position = Vector2(1302, 576)
+rotation = -0.00178233
+scale = Vector2(1, 1)
+
+[node name="Text2" type="Label" parent="Upgrade"]
+modulate = Color(0.121569, 0.117647, 0.121569, 1)
+offset_left = -90.9507
+offset_top = -27.7398
+offset_right = 192.05
+offset_bottom = 33.2602
+rotation = -0.00178233
+theme_override_fonts/font = ExtResource("5_fsq1d")
+theme_override_font_sizes/font_size = 50
+text = "Upgrade"
+
+[node name="Button" type="Button" parent="Upgrade"]
+modulate = Color(1, 1, 1, 0)
+offset_left = -154.924
+offset_top = -42.6524
+offset_right = 195.076
+offset_bottom = 44.3476
+
+[node name="AbilityPreview" type="Node2D" parent="."]
+visible = false
+position = Vector2(570, 579)
+scale = Vector2(0.7, 0.7)
+
+[node name="ability_box" parent="AbilityPreview" instance=ExtResource("6_8jsup")]
+
+[node name="Text2" type="Label" parent="AbilityPreview"]
+modulate = Color(0.121569, 0.117647, 0.121569, 1)
+offset_left = 40.0
+offset_top = 90.0
+offset_right = 413.0
+offset_bottom = 151.0
+rotation = -0.00178233
+theme_override_fonts/font = ExtResource("5_fsq1d")
+theme_override_font_sizes/font_size = 50
+text = "(Click to confirm)"
+
+[node name="NextButton" type="Button" parent="."]
+visible = false
+offset_left = 838.0
+offset_top = 933.0
+offset_right = 1082.0
+offset_bottom = 1056.0
+focus_mode = 0
+theme_override_fonts/font = ExtResource("5_fsq1d")
+theme_override_font_sizes/font_size = 70
+text = "Next"

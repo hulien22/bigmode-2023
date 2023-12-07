@@ -30,3 +30,8 @@ func init_warrior():
 #			[[5,5,5,5,5,5], Color.LIGHT_GREEN]]
 	relics = []
 
+func has_upgradeable_ability() -> bool:
+	for a in abilities:
+		if a.is_upgradeable():
+			return true
+	return false

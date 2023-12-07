@@ -18,3 +18,9 @@ func load_abilities():
 		assert(a.size() >= 3)
 		monster_abilities.append(Ability.new(a[0],a[1],a[2]))
 
+func get_upgraded_ability(a:Ability) -> Ability:
+	for x in abilities:
+		if x.name_ == a.name_ + "+":
+			return x
+	print_debug("could not find upgraded ability for ", a.name_)
+	return a

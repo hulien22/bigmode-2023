@@ -5,3 +5,5 @@ signal tooltip_obj_clicked(obj:Object, time_to_show_sec:float, display:ToolTip.D
 signal tooltip_obj_exited(obj:Object)
 
 signal coins_updated()
+signal health_updated()
+signal abilities_updated()

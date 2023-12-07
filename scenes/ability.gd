@@ -12,3 +12,6 @@ func _init(name: String, desc: String, effects: Array):
 	for e in effects:
 		assert(e.size() >= 3);
 		effects_.append(AbilityEffect.new(e[0],e[1],str(e[2])))
+
+func is_upgradeable() -> bool:
+	return !name_.ends_with("+")

@@ -30,7 +30,6 @@ autowrap_mode = 3
 [node name="Coins" type="Node2D" parent="."]
 position = Vector2(953, 498)
 rotation = -0.00178233
-scale = Vector2(1, 1)
 
 [node name="Text2" type="Label" parent="Coins"]
 modulate = Color(0.121569, 0.117647, 0.121569, 1)
@@ -46,7 +45,6 @@ text = "10 coins"
 [node name="Coin" type="Sprite2D" parent="Coins"]
 position = Vector2(-88.2227, -1.60995)
 rotation = 0.00178233
-scale = Vector2(1, 1)
 texture = ExtResource("4_jch7k")
 
 [node name="Button" type="Button" parent="Coins"]
@@ -59,7 +57,6 @@ offset_bottom = 44.3476
 [node name="Relic" type="Node2D" parent="."]
 position = Vector2(954, 663)
 rotation = -0.00178233
-scale = Vector2(1, 1)
 
 [node name="Text2" type="Label" parent="Relic"]
 modulate = Color(0.121569, 0.117647, 0.121569, 1)
@@ -75,7 +72,6 @@ text = "10 coins"
 [node name="relic" parent="Relic" instance=ExtResource("5_rt4dt")]
 position = Vector2(-100.221, -2.63132)
 rotation = 0.00178233
-scale = Vector2(1, 1)
 
 [node name="Button" type="Button" parent="Relic"]
 modulate = Color(1, 1, 1, 0)

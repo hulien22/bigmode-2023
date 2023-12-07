@@ -34,6 +34,8 @@ func _ready():
 		ability_boxes[i].init(i+1, GameState.player.abilities[i])
 	
 	Events.connect("coins_updated", anim_coins)
+	Events.connect("health_updated", render_health)
+	Events.connect("abilities_updated", update_abilities)
 #	process_start_combat()
 
 func go_to_scene(gs: GameState.GameScene):
@@ -41,7 +43,7 @@ func go_to_scene(gs: GameState.GameScene):
 	hide_all_scenes()
 	match gs:
 		GameState.GameScene.INTRO:
-			var doors:Array[GameState.GameScene] = [GameState.GameScene.DICE_SHOP]
+			var doors:Array[GameState.GameScene] = [GameState.GameScene.REST]
 #			var doors:Array[GameState.GameScene] = [GameState.GameScene.SELECT_ABILITY]
 			$DoorChoiceScreen.init(doors, "After a long trek you finally made it to the dungeon entrance..\nYou take a deep breath and enter through the front door")
 			$DoorChoiceScreen.connect("door_selected", _on_door_selected)
@@ -79,6 +81,11 @@ func go_to_scene(gs: GameState.GameScene):
 			animate_abilities_slide(false)
 			#start dice rolls
 			init_dice_shop()
+		GameState.GameScene.REST:
+			$RestScreen.connect("gg_go_next", end_rest_scene)
+			$RestScreen.show()
+			$RestScreen.connect("begin_upgrade", process_upgrade)
+			animate_abilities_slide(false)
 
 
 func hide_all_scenes():
@@ -88,6 +95,7 @@ func hide_all_scenes():
 	$AbilityChoiceScreen.hide()
 	$LootScreen.hide()
 	$DiceShopScreen.hide()
+	$RestScreen.hide()
 
 
 func generate_next_door_scene():
@@ -103,8 +111,7 @@ func process_start_combat():
 	disable_abilities_and_rerollbtn()
 	monster.init_slime()
 	$MonsterUI/character2.init(monster.image)
-	for i in 6:
-		ability_boxes[i].init(i+1, GameState.player.abilities[i])
+	update_abilities()
 #	$Abilities/ability_box1.init(1, GameState.player.abilities[0])
 #	$Abilities/ability_box2.init(2, GameState.player.abilities[1])
 #	$Abilities/ability_box3.init(3, GameState.player.abilities[2])
@@ -421,6 +428,10 @@ func anim_coins():
 	var tween = get_tree().create_tween()
 	tween.tween_property($PlayerUI/PlayerCoins, "scale", Vector2.ONE, 0.5)
 
+func update_abilities():
+	for i in 6:
+		ability_boxes[i].init(i+1, GameState.player.abilities[i])
+
 func init_dice_shop():
 	$DiceShopScreen/NextButton.disabled = true
 	dice_mgr.line_up_dice_after_roll = true
@@ -440,3 +451,20 @@ func end_dice_shop():
 	dice_mgr.fade_away_dice()
 	dice_mgr.dice.clear()
 	generate_next_door_scene()
+
+func process_upgrade():
+	animate_abilities_slide(true)
+	for ab in ability_boxes:
+		ab.connect("ability_clicked", show_preview)
+	for i in 6:
+		ability_boxes[i].set_enabled(ability_boxes[i].ability.is_upgradeable())
+
+func show_preview(val):
+	$RestScreen.show_preview(val, Global.get_upgraded_ability(ability_boxes[val - 1].ability))
+
+func end_rest_scene():
+	disable_abilities_and_rerollbtn()
+	for ab in ability_boxes:
+		ab.disconnect("ability_clicked", show_preview)
+	generate_next_door_scene()
+	
