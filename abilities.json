@@ -12,11 +12,11 @@
 		["Block+", "Gain X+1 shield", [
 			[0, 1, "x+1"]
 		]],
-		["Wide Swing", "Deal 2X damage, but gain Vulnerable 1", [
+		["Wide Swing", "Deal 2*X damage, but gain 1 Vulnerable", [
 			[1, 0, "2 * x"],
 			[0, 2, 1]
 		]],
-		["Wide Swing+", "Deal 2(X+1) damage, but gain Vulnerable 1", [
+		["Wide Swing+", "Deal 2*(X+1) damage, but gain 1 Vulnerable", [
 			[1, 0, "2 * (x + 1)"],
 			[0, 2, 1]
 		]],
