@@ -226,8 +226,10 @@ visible = false
 visible = false
 
 [node name="RestScreen" parent="." instance=ExtResource("19_t1oyl")]
+visible = false
 
 [node name="RitualScreen" parent="." instance=ExtResource("20_ngfl2")]
+visible = false
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 z_index = 10

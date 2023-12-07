@@ -14,7 +14,13 @@ func init():
 
 func sacrificed_die():
 	$NextButton.text = "Continue"
-	$Text.text = "The die disappears in a blast of dark energy\n\nYou feel the power enter you and strengthen you\n\nMax health increased!"
-	GameState.player.max_health += 5
-	GameState.player.health += 5
-	Events.emit_signal("health_updated")
+	if randi_range(0,3) <= 2: #75% chance
+		$Text.text = "The die disappears in a blast of dark energy\n\nYou feel a surge of power strengthen you\n\nMax health increased!"
+		GameState.player.max_health += 5
+		GameState.player.health += 5
+		Events.emit_signal("health_updated")
+	else:
+		$Text.text = "The die disappears in a blast of golden energy\n\nA pile of gold appears in front of you\n\nGained 10 coins!"
+		GameState.player.coins += 10
+		Events.emit_signal("coins_updated")
+		

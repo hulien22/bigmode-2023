@@ -52,6 +52,7 @@ func go_to_scene(gs: GameState.GameScene):
 			animate_abilities_slide(false)
 		GameState.GameScene.DOORS:
 			var doors:Array[GameState.GameScene] = GameState.generate_next_doors()
+			print("LEVEL: ", GameState.level, "DOORS: ", doors)
 			if doors.size() == 1:
 				$DoorChoiceScreen.init(doors, "You find yourself in front of a large door")
 			else:
