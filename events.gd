@@ -6,6 +6,6 @@ signal tooltip_obj_exited(obj:Object)
 
 signal coins_updated()
 signal health_updated()
-signal abilities_updated()
+signal abilities_updated(disable:bool)
 
 signal sacrificed_die(index:int)

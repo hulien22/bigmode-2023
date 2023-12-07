@@ -62,7 +62,7 @@ func upgrade_ability(val: int):
 	if ua:
 		GameState.player.abilities[val - 1] = ua
 		$Text.text = "You spend some time practicing your moves - ability upgraded!"
-		Events.emit_signal("abilities_updated")
+		Events.emit_signal("abilities_updated", true)
 		$AbilityPreview.hide()
 		$NextButton.show()
 	

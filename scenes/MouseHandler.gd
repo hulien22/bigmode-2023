@@ -39,11 +39,11 @@ func _process(delta):
 						else:
 							die.toggle_locked()
 					GameState.GameScene.DICE_SHOP:
-						if GameState.player.coins < 2:
+						if GameState.player.coins < 5:
 							print("not enough money")
 							#TODO play err sound?
 							return
-						GameState.player.coins -= 2
+						GameState.player.coins -= 5
 						GameState.player.dice.append([die.faces, die.die_color])
 						last_obj = null
 						last_obj_rid = 0

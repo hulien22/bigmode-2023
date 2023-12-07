@@ -119,7 +119,7 @@ func process_start_combat():
 	disable_abilities_and_rerollbtn()
 	monster.init_slime()
 	$MonsterUI/character2.init(monster.image)
-	update_abilities()
+	update_abilities(false)
 #	$Abilities/ability_box1.init(1, GameState.player.abilities[0])
 #	$Abilities/ability_box2.init(2, GameState.player.abilities[1])
 #	$Abilities/ability_box3.init(3, GameState.player.abilities[2])
@@ -436,9 +436,11 @@ func anim_coins():
 	var tween = get_tree().create_tween()
 	tween.tween_property($PlayerUI/PlayerCoins, "scale", Vector2.ONE, 0.5)
 
-func update_abilities():
+func update_abilities(disable:bool):
 	for i in 6:
 		ability_boxes[i].init(i+1, GameState.player.abilities[i])
+	if disable:
+		disable_abilities_and_rerollbtn()
 
 func init_dice_shop():
 	$DiceShopScreen/NextButton.disabled = true
