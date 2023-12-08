@@ -35,7 +35,6 @@ autowrap_mode = 3
 [node name="Rest" type="Node2D" parent="."]
 position = Vector2(651, 576)
 rotation = -0.00178233
-scale = Vector2(1, 1)
 
 [node name="Text2" type="Label" parent="Rest"]
 modulate = Color(0.121569, 0.117647, 0.121569, 1)
@@ -58,7 +57,6 @@ offset_bottom = 44.3476
 [node name="Upgrade" type="Node2D" parent="."]
 position = Vector2(1302, 576)
 rotation = -0.00178233
-scale = Vector2(1, 1)
 
 [node name="Text2" type="Label" parent="Upgrade"]
 modulate = Color(0.121569, 0.117647, 0.121569, 1)

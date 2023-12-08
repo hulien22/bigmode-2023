@@ -15,3 +15,13 @@ func _init(name: String, desc: String, effects: Array):
 
 func is_upgradeable() -> bool:
 	return !name_.ends_with("+")
+
+func get_effect_descs() -> String:
+	var extras:String = ""
+	for e in effects_:
+		var s: String = AbilityEffect.get_status_desc(e.type_)
+		if !s.is_empty():
+			extras += "\n" + s
+	if extras.is_empty():
+		return ""
+	return "\n---" + extras

@@ -48,17 +48,22 @@
 		]],
 	],
 	"monster_abilities" : [
-		["Bite", "Deal 2 damage", [
+		["Bite", "Deal [D] damage", [
 			[0, 0, 2]
 		]],
-		["Defend", "Gain 2 block", [
+		["Defend", "Gain [B] block", [
 			[1, 1, 2]
 		]],
-		["Strengthen", "Gain 1 STR", [
+		["Strengthen", "Gain [S] STR", [
 			[1, 3, 1]
 		]],
-		["Distract", "Make the player Vulnerable 1", [
+		["Distract", "Inflict 1 Vulnerable", [
 			[0, 2, 1]
-		]]
+		]],
+		["Tri-Attack", "Deal 3*[D] damage", [
+			[0, 0, 1],
+			[0, 0, 1],
+			[0, 0, 1]
+		]],
 	]
 }

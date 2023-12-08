@@ -8,6 +8,7 @@ const NONCOMBATSCENES:Array[GameScene] = [GameScene.REST, GameScene.DICE_SHOP, G
 var game_scene: GameScene
 var level: int = 0
 var player: Player
+var monsters_fought:Array[Monster.MonsterType] = []
 
 var first_game = true
 
@@ -19,6 +20,7 @@ func reset_game_state():
 	player = Player.new()
 	player.init_warrior()
 	level = 0
+	monsters_fought = []
 
 func generate_next_doors() -> Array[GameScene]:
 	# 0 based
@@ -57,3 +59,12 @@ func generate_next_doors() -> Array[GameScene]:
 			return [NONCOMBATSCENES[a],NONCOMBATSCENES[b]]
 		#TODO check for chest spawn, boss spawn, elite spawns
 	return [GameScene.COMBAT]
+
+
+
+func generate_monster_to_fight() -> Monster.MonsterType:
+	var ret: Monster.MonsterType
+	ret = Monster.MonsterType.SLIME
+	
+	monsters_fought.append(ret)
+	return ret

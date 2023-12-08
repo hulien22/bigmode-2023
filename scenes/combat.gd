@@ -119,6 +119,7 @@ func process_start_combat():
 	disable_abilities_and_rerollbtn()
 	monster.init_slime()
 	$MonsterUI/character2.init(monster.image)
+	$MonsterUI/MonsterName.text = monster.name_
 	update_abilities(false)
 #	$Abilities/ability_box1.init(1, GameState.player.abilities[0])
 #	$Abilities/ability_box2.init(2, GameState.player.abilities[1])
@@ -179,7 +180,9 @@ func process_new_turn():
 	
 	# select monster intent
 	monster_intent = monster.get_next_move(turn_counter)
-	print("monster intent: ", monster_intent.name_)
+	$MonsterUI/Intent/MonsterIntent.text = monster_intent.name_
+	_on_monster_intent_exited()
+#	print("monster intent: ", monster_intent.name_)
 	
 	$Combatscreen/RerollButton.disabled = false
 	$Combatscreen/RerollButton.text = "ROLL"
@@ -411,6 +414,39 @@ func compute_damage(base_dmg: int, source: AbilityEffect.TARGET, target: Ability
 				pass
 	return dmg
 
+func get_monster_desc() -> String:
+	var s:String = monster_intent.desc_
+	if s.contains("[D]"):
+		for e in monster_intent.effects_:
+			if e.type_ == AbilityEffect.TYPE.DAMAGE && e.target_ == AbilityEffect.TARGET.PLAYER:
+				var dmg = e.process_value(0)
+				s = s.replace("[D]", str(compute_damage(dmg, AbilityEffect.TARGET.MONSTER, AbilityEffect.TARGET.PLAYER)))
+				break
+	if s.contains("[B]"):
+		for e in monster_intent.effects_:
+			if e.type_ == AbilityEffect.TYPE.SHIELD && e.target_ == AbilityEffect.TARGET.MONSTER:
+				var v = e.process_value(0)
+				s = s.replace("[B]", str(v))
+				break
+	if s.contains("[S]"):
+		for e in monster_intent.effects_:
+			if e.type_ == AbilityEffect.TYPE.STRENGTH && e.target_ == AbilityEffect.TARGET.MONSTER:
+				var v = e.process_value(0)
+				s = s.replace("[S]", str(v))
+				break
+	return s
+
+func _on_monster_intent_enter():
+	$MonsterUI/Intent.scale = Vector2.ONE * 1.1
+	$MonsterUI/Intent/Description/Label2.text = get_monster_desc() + monster_intent.get_effect_descs()
+	$MonsterUI/Intent/Description.show()
+	SfxHandler.play_sfx(SfxHandler.PAPER_SFX, self, 1)
+
+func _on_monster_intent_exited():
+	$MonsterUI/Intent.scale = Vector2.ONE
+	$MonsterUI/Intent/Description.hide()
+
+
 func wait_secs(s: float):
 	var tmr = get_tree().create_timer(s)
 	await tmr.timeout
@@ -506,3 +542,4 @@ func end_ritual_scene():
 	dice_mgr.fade_away_dice()
 	dice_mgr.dice.clear()
 	generate_next_door_scene()
+
