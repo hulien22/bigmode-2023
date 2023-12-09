@@ -12,19 +12,19 @@
 		["Block+", "Gain X+1 shield", [
 			[0, 1, "x+1"]
 		], 0],
-		["Wide Swing", "Deal 2*X damage, but gain 1 Vulnerable", [
-			[1, 0, "2 * x"],
+		["Wide Swing", "Deal X+2 damage, but gain 1 Vulnerable", [
+			[1, 0, "x+2"],
 			[0, 2, 1]
 		], 0],
-		["Wide Swing+", "Deal 2*(X+1) damage, but gain 1 Vulnerable", [
-			[1, 0, "2 * (x + 1)"],
-			[0, 2, 1]
+		["Wide Swing+", "Deal 2*X damage, but gain 2 Vulnerable", [
+			[1, 0, "2 * x"],
+			[0, 2, 2]
 		], 0],
 		["Power Up", "Gain 1 Strength", [
 			[0, 3, 1]
 		], 0],
-		["Power Up+", "Gain 2 Strength", [
-			[0, 3, 2]
+		["Power Up+", "Gain (X-2) Strength", [
+			[0, 3, "x - 2"]
 		], 0],
 		["Rolling Tumble", "Deal [# of rerolls remaining] damage", [
 			[1, 0, "r"]
@@ -47,8 +47,10 @@
 			[0, 4, 1]
 		], 1],
 		["Loot", "Gain 1 gold (once per combat)", [
+			[0, 4, 1]
 		], 2],
 		["Loot+", "Gain 2 gold (once per combat)", [
+			[0, 4, 1]
 		], 2],
 		["Double Slap", "Attack twice for 1 damage", [
 			[1, 0, "1"],
@@ -59,6 +61,62 @@
 			[1, 0, "1"],
 			[1, 0, "1"],
 		], 1],
+		["Preparation", "Repeat the next ability twice", [
+		], 3],
+		["Preparation+", "Repeat the next ability thrice", [
+		], 3],
+		["Fortify", "Gain 1 Fortify (once per combat)", [
+		], 3],
+		["Fortify+", "Gain 2 Fortify (once per combat)", [
+		], 3],
+		["Shield Throw", "Deal damage equal to your block", [
+		], 2],
+		["Shield Throw+", "Gain 2 shield, Deal damage equal to your block", [
+		], 2],
+		["Guarding Blow", "Deal X-2 damage, Gain X-2 shield", [
+			[1, 0, "x-2"],
+			[0, 1, "x-2"]
+		], 1],
+		["Guarding Blow+", "Deal X-1 damage, Gain X-1 shield", [
+			[1, 0, "x-1"],
+			[0, 1, "x-1"]
+		], 1],
+		["Reckless Hit", "Deal X+3 damage, but take 2 damage", [
+			[1, 0, "x+1"],
+			[0, 6, "2"]
+		], 1],
+		["Reckless Hit+", "Deal X+3 damage, but take 1 damage", [
+			[1, 0, "x+3"],
+			[0, 6, "1"]
+		], 1],
+		["Exploit Opening", "Inflict 3 Vulnerable (once per combat)", [
+			[1, 2, 3],
+			[0, 4, 1]
+		], 2],
+		["Exploit Opening+", "Inflict X Vulnerable (once per combat)", [
+			[1, 2, 5],
+			[0, 4, 1]
+		], 2],
+		["Rummage", "Gain a temp die (3x per combat)", [
+			[0, 4, 3]
+		], 3],
+		["Rummage+", "Gain a temp die (5x per combat)", [
+			[0, 4, 5]
+		], 3],
+		["Feast", "Deal 1 damage, if lethal gain 2 max health", [
+			[1, 0, "1"],
+		], 3],
+		["Feast+", "Deal 2 damage, if lethal gain 3 max health", [
+			[1, 0, "2"],
+		], 3],
+		["Enrage", "Take 2 damage, gain X Strength", [
+			[0, 3, "x"],
+			[0, 6, "2"]
+		], 2],
+		["Enrage+", "Take 2 damage, gain 2*X Strength", [
+			[0, 3, "2*x"],
+			[0, 6, "2"]
+		], 2],
 	],
 	"monster_abilities" : [
 		["Bite", "Deal [D] damage", [
@@ -77,6 +135,8 @@
 			[0, 0, 1],
 			[0, 0, 1],
 			[0, 0, 1]
+		]],
+		["Engulf", "Disable top and bottom skills", [
 		]],
 	]
 }

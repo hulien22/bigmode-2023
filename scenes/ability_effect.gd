@@ -1,9 +1,9 @@
 extends Resource
 class_name AbilityEffect
 
-enum TARGET { PLAYER, MONSTER }
-enum TYPE { DAMAGE, SHIELD, VULNERABLE, STRENGTH, LIMITED_USES, HEAL }
-#             0       1         2          3           4         5
+enum TARGET { PLAYER, MONSTER, NOONE }
+enum TYPE { DAMAGE, SHIELD, VULNERABLE, STRENGTH, LIMITED_USES, HEAL, SELF_DMG }
+#             0       1         2          3           4         5      6
 
 var target_: TARGET;
 var type_: TYPE;

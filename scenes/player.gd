@@ -15,7 +15,7 @@ func init_warrior():
 	abilities = [Global.abilities[0],
 				 Global.abilities[0], 
 				 Global.abilities[2], 
-				 Global.abilities[12], 
+				 Global.abilities[2], 
 				 Global.abilities[4], 
 				 Global.abilities[6]]
 	dice = [[[1,2,6,5,3,4], Color.LIGHT_SEA_GREEN],

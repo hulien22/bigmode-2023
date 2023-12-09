@@ -286,7 +286,7 @@ func process_effect(effect: AbilityEffect) -> Dictionary:
 		AbilityEffect.TYPE.DAMAGE:
 			var dmg = effect.process_value(occurences)
 			# process other statuses (eg strength, weaknesses)
-			inflict_damage(effect.target_, compute_damage(dmg, (effect.target_ + 1) % 2, effect.target_))
+			inflict_damage(effect.target_, max(0, compute_damage(dmg, (effect.target_ + 1) % 2, effect.target_)))
 		AbilityEffect.TYPE.SHIELD:
 			var amt = effect.process_value(occurences)
 			# process other statuses (eg strength)
@@ -306,6 +306,10 @@ func process_effect(effect: AbilityEffect) -> Dictionary:
 		AbilityEffect.TYPE.HEAL:
 			var amt = effect.process_value(occurences)
 			change_health(effect.target_, -1 * amt)
+		AbilityEffect.TYPE.SELF_DMG:
+			var dmg = effect.process_value(occurences)
+			# don't include strength, do include vulnerable
+			inflict_damage(effect.target_, max(0, compute_damage(dmg, AbilityEffect.TARGET.NOONE, effect.target_)))
 	return dict
 
 func process_end_turn():
@@ -416,12 +420,13 @@ func animate_status_changes():
 func compute_damage(base_dmg: int, source: AbilityEffect.TARGET, target: AbilityEffect.TARGET) -> int:
 	var dmg = base_dmg
 	# first go through strength modifiers
-	for s in statuses[source]:
-		match s.type:
-			AbilityEffect.TYPE.STRENGTH:
-				dmg += s.amount
-			_:
-				pass
+	if source != AbilityEffect.TARGET.NOONE:
+		for s in statuses[source]:
+			match s.type:
+				AbilityEffect.TYPE.STRENGTH:
+					dmg += s.amount
+				_:
+					pass
 	for s in statuses[target]:
 		match s.type:
 			AbilityEffect.TYPE.VULNERABLE:
