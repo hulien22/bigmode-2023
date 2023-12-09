@@ -14,8 +14,8 @@ func _ready():
 
 func load_abilities():
 	for a in data.abilities:
-		assert(a.size() >= 3)
-		abilities.append(Ability.new(a[0],a[1],a[2]))
+		assert(a.size() >= 4)
+		abilities.append(Ability.new(a[0],a[1],a[2],a[3]))
 	for a in data.monster_abilities:
 		assert(a.size() >= 3)
 		monster_abilities.append(Ability.new(a[0],a[1],a[2]))

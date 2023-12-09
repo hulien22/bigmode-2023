@@ -9,7 +9,7 @@ var enabled:bool = false
 
 func init(v:int, a:Ability):
 	value = v
-	ability = a
+	ability.copy_from(a)
 	updateSprites()
 
 func updateSprites():
