@@ -38,14 +38,27 @@
 		["Dice Throw+", "Deal [(die face) + 2] damage", [
 			[1, 0, "f + 2"]
 		], 1],
-		["Healing Potion", "Heal 3 health (once per combat)", [
+		["Healing Potion", "Heal 2 health (once per combat)", [
+			[0, 5, 2],
+			[0, 4, 1]
 		], 1],
-		["Healing Potion+", "Heal 6 health (once per combat)", [
+		["Healing Potion+", "Heal 4 health (once per combat)", [
+			[0, 5, 4],
+			[0, 4, 1]
 		], 1],
 		["Loot", "Gain 1 gold (once per combat)", [
 		], 2],
 		["Loot+", "Gain 2 gold (once per combat)", [
 		], 2],
+		["Double Slap", "Attack twice for 1 damage", [
+			[1, 0, "1"],
+			[1, 0, "1"],
+		], 1],
+		["Double Slap+", "Attack thrice for 1 damage", [
+			[1, 0, "1"],
+			[1, 0, "1"],
+			[1, 0, "1"],
+		], 1],
 	],
 	"monster_abilities" : [
 		["Bite", "Deal [D] damage", [

@@ -13,8 +13,12 @@ func _init(name: String, desc: String, effects: Array, rarity: RARITY = RARITY.B
 	desc_ = desc;
 	effects_ = [];
 	for e in effects:
-		assert(e.size() >= 3);
-		effects_.append(AbilityEffect.new(e[0],e[1],str(e[2])))
+		if typeof(e) == TYPE_ARRAY:
+			assert(e.size() >= 3);
+			effects_.append(AbilityEffect.new(e[0],e[1],str(e[2])))
+		else:
+			# effect
+			effects_.append(AbilityEffect.new(e.target_,e.type_,e.value_))
 	rarity_ = rarity
 
 func is_upgradeable() -> bool:

@@ -225,7 +225,9 @@ func _on_ability_clicked(val):
 	print("selected ability ", ability_boxes[val-1].ability.name_)
 
 	combat_state = CombatState.PLAYER_ABILITY
-	process_ability(ability_boxes[val-1].ability, false)
+	var d:Dictionary = process_ability(ability_boxes[val-1].ability, false)
+	if d.get("deplete_ability", false):
+		ability_boxes[val-1].init(val, Global.depleted_ability)
 	
 #	animate_status_changes()
 	
@@ -265,15 +267,21 @@ func process_monster_turn():
 	
 	process_end_turn()
 
-func process_ability(ability: Ability, inflict_status_later: bool):
+func process_ability(ability: Ability, inflict_status_later: bool) -> Dictionary:
+	var dict:Dictionary = {}
 	for effect in ability.effects_:
 		if inflict_status_later && effect.is_status_inflict() && effect.target_ == AbilityEffect.TARGET.PLAYER:
 			statuses_to_inflict.append(effect)
 			continue
-		process_effect(effect)
+		var d:Dictionary = process_effect(effect)
+		if d.get("deplete_ability", false):
+			dict["deplete_ability"] = true
 	#TODO: return type of animation to play (instead of just attack always)
+	return dict
 
-func process_effect(effect: AbilityEffect):
+# returns bool if ability is now depleted
+func process_effect(effect: AbilityEffect) -> Dictionary:
+	var dict:Dictionary = {}
 	match effect.type_:
 		AbilityEffect.TYPE.DAMAGE:
 			var dmg = effect.process_value(occurences)
@@ -291,6 +299,14 @@ func process_effect(effect: AbilityEffect):
 			var amt = effect.process_value(occurences)
 			# process other statuses (eg strength)
 			add_status(effect.target_, AbilityEffect.TYPE.STRENGTH, amt, false)
+		AbilityEffect.TYPE.LIMITED_USES:
+			effect.uses_left -= 1
+			if effect.uses_left <= 0:
+				dict["deplete_ability"] = true
+		AbilityEffect.TYPE.HEAL:
+			var amt = effect.process_value(occurences)
+			change_health(effect.target_, -1 * amt)
+	return dict
 
 func process_end_turn():
 	combat_state = CombatState.END_TURN
@@ -323,6 +339,7 @@ func combat_win():
 	animate_status_changes()
 	await wait_secs(0.5)
 	
+	update_abilities(false)
 	#generate loot scene
 		# coins, and relic
 	# which will then generate the ability screen
@@ -345,9 +362,9 @@ func render_health():
 
 func change_health(target: AbilityEffect.TARGET, amount: int):
 	if target == AbilityEffect.TARGET.PLAYER:
-		GameState.player.health += amount
+		GameState.player.health = min(GameState.player.health + amount, GameState.player.max_health)
 	else:
-		monster.health += amount
+		monster.health = min(monster.health + amount, monster.max_health)
 	#animate?
 #	render_health()
 
@@ -390,7 +407,6 @@ func reduce_statuses(target: AbilityEffect.TARGET):
 			statuses[target][i].add_amount(-1)
 			# animate and wait?
 			if statuses[target][i].amount == 0:
-#				statuses[target][i].free()
 				statuses[target].remove_at(i)
 
 func animate_status_changes():

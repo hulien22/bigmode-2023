@@ -7,6 +7,9 @@ var value:int
 var ability:Ability
 var enabled:bool = false
 
+func _init():
+	ability = Ability.new("", "", [])
+
 func init(v:int, a:Ability):
 	value = v
 	ability.copy_from(a)
