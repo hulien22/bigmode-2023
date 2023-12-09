@@ -225,7 +225,7 @@ func _on_ability_clicked(val):
 	print("selected ability ", ability_boxes[val-1].ability.name_)
 
 	combat_state = CombatState.PLAYER_ABILITY
-	var d:Dictionary = process_ability(ability_boxes[val-1].ability, false)
+	var d:Dictionary = process_ability(ability_boxes[val-1].ability, val, false)
 	if d.get("deplete_ability", false):
 		ability_boxes[val-1].init(val, Global.depleted_ability)
 	
@@ -250,7 +250,7 @@ func _on_ability_clicked(val):
 
 func process_monster_turn():
 	combat_state = CombatState.MONSTER_ABILITY
-	process_ability(monster_intent, true)
+	process_ability(monster_intent, 0, true)
 	
 	$MonsterUI/character2.play_attack()
 	await wait_secs(0.5)
@@ -267,36 +267,36 @@ func process_monster_turn():
 	
 	process_end_turn()
 
-func process_ability(ability: Ability, inflict_status_later: bool) -> Dictionary:
+func process_ability(ability: Ability, face:int, inflict_status_later: bool) -> Dictionary:
 	var dict:Dictionary = {}
 	for effect in ability.effects_:
 		if inflict_status_later && effect.is_status_inflict() && effect.target_ == AbilityEffect.TARGET.PLAYER:
 			statuses_to_inflict.append(effect)
 			continue
-		var d:Dictionary = process_effect(effect)
+		var d:Dictionary = process_effect(effect, face)
 		if d.get("deplete_ability", false):
 			dict["deplete_ability"] = true
 	#TODO: return type of animation to play (instead of just attack always)
 	return dict
 
 # returns bool if ability is now depleted
-func process_effect(effect: AbilityEffect) -> Dictionary:
+func process_effect(effect: AbilityEffect, face:int = 0) -> Dictionary:
 	var dict:Dictionary = {}
 	match effect.type_:
 		AbilityEffect.TYPE.DAMAGE:
-			var dmg = effect.process_value(occurences)
+			var dmg = effect.process_value(occurences, face)
 			# process other statuses (eg strength, weaknesses)
 			inflict_damage(effect.target_, max(0, compute_damage(dmg, (effect.target_ + 1) % 2, effect.target_)))
 		AbilityEffect.TYPE.SHIELD:
-			var amt = effect.process_value(occurences)
+			var amt = effect.process_value(occurences, face)
 			# process other statuses (eg strength)
 			change_block(effect.target_, amt)
 		AbilityEffect.TYPE.VULNERABLE:
-			var amt = effect.process_value(occurences)
+			var amt = effect.process_value(occurences, face)
 			# process other statuses (eg strength)
 			add_status(effect.target_, AbilityEffect.TYPE.VULNERABLE, amt, true)
 		AbilityEffect.TYPE.STRENGTH:
-			var amt = effect.process_value(occurences)
+			var amt = effect.process_value(occurences, face)
 			# process other statuses (eg strength)
 			add_status(effect.target_, AbilityEffect.TYPE.STRENGTH, amt, false)
 		AbilityEffect.TYPE.LIMITED_USES:
@@ -304,10 +304,10 @@ func process_effect(effect: AbilityEffect) -> Dictionary:
 			if effect.uses_left <= 0:
 				dict["deplete_ability"] = true
 		AbilityEffect.TYPE.HEAL:
-			var amt = effect.process_value(occurences)
+			var amt = effect.process_value(occurences, face)
 			change_health(effect.target_, -1 * amt)
 		AbilityEffect.TYPE.SELF_DMG:
-			var dmg = effect.process_value(occurences)
+			var dmg = effect.process_value(occurences, face)
 			# don't include strength, do include vulnerable
 			inflict_damage(effect.target_, max(0, compute_damage(dmg, AbilityEffect.TARGET.NOONE, effect.target_)))
 	return dict

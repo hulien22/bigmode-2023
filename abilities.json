@@ -42,8 +42,8 @@
 			[0, 5, 2],
 			[0, 4, 1]
 		], 1],
-		["Healing Potion+", "Heal 4 health (once per combat)", [
-			[0, 5, 4],
+		["Healing Potion+", "Heal X health (once per combat)", [
+			[0, 5, "x"],
 			[0, 4, 1]
 		], 1],
 		["Loot", "Gain 1 gold (once per combat)", [
@@ -117,6 +117,24 @@
 			[0, 3, "2*x"],
 			[0, 6, "2"]
 		], 2],
+		["Panicked Block", "Gain X+3 shield, Gain 2 Frightened", [
+			[0, 1, "x+3"]
+		], 1],
+		["Panicked Block+", "Gain X+5 shield, Gain 2 Frightened", [
+			[0, 1, "x+5"]
+		], 1],
+		["Face Tank", "Gain [die face] shield", [
+			[0, 1, "f"]
+		], 1],
+		["Face Tank+", "Gain [(die face) + 2] shield", [
+			[0, 1, "f + 2"]
+		], 1],
+		["Low Kick", "Deal 6-X damage", [
+			[1, 0, "6-x"],
+		], 1],
+		["Low Kick+", "Deal 10-X damage", [
+			[1, 0, "10-x"],
+		], 1],
 	],
 	"monster_abilities" : [
 		["Bite", "Deal [D] damage", [

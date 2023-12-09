@@ -18,11 +18,11 @@ func _init(target: int, type: int, value: String):
 	if type_ == TYPE.LIMITED_USES:
 		uses_left = int(value_)
 
-func process_value(x:int) -> int:
+func process_value(x:int, f:int) -> int:
 	var expr = Expression.new()
-	expr.parse(value_, ["x"])
+	expr.parse(value_, ["x", "f"])
 	# todo replace other things
-	return expr.execute([x])
+	return expr.execute([x, f])
 
 func is_status_inflict() -> bool:
 	match type_:
