@@ -440,19 +440,19 @@ func get_monster_desc() -> String:
 	if s.contains("[D]"):
 		for e in monster_intent.effects_:
 			if e.type_ == AbilityEffect.TYPE.DAMAGE && e.target_ == AbilityEffect.TARGET.PLAYER:
-				var dmg = e.process_value(0)
+				var dmg = e.process_value(0,0)
 				s = s.replace("[D]", str(compute_damage(dmg, AbilityEffect.TARGET.MONSTER, AbilityEffect.TARGET.PLAYER)))
 				break
 	if s.contains("[B]"):
 		for e in monster_intent.effects_:
 			if e.type_ == AbilityEffect.TYPE.SHIELD && e.target_ == AbilityEffect.TARGET.MONSTER:
-				var v = e.process_value(0)
+				var v = e.process_value(0,0)
 				s = s.replace("[B]", str(v))
 				break
 	if s.contains("[S]"):
 		for e in monster_intent.effects_:
 			if e.type_ == AbilityEffect.TYPE.STRENGTH && e.target_ == AbilityEffect.TARGET.MONSTER:
-				var v = e.process_value(0)
+				var v = e.process_value(0,0)
 				s = s.replace("[S]", str(v))
 				break
 	return s

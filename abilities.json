@@ -135,6 +135,10 @@
 		["Low Kick+", "Deal 10-X damage", [
 			[1, 0, "10-x"],
 		], 1],
+		["Evade", "Gain 1 Dodge", [
+		], 2],
+		["Evade+", "Gain X Dodge (once per combat)", [
+		], 2],
 	],
 	"monster_abilities" : [
 		["Bite", "Deal [D] damage", [
