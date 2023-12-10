@@ -181,7 +181,7 @@ func process_new_turn():
 	statuses_to_inflict.clear()
 	animate_status_changes()
 	
-	if is_player_status(AbilityEffect.TYPE.BLIND):
+	if has_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BLIND):
 		dice_mgr.blind_all_dice()
 	else :
 		dice_mgr.unblind_all_dice()
@@ -190,7 +190,7 @@ func process_new_turn():
 	for i in 6:
 		cur_abilities[i].is_disabled = false
 	# Shuffle abilities before applying disabled statuses
-	if is_player_status(AbilityEffect.TYPE.CONFUSE):
+	if has_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.CONFUSE):
 		cur_abilities.shuffle()
 	# Apply disabled abilities
 	for s in statuses[AbilityEffect.TARGET.PLAYER]:
@@ -236,13 +236,13 @@ func _on_complete_roll(results):
 	print(results)
 	
 	# handle frozen / burned first
-	if is_player_status(AbilityEffect.TYPE.FREEZE):
-		if !is_player_status(AbilityEffect.TYPE.BURN):
+	if has_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.FREEZE):
+		if !has_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BURN):
 			results[0] += results[1]
 			for i in range(1,5):
 				results[i] = results[i + 1]
 			results[5] = 0
-	elif is_player_status(AbilityEffect.TYPE.BURN):
+	elif has_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BURN):
 		results[5] += results[4]
 		for i in range(4,0, -1):
 			results[i] = results[i - 1]
@@ -466,6 +466,9 @@ func change_block(target: AbilityEffect.TARGET, amount: int):
 #	render_health()
 
 func inflict_damage(target: AbilityEffect.TARGET, dmg: int):
+	if has_status(target, AbilityEffect.TYPE.EVADE):
+		# ignore damage if evading
+		return
 	var cur_block = GameState.player.block 
 	if target == AbilityEffect.TARGET.MONSTER:
 		cur_block = monster.block
@@ -674,8 +677,8 @@ func end_ritual_scene():
 	dice_mgr.dice.clear()
 	generate_next_door_scene()
 
-func is_player_status(t: AbilityEffect.TYPE):
-	for s in statuses[AbilityEffect.TARGET.PLAYER]:
+func has_status(c: AbilityEffect.TARGET, t: AbilityEffect.TYPE):
+	for s in statuses[c]:
 		if s.type == t:
 			return true
 	return false

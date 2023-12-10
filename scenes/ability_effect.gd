@@ -21,6 +21,7 @@ enum TYPE {
 	BURN,				#15
 	FREEZE,				#16
 	BLIND,				#17
+	EVADE,				#18
 }
 
 var target_: TARGET;
@@ -97,6 +98,8 @@ static func get_status_desc(t:TYPE) -> String:
 			return "Frozen: Decrease all dice values by 1 (min value is still 1)"
 		TYPE.BLIND:
 			return "Blinded: Can't see dice faces"
+		TYPE.EVADE:
+			return "Evading: Dodge all damage"
 		_:
 			return ""
 		
