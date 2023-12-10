@@ -148,6 +148,7 @@ func process_start_combat():
 	$MonsterUI/Intent/AnimationPlayer.play("intent")
 	
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.CONFUSE, 99, true)
+	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BURN, 99, true)
 	
 	process_new_turn()
 	#todo timer between states? to play anims or smth
@@ -177,10 +178,8 @@ func process_new_turn():
 		cur_abilities[i].is_disabled = false
 	
 	# Shuffle abilities before applying disabled statuses
-	for s in statuses[AbilityEffect.TARGET.PLAYER]:
-		match s.type:
-			AbilityEffect.TYPE.CONFUSE:
-				cur_abilities.shuffle()
+	if is_player_status(AbilityEffect.TYPE.CONFUSE):
+		cur_abilities.shuffle()
 	# Apply disabled abilities
 	for s in statuses[AbilityEffect.TARGET.PLAYER]:
 		match s.type:
@@ -223,6 +222,20 @@ func process_new_turn():
 
 func _on_complete_roll(results):
 	print(results)
+	
+	# handle frozen / burned first
+	if is_player_status(AbilityEffect.TYPE.FREEZE):
+		if !is_player_status(AbilityEffect.TYPE.BURN):
+			results[0] += results[1]
+			for i in range(1,5):
+				results[i] = results[i + 1]
+			results[5] = 0
+	elif is_player_status(AbilityEffect.TYPE.BURN):
+		results[5] += results[4]
+		for i in range(4,0, -1):
+			results[i] = results[i - 1]
+		results[0] = 0
+	
 	occurences = results.max()
 	var modes:Array = []
 	for i in results.size():
@@ -631,3 +644,8 @@ func end_ritual_scene():
 	dice_mgr.dice.clear()
 	generate_next_door_scene()
 
+func is_player_status(t: AbilityEffect.TYPE):
+	for s in statuses[AbilityEffect.TARGET.PLAYER]:
+		if s.type == t:
+			return true
+	return false

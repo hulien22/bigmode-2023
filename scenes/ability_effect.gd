@@ -18,6 +18,8 @@ enum TYPE {
 	DISABLE_ABILITY6,	#12
 	DISABLE_ABILITYR,	#13
 	CONFUSE,			#14
+	BURN,				#15
+	FREEZE,				#16
 }
 
 var target_: TARGET;
@@ -55,6 +57,10 @@ func is_status_inflict() -> bool:
 			return true
 		TYPE.CONFUSE:
 			return true
+		TYPE.BURN:
+			return true
+		TYPE.FREEZE:
+			return true
 		_:
 			return false
 
@@ -82,6 +88,10 @@ static func get_status_desc(t:TYPE) -> String:
 			return "Disabled R: Can't use a random ability"
 		TYPE.CONFUSE:
 			return "Confused: Randomly shuffle your abilities"
+		TYPE.BURN:
+			return "Burned: Increase all dice values by 1 (max value is still 6)"
+		TYPE.FREEZE:
+			return "Frozen: Decrease all dice values by 1 (min value is still 1)"
 		_:
 			return ""
 		

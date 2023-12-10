@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bmqm3htxfa4fv"]
+[gd_scene load_steps=22 format=3 uid="uid://bmqm3htxfa4fv"]
 
 [ext_resource type="Script" path="res://scenes/statusobj.gd" id="1_88vg2"]
 [ext_resource type="Texture2D" uid="uid://cetupre532drl" path="res://art/icons/spiral.png" id="2_y62y4"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://bjkxvjd4n0hsl" path="res://art/icons/x.png" id="16_khbrj"]
 [ext_resource type="Texture2D" uid="uid://qjwgo3m34x35" path="res://art/icons/xeye.png" id="17_0vlag"]
 [ext_resource type="Texture2D" uid="uid://cv6s4o6qwwj5b" path="res://art/icons/power.png" id="18_vklo6"]
+[ext_resource type="Texture2D" uid="uid://bi2w1o133l2hb" path="res://art/icons/freeze.png" id="19_rmggo"]
 [ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="19_vk7cy"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6g7fp"]
@@ -73,6 +74,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("18_vklo6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_rmggo")
 }],
 "loop": true,
 "name": &"default",

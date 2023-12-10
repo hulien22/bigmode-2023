@@ -21,6 +21,10 @@ func init(s: Status):
 			$holder/Icon.frame = 9
 		AbilityEffect.TYPE.CONFUSE:
 			$holder/Icon.frame = 0
+		AbilityEffect.TYPE.BURN:
+			$holder/Icon.frame = 5
+		AbilityEffect.TYPE.FREEZE:
+			$holder/Icon.frame = 17
 		_:
 			$holder/Icon.frame = 10
 	if amount == 0:
