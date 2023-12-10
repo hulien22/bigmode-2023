@@ -144,6 +144,7 @@ func process_start_combat():
 	
 	render_health()
 	animate_abilities_slide(true)
+	$MonsterUI/Intent/AnimationPlayer.play("intent")
 	
 	process_new_turn()
 	#todo timer between states? to play anims or smth
@@ -274,8 +275,7 @@ func process_ability(ability: Ability, face:int, inflict_status_later: bool) -> 
 			statuses_to_inflict.append(effect)
 			continue
 		var d:Dictionary = process_effect(effect, face)
-		if d.get("deplete_ability", false):
-			dict["deplete_ability"] = true
+		dict.merge(d)
 	#TODO: return type of animation to play (instead of just attack always)
 	return dict
 
@@ -340,6 +340,7 @@ func combat_win():
 	GameState.player.block = 0
 	
 	$MonsterUI/character2.play_fade_die()
+	$MonsterUI/Intent/AnimationPlayer.stop()
 	animate_status_changes()
 	await wait_secs(0.5)
 	

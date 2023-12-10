@@ -144,7 +144,7 @@
 		["Bite", "Deal [D] damage", [
 			[0, 0, 2]
 		]],
-		["Defend", "Gain [B] block", [
+		["Curl Up", "Gain [B] block", [
 			[1, 1, 2]
 		]],
 		["Strengthen", "Gain [S] STR", [

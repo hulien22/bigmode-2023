@@ -1,6 +1,8 @@
 extends Node
 class_name Relic
 
+enum TYPE {}
+
 var name_: String = ""
 var description: String = ""
 var animated_sprite_frame: int = 0

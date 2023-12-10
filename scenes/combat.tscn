@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://ccl2kenwh73ve"]
+[gd_scene load_steps=29 format=3 uid="uid://ccl2kenwh73ve"]
 
 [ext_resource type="Script" path="res://scenes/combat.gd" id="1_lnnkv"]
 [ext_resource type="Texture2D" uid="uid://yfhqg1amblqt" path="res://art/prototyping/realtabletest2.png" id="3_r2h8u"]
@@ -25,6 +25,39 @@
 [ext_resource type="PackedScene" uid="uid://culwykxollff1" path="res://scenes/diceshop.tscn" id="18_iaon4"]
 [ext_resource type="PackedScene" uid="uid://duxix8w6sngbf" path="res://scenes/restroom.tscn" id="19_t1oyl"]
 [ext_resource type="PackedScene" uid="uid://cb57lhpjwpcfx" path="res://scenes/ritual.tscn" id="20_ngfl2"]
+
+[sub_resource type="Animation" id="Animation_2nawh"]
+resource_name = "intent"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Paper-strip:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-1.18896, -1), Vector2(-1.189, 5), Vector2(-1.18896, -1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MonsterIntent:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-192, -27), Vector2(-192, -22), Vector2(-192, -27)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_30k1b"]
+_data = {
+"intent": SubResource("Animation_2nawh")
+}
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hvqtu"]
 shader = ExtResource("8_w723f")
@@ -152,38 +185,44 @@ position = Vector2(1103, 184)
 sprite_ = ExtResource("12_xl2x6")
 
 [node name="Intent" type="Node2D" parent="MonsterUI"]
-position = Vector2(1130, 44)
+position = Vector2(1101, 52)
 
 [node name="ColorRect" type="Button" parent="MonsterUI/Intent"]
 modulate = Color(1, 1, 1, 0)
 offset_left = -197.0
 offset_top = -35.0
 offset_right = 228.0
-offset_bottom = 37.0
+offset_bottom = 239.0
 scale = Vector2(0.922844, 1.0122)
 
 [node name="Paper-strip" type="Sprite2D" parent="MonsterUI/Intent"]
-modulate = Color(1, 0.658824, 0.658824, 1)
-position = Vector2(-1.18896, -1)
+modulate = Color(0.929412, 0.929412, 0.929412, 1)
+position = Vector2(-1.18897, 1.62946)
 rotation = -3.14159
 scale = Vector2(0.582592, -0.359652)
 texture = ExtResource("13_513gy")
 
 [node name="MonsterIntent" type="Label" parent="MonsterUI/Intent"]
-modulate = Color(0.121569, 0.117647, 0.121569, 1)
+modulate = Color(0.603922, 0, 0.027451, 1)
 offset_left = -192.0
-offset_top = -27.0
+offset_top = -24.6096
 offset_right = 191.0
-offset_bottom = 25.0
+offset_bottom = 27.3904
 theme_override_fonts/font = ExtResource("8_tih6j")
 theme_override_font_sizes/font_size = 42
+text = "Bite"
 horizontal_alignment = 1
 vertical_alignment = 1
+uppercase = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MonsterUI/Intent"]
+libraries = {
+"": SubResource("AnimationLibrary_30k1b")
+}
 
 [node name="Description" type="Node2D" parent="MonsterUI/Intent"]
-visible = false
 z_index = 11
-position = Vector2(353, 143)
+position = Vector2(353, 317)
 
 [node name="ColorRect3" type="ColorRect" parent="MonsterUI/Intent/Description"]
 offset_left = -610.0
@@ -199,7 +238,7 @@ offset_top = -96.0
 offset_right = -94.0
 offset_bottom = 98.0
 mouse_filter = 2
-color = Color(0.847059, 0.843137, 0.807843, 1)
+color = Color(0.780392, 0.780392, 0.764706, 1)
 
 [node name="ColorRect4" type="ColorRect" parent="MonsterUI/Intent/Description"]
 offset_left = -601.0
@@ -210,7 +249,7 @@ mouse_filter = 2
 color = Color(0, 0, 0, 0.0745098)
 
 [node name="Label2" type="Label" parent="MonsterUI/Intent/Description"]
-modulate = Color(0.14902, 0.14902, 0.14902, 1)
+modulate = Color(0.603922, 0, 0.027451, 1)
 offset_left = -595.0
 offset_top = -89.0
 offset_right = -101.0
