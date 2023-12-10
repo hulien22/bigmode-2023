@@ -19,6 +19,8 @@ func init(s: Status):
 		AbilityEffect.TYPE.DISABLE_ABILITY5, AbilityEffect.TYPE.DISABLE_ABILITY6, \
 		AbilityEffect.TYPE.DISABLE_ABILITYR:
 			$holder/Icon.frame = 9
+		AbilityEffect.TYPE.CONFUSE:
+			$holder/Icon.frame = 0
 		_:
 			$holder/Icon.frame = 10
 	if amount == 0:

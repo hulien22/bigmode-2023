@@ -147,6 +147,8 @@ func process_start_combat():
 	animate_abilities_slide(true)
 	$MonsterUI/Intent/AnimationPlayer.play("intent")
 	
+#	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.CONFUSE, 99, true)
+	
 	process_new_turn()
 	#todo timer between states? to play anims or smth
 
@@ -174,7 +176,11 @@ func process_new_turn():
 	for i in 6:
 		cur_abilities[i].is_disabled = false
 	
-	#TODO shuffle abilities
+	# Shuffle abilities before applying disabled statuses
+	for s in statuses[AbilityEffect.TARGET.PLAYER]:
+		match s.type:
+			AbilityEffect.TYPE.CONFUSE:
+				cur_abilities.shuffle()
 	# Apply disabled abilities
 	for s in statuses[AbilityEffect.TARGET.PLAYER]:
 		match s.type:

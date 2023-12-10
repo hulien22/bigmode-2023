@@ -106,7 +106,7 @@ color = Color(1, 1, 1, 0)
 
 [node name="Description" type="Node2D" parent="holder"]
 visible = false
-z_index = 1
+z_index = 11
 position = Vector2(364, 137)
 
 [node name="ColorRect3" type="ColorRect" parent="holder/Description"]
@@ -124,6 +124,14 @@ offset_right = -212.0
 offset_bottom = 21.0
 mouse_filter = 2
 color = Color(0.847059, 0.843137, 0.807843, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="holder/Description"]
+offset_left = -515.0
+offset_top = -96.0
+offset_right = -212.0
+offset_bottom = 21.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.0745098)
 
 [node name="Label2" type="Label" parent="holder/Description"]
 modulate = Color(0.14902, 0.14902, 0.14902, 1)

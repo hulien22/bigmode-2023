@@ -221,6 +221,7 @@ libraries = {
 }
 
 [node name="Description" type="Node2D" parent="MonsterUI/Intent"]
+visible = false
 z_index = 11
 position = Vector2(353, 317)
 
