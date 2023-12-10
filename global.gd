@@ -28,3 +28,24 @@ func get_upgraded_ability(a:Ability) -> Ability:
 			return x
 	print_debug("could not find upgraded ability for ", a.name_)
 	return a
+
+func get_ability_by_name(n:String) -> Ability:
+	for x in abilities:
+		if x.name_ == n:
+			return x
+	print_debug("could not find ability for ", n)
+	return disabled_ability
+
+func get_monster_ability_by_name(n:String) -> Ability:
+	for x in monster_abilities:
+		if x.name_ == n:
+			return x
+	print_debug("could not find monster ability for ", n)
+	return disabled_ability
+
+func get_upgraded_monster_ability(a:Ability) -> Ability:
+	for x in monster_abilities:
+		if x.name_ == a.name_ + "+":
+			return x
+	print_debug("could not find upgraded monster ability for ", a.name_)
+	return a

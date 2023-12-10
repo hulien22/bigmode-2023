@@ -159,6 +159,8 @@
 			[0, 0, 1]
 		]],
 		["Engulf", "Disable top and bottom skills", [
+			[0, 7, 1],
+			[0, 12, 1],
 		]],
 	]
 }

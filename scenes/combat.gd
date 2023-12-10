@@ -14,6 +14,7 @@ var monster: Monster
 var turn_counter:int
 var rerolls:int
 var monster_intent:Ability
+var cur_abilities: Array[AbilityDesc]
 
 # player statuses followed by monster statuses
 var statuses:Array[Array] = [[], []]
@@ -35,7 +36,7 @@ func _ready():
 	
 	Events.connect("coins_updated", anim_coins)
 	Events.connect("health_updated", render_health)
-	Events.connect("abilities_updated", update_abilities)
+	Events.connect("abilities_updated", update_abilities_with_player_vals)
 	Events.connect("sacrificed_die", sacrificed_die)
 #	process_start_combat()
 
@@ -120,13 +121,13 @@ func process_start_combat():
 	monster.init_slime()
 	$MonsterUI/character2.init(monster.image)
 	$MonsterUI/MonsterName.text = monster.name_
-	update_abilities(false)
-#	$Abilities/ability_box1.init(1, GameState.player.abilities[0])
-#	$Abilities/ability_box2.init(2, GameState.player.abilities[1])
-#	$Abilities/ability_box3.init(3, GameState.player.abilities[2])
-#	$Abilities/ability_box4.init(4, GameState.player.abilities[3])
-#	$Abilities/ability_box5.init(5, GameState.player.abilities[4])
-#	$Abilities/ability_box6.init(6, GameState.player.abilities[5])
+
+	# init copy of abilities with extra metadata
+	cur_abilities = []
+	for i in 6:
+		cur_abilities.append(AbilityDesc.new(GameState.player.abilities[i]))
+	update_abilities_with_current_vals()
+
 	for ab in ability_boxes:
 		ab.connect("ability_clicked", _on_ability_clicked)
 	$Combatscreen/RerollButton.connect("pressed", _on_reroll_button_pressed)
@@ -168,6 +169,30 @@ func process_new_turn():
 		# animate status changes
 	statuses_to_inflict.clear()
 	animate_status_changes()
+	
+	# Reset disabled abilities
+	for i in 6:
+		cur_abilities[i].is_disabled = false
+	
+	#TODO shuffle abilities
+	# Apply disabled abilities
+	for s in statuses[AbilityEffect.TARGET.PLAYER]:
+		match s.type:
+			AbilityEffect.TYPE.DISABLE_ABILITY1:
+				cur_abilities[0].is_disabled = true
+			AbilityEffect.TYPE.DISABLE_ABILITY2:
+				cur_abilities[1].is_disabled = true
+			AbilityEffect.TYPE.DISABLE_ABILITY3:
+				cur_abilities[2].is_disabled = true
+			AbilityEffect.TYPE.DISABLE_ABILITY4:
+				cur_abilities[3].is_disabled = true
+			AbilityEffect.TYPE.DISABLE_ABILITY5:
+				cur_abilities[4].is_disabled = true
+			AbilityEffect.TYPE.DISABLE_ABILITY6:
+				cur_abilities[5].is_disabled = true
+			AbilityEffect.TYPE.DISABLE_ABILITYR:
+				cur_abilities[randi_range(0,5)].is_disabled = true
+	update_abilities_with_current_vals()
 	
 	# trying this
 	rerolls = 2
@@ -226,9 +251,16 @@ func _on_ability_clicked(val):
 	print("selected ability ", ability_boxes[val-1].ability.name_)
 
 	combat_state = CombatState.PLAYER_ABILITY
-	var d:Dictionary = process_ability(ability_boxes[val-1].ability, val, false)
-	if d.get("deplete_ability", false):
-		ability_boxes[val-1].init(val, Global.depleted_ability)
+	
+	# Only process the selected ability if it is enabled
+	if !cur_abilities[val-1].is_disabled:
+		var d:Dictionary = process_ability(ability_boxes[val-1].ability, val, false)
+	#	if d.get("deplete_ability", false):
+	#		ability_boxes[val-1].init(val, Global.depleted_ability)
+		if cur_abilities[val-1].has_limited_uses:
+			cur_abilities[val-1].limited_uses_left -= 1
+			if cur_abilities[val-1].limited_uses_left <= 0:
+				cur_abilities[val-1] = AbilityDesc.new(Global.depleted_ability)
 	
 #	animate_status_changes()
 	
@@ -279,7 +311,7 @@ func process_ability(ability: Ability, face:int, inflict_status_later: bool) -> 
 	#TODO: return type of animation to play (instead of just attack always)
 	return dict
 
-# returns bool if ability is now depleted
+# returns dictionary of follow up things
 func process_effect(effect: AbilityEffect, face:int = 0) -> Dictionary:
 	var dict:Dictionary = {}
 	match effect.type_:
@@ -299,10 +331,10 @@ func process_effect(effect: AbilityEffect, face:int = 0) -> Dictionary:
 			var amt = effect.process_value(occurences, face)
 			# process other statuses (eg strength)
 			add_status(effect.target_, AbilityEffect.TYPE.STRENGTH, amt, false)
-		AbilityEffect.TYPE.LIMITED_USES:
-			effect.uses_left -= 1
-			if effect.uses_left <= 0:
-				dict["deplete_ability"] = true
+#		AbilityEffect.TYPE.LIMITED_USES:
+#			effect.uses_left -= 1
+#			if effect.uses_left <= 0:
+#				dict["deplete_ability"] = true
 		AbilityEffect.TYPE.HEAL:
 			var amt = effect.process_value(occurences, face)
 			change_health(effect.target_, -1 * amt)
@@ -310,6 +342,27 @@ func process_effect(effect: AbilityEffect, face:int = 0) -> Dictionary:
 			var dmg = effect.process_value(occurences, face)
 			# don't include strength, do include vulnerable
 			inflict_damage(effect.target_, max(0, compute_damage(dmg, AbilityEffect.TARGET.NOONE, effect.target_)))
+		AbilityEffect.TYPE.DISABLE_ABILITY1:
+			var amt = effect.process_value(occurences, face)
+			add_status(effect.target_, AbilityEffect.TYPE.DISABLE_ABILITY1, amt, true)
+		AbilityEffect.TYPE.DISABLE_ABILITY2:
+			var amt = effect.process_value(occurences, face)
+			add_status(effect.target_, AbilityEffect.TYPE.DISABLE_ABILITY2, amt, true)
+		AbilityEffect.TYPE.DISABLE_ABILITY3:
+			var amt = effect.process_value(occurences, face)
+			add_status(effect.target_, AbilityEffect.TYPE.DISABLE_ABILITY3, amt, true)
+		AbilityEffect.TYPE.DISABLE_ABILITY4:
+			var amt = effect.process_value(occurences, face)
+			add_status(effect.target_, AbilityEffect.TYPE.DISABLE_ABILITY4, amt, true)
+		AbilityEffect.TYPE.DISABLE_ABILITY5:
+			var amt = effect.process_value(occurences, face)
+			add_status(effect.target_, AbilityEffect.TYPE.DISABLE_ABILITY5, amt, true)
+		AbilityEffect.TYPE.DISABLE_ABILITY6:
+			var amt = effect.process_value(occurences, face)
+			add_status(effect.target_, AbilityEffect.TYPE.DISABLE_ABILITY6, amt, true)
+		AbilityEffect.TYPE.DISABLE_ABILITYR:
+			var amt = effect.process_value(occurences, face)
+			add_status(effect.target_, AbilityEffect.TYPE.DISABLE_ABILITYR, amt, true)
 	return dict
 
 func process_end_turn():
@@ -344,7 +397,7 @@ func combat_win():
 	animate_status_changes()
 	await wait_secs(0.5)
 	
-	update_abilities(false)
+	update_abilities_with_player_vals(false)
 	#generate loot scene
 		# coins, and relic
 	# which will then generate the ability screen
@@ -494,11 +547,18 @@ func anim_coins():
 	var tween = get_tree().create_tween()
 	tween.tween_property($PlayerUI/PlayerCoins, "scale", Vector2.ONE, 0.5)
 
-func update_abilities(disable:bool):
+func update_abilities_with_player_vals(disable:bool):
 	for i in 6:
 		ability_boxes[i].init(i+1, GameState.player.abilities[i])
 	if disable:
 		disable_abilities_and_rerollbtn()
+
+func update_abilities_with_current_vals():
+	for i in 6:
+		if cur_abilities[i].is_disabled:
+			ability_boxes[i].init(i+1, Global.disabled_ability)
+		else:
+			ability_boxes[i].init(i+1, cur_abilities[i].ab)
 
 func init_dice_shop():
 	$DiceShopScreen/NextButton.disabled = true

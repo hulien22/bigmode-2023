@@ -17,7 +17,7 @@ func init_slime():
 	health = 10
 	name_ = "Slime"
 #	starting_abilities = [Global.monster_abilities[2]]
-	repeat_abilities = [Global.monster_abilities[0], Global.monster_abilities[1], Global.monster_abilities[2]]
+	repeat_abilities = [Global.get_monster_ability_by_name("Bite"), Global.get_monster_ability_by_name("Engulf"), Global.get_monster_ability_by_name("Curl Up")]
 	image = preload("res://art/characters/slime.png")
 	coins_dropped = 2
 #	repeat_abilities = [Global.monster_abilities[3]]

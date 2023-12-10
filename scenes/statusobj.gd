@@ -14,6 +14,11 @@ func init(s: Status):
 			$holder/Icon.frame = 13
 		AbilityEffect.TYPE.STRENGTH:
 			$holder/Icon.frame = 16
+		AbilityEffect.TYPE.DISABLE_ABILITY1, AbilityEffect.TYPE.DISABLE_ABILITY2, \
+		AbilityEffect.TYPE.DISABLE_ABILITY3, AbilityEffect.TYPE.DISABLE_ABILITY4, \
+		AbilityEffect.TYPE.DISABLE_ABILITY5, AbilityEffect.TYPE.DISABLE_ABILITY6, \
+		AbilityEffect.TYPE.DISABLE_ABILITYR:
+			$holder/Icon.frame = 9
 		_:
 			$holder/Icon.frame = 10
 	if amount == 0:
