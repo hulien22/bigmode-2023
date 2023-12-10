@@ -38,6 +38,7 @@ func generate_next_doors() -> Array[GameScene]:
 	# TODO Modulo these for later floors?
 	
 	# do smth special on first play through? to intro special dice early?
+	# REST / RITUAL?
 #	if level == 1 && first_game:
 #		first_game = false
 #		return [GameScene.COMBAT, GameScene.COMBAT]

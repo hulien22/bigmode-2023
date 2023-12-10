@@ -40,6 +40,10 @@ func _ready():
 	Events.connect("sacrificed_die", sacrificed_die)
 #	process_start_combat()
 
+
+####################################################################################################
+####################################################################################################
+####################################################################################################
 func go_to_scene(gs: GameState.GameScene):
 	GameState.game_scene = gs
 	hide_all_scenes()
@@ -88,6 +92,7 @@ func go_to_scene(gs: GameState.GameScene):
 			$RestScreen.connect("gg_go_next", end_rest_scene)
 			$RestScreen.show()
 			$RestScreen.connect("begin_upgrade", process_upgrade)
+			$RestScreen.connect("begin_heal", process_heal)
 			animate_abilities_slide(false)
 		GameState.GameScene.RITUAL:
 			$RitualScreen.connect("gg_go_next", end_ritual_scene)
@@ -115,7 +120,9 @@ func _on_door_selected(gs: GameState.GameScene):
 	go_to_scene(gs)
 	GameState.level += 1
 
-
+####################################################################################################
+####################################################################################################
+####################################################################################################
 func process_start_combat():
 	disable_abilities_and_rerollbtn()
 	monster.init_slime()
@@ -148,7 +155,7 @@ func process_start_combat():
 	$MonsterUI/Intent/AnimationPlayer.play("intent")
 	
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.CONFUSE, 99, true)
-	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BURN, 99, true)
+#	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BURN, 99, true)
 	
 	process_new_turn()
 	#todo timer between states? to play anims or smth
@@ -607,17 +614,35 @@ func process_upgrade():
 	for i in 6:
 		ability_boxes[i].set_enabled(ability_boxes[i].ability.is_upgradeable())
 
+func process_heal():
+	$RestScreen/NextButton.disabled = true
+	dice_mgr.line_up_dice_after_roll = true
+	dice_mgr.mouse_handler.remove_on_select = true
+	dice_mgr.dice_box_rect = Rect2(-7, -1.5, 4, 5.5)
+	dice_mgr.connect("complete_roll", rest_screen_on_roll_complete)
+	dice_mgr.dice.clear()
+	dice_mgr.add_die([1,2,6,5,3,4], Color.DARK_RED)
+	dice_mgr.add_die([1,2,6,5,3,4], Color.DARK_RED)
+	dice_mgr.drop_all_dice()
+
+func rest_screen_on_roll_complete(_results):
+	$RestScreen/NextButton.disabled = false
+	dice_mgr.disconnect("complete_roll", rest_screen_on_roll_complete)
+
 func show_preview(val):
 	$RestScreen.show_preview(val, Global.get_upgraded_ability(ability_boxes[val - 1].ability))
 
 func end_rest_scene():
+	dice_mgr.fade_away_dice()
+	dice_mgr.dice.clear()
 	disable_abilities_and_rerollbtn()
 	for ab in ability_boxes:
-		ab.disconnect("ability_clicked", show_preview)
+		if ab.is_connected("ability_clicked", show_preview):
+			ab.disconnect("ability_clicked", show_preview)
 	generate_next_door_scene()
 
 func init_ritual_scene():
-	$RestScreen/NextButton.disabled = true
+	$RitualScreen/NextButton.disabled = true
 	dice_mgr.line_up_dice_after_roll = true
 #	dice_mgr.line_up_dice_after_roll = false
 	dice_mgr.dice_box_rect = Rect2(-7, -1.5, 9.5, 5.5)
@@ -629,7 +654,7 @@ func init_ritual_scene():
 	dice_mgr.drop_all_dice()
 
 func ritual_screen_on_roll_complete(_results):
-	$RestScreen/NextButton.disabled = false
+	$RitualScreen/NextButton.disabled = false
 	dice_mgr.disconnect("complete_roll", ritual_screen_on_roll_complete)
 
 func sacrificed_die(index:int):

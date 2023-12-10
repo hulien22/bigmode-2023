@@ -54,6 +54,12 @@ func _process(delta):
 						last_obj_rid = 0
 						Events.emit_signal("sacrificed_die", die.index)
 						die.queue_free()
+					GameState.GameScene.REST:
+						last_obj = null
+						last_obj_rid = 0
+						GameState.player.health = min(GameState.player.health + die.get_top_val(), GameState.player.max_health)
+						Events.emit_signal("health_updated")
+						die.queue_free()
 						
 				SfxHandler.play_sfx(SfxHandler.GROUND_SFX, self, 1)
 	elif is_mouse_down:

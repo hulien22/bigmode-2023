@@ -2,6 +2,7 @@ extends Node2D
 
 signal gg_go_next()
 signal begin_upgrade()
+signal begin_heal()
 
 func _ready():
 	$NextButton.connect("pressed", _on_nextbtn_pressed)
@@ -37,12 +38,11 @@ func _on_button_mouse_exited(obj):
 	obj.scale = Vector2.ONE
 
 func heal():
-	GameState.player.health = GameState.player.max_health
-	Events.emit_signal("health_updated")
+	begin_heal.emit()
 	$NextButton.show()
 	$Upgrade.hide()
 	$Rest.hide()
-	$Text.text = "You tend to your wounds and recover your health!"
+	$Text.text = "You spend some time to tend to your wounds\n\n(Click on dice to heal)"
 
 func upgrade():
 	begin_upgrade.emit()
