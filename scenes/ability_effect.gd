@@ -20,6 +20,7 @@ enum TYPE {
 	CONFUSE,			#14
 	BURN,				#15
 	FREEZE,				#16
+	BLIND,				#17
 }
 
 var target_: TARGET;
@@ -61,6 +62,8 @@ func is_status_inflict() -> bool:
 			return true
 		TYPE.FREEZE:
 			return true
+		TYPE.BLIND:
+			return true
 		_:
 			return false
 
@@ -92,6 +95,8 @@ static func get_status_desc(t:TYPE) -> String:
 			return "Burned: Increase all dice values by 1 (max value is still 6)"
 		TYPE.FREEZE:
 			return "Frozen: Decrease all dice values by 1 (min value is still 1)"
+		TYPE.BLIND:
+			return "Blinded: Can't see dice faces"
 		_:
 			return ""
 		

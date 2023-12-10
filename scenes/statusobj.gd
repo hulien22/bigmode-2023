@@ -25,6 +25,8 @@ func init(s: Status):
 			$holder/Icon.frame = 5
 		AbilityEffect.TYPE.FREEZE:
 			$holder/Icon.frame = 17
+		AbilityEffect.TYPE.BLIND:
+			$holder/Icon.frame = 15
 		_:
 			$holder/Icon.frame = 10
 	if amount == 0:

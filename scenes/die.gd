@@ -39,6 +39,11 @@ func init(f: Array, c: Color, i:int):
 	die_color = c
 	index = i
 
+func blind_die():
+	$CollisionShape3D/MeshInstance3D.get_surface_override_material(0).albedo_color = Color.BLACK
+func unblind_die():
+	$CollisionShape3D/MeshInstance3D.get_surface_override_material(0).albedo_color = die_color
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 #	if Input.is_action_just_pressed("Launch"):

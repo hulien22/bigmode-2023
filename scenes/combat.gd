@@ -156,6 +156,7 @@ func process_start_combat():
 	
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.CONFUSE, 99, true)
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BURN, 99, true)
+#	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BLIND, 2, true)
 	
 	process_new_turn()
 	#todo timer between states? to play anims or smth
@@ -180,10 +181,14 @@ func process_new_turn():
 	statuses_to_inflict.clear()
 	animate_status_changes()
 	
+	if is_player_status(AbilityEffect.TYPE.BLIND):
+		dice_mgr.blind_all_dice()
+	else :
+		dice_mgr.unblind_all_dice()
+	
 	# Reset disabled abilities
 	for i in 6:
 		cur_abilities[i].is_disabled = false
-	
 	# Shuffle abilities before applying disabled statuses
 	if is_player_status(AbilityEffect.TYPE.CONFUSE):
 		cur_abilities.shuffle()

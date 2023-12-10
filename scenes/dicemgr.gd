@@ -101,3 +101,13 @@ func fade_away_dice():
 		if d != null:
 			d.fade_away()
 	state = STATE.HIDDEN
+
+func blind_all_dice():
+	for d in dice:
+		if d != null:
+			d.blind_die()
+
+func unblind_all_dice():
+	for d in dice:
+		if d != null:
+			d.unblind_die()

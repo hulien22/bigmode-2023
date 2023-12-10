@@ -12,6 +12,9 @@ var repeat_abilities: Array[Ability]
 var image: CompressedTexture2D
 var coins_dropped:int = 2
 
+# elite has 25% more health and uses upgraded abilities?
+var is_elite:bool = false
+
 func init_slime():
 	max_health = 10
 	health = 10
@@ -27,3 +30,5 @@ func get_next_move(turn: int) -> Ability:
 	if turn < starting_abilities.size():
 		return starting_abilities[turn]
 	return repeat_abilities[(turn - starting_abilities.size()) % repeat_abilities.size()]
+
+
