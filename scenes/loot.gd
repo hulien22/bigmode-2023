@@ -35,6 +35,7 @@ func _on_nextbtn_pressed():
 
 func _on_button_mouse_entered():
 	$Coins.scale = Vector2.ONE * 1.5
+	SfxHandler.play_sfx(SfxHandler.COIN_SFX, self, 0.6)
 
 
 func _on_button_mouse_exited():

@@ -120,7 +120,7 @@ static func get_status_desc(t:TYPE) -> String:
 		TYPE.STUNNED:
 			return "Stunned: can't reroll dice"
 		TYPE.DEXTERITY:
-			return "Dexterity: gain extra block"
+			return "Dexterity: gain extra shield"
 		TYPE.EXHAUSTED:
 			return "Exhausted: attacks deal half damage"
 		_:

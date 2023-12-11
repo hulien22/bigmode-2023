@@ -38,8 +38,8 @@ func init_monster(m:MonsterType):
 			image = preload("res://art/characters/slime.png")
 			coins_dropped = 2
 		MonsterType.BAT:
-			max_health = 10
-			health = 10
+			max_health = 8
+			health = 8
 			name_ = "Bat"
 			repeat_abilities = [
 				Global.get_monster_ability_by_name("Fly"),
@@ -49,8 +49,8 @@ func init_monster(m:MonsterType):
 			image = preload("res://art/characters/bat.png")
 			coins_dropped = 2
 		MonsterType.CULTIST:
-			max_health = 15
-			health = 15
+			max_health = 13
+			health = 13
 			name_ = "Cultist"
 			repeat_abilities = [
 				Global.get_monster_ability_by_name("Chant"),

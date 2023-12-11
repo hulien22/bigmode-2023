@@ -264,11 +264,11 @@
 		]],
 		["Headbutt", "Deal [D] damage, take 2 damage", [
 			[0, 0, 2],
-			[1, 6, "1"]
+			[1, 6, "2"]
 		]],
 		["Headbutt+", "Deal [D] damage, take 2 damage", [
 			[0, 0, 4],
-			[1, 6, "1"]
+			[1, 6, "2"]
 		]],
 	]
 }

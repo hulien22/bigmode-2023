@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cpy0266ipvs8r" path="res://art/prototyping/realtabletest3.png" id="2_v73s8"]
 [ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="3_c46e1"]
 [ext_resource type="Texture2D" uid="uid://dp4mbownqfhu3" path="res://art/icons/coin.png" id="4_jch7k"]
-[ext_resource type="PackedScene" uid="uid://x3clfwsacs1s" path="res://scenes/relic.tscn" id="5_rt4dt"]
+[ext_resource type="PackedScene" uid="uid://x3clfwsacs1s" path="res://scenes/relicobj.tscn" id="5_rt4dt"]
 [ext_resource type="PackedScene" uid="uid://bedbnvcvmg5r0" path="res://scenes/postitbtn.tscn" id="6_dlf2o"]
 
 [node name="LootScreen" type="Node2D"]
@@ -31,6 +31,13 @@ autowrap_mode = 3
 [node name="Coins" type="Node2D" parent="."]
 position = Vector2(953, 498)
 rotation = -0.00178233
+
+[node name="ColorRect" type="ColorRect" parent="Coins"]
+offset_left = -154.0
+offset_top = -42.0
+offset_right = 194.0
+offset_bottom = 43.0
+color = Color(0, 0, 0, 0.141176)
 
 [node name="Text2" type="Label" parent="Coins"]
 modulate = Color(0.121569, 0.117647, 0.121569, 1)

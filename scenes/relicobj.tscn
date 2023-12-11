@@ -1,0 +1,152 @@
+[gd_scene load_steps=23 format=3 uid="uid://x3clfwsacs1s"]
+
+[ext_resource type="Texture2D" uid="uid://col80tyqs1tj6" path="res://art/paper-square.png" id="1_7fhnf"]
+[ext_resource type="Script" path="res://scenes/relicobj.gd" id="1_p0s7b"]
+[ext_resource type="Texture2D" uid="uid://dxhj3333otq5x" path="res://art/paper-square2.png" id="3_1oenp"]
+[ext_resource type="Texture2D" uid="uid://cl70yrkcrc3df" path="res://art/relics/backupplan.png" id="3_4jgit"]
+[ext_resource type="Texture2D" uid="uid://dewteawgykrlj" path="res://art/relics/bagofholding.png" id="4_ugxam"]
+[ext_resource type="Texture2D" uid="uid://c46l0kbesaky1" path="res://art/relics/bringerofdeath.png" id="5_kjkjf"]
+[ext_resource type="Texture2D" uid="uid://d2hn4eonsukb8" path="res://art/relics/catslippers.png" id="6_sq0ek"]
+[ext_resource type="Texture2D" uid="uid://coqprqp10ifo3" path="res://art/relics/cultisthead.png" id="7_c4qeh"]
+[ext_resource type="Texture2D" uid="uid://chq75chgh8p5d" path="res://art/relics/dragonqueen.png" id="8_2wukn"]
+[ext_resource type="Texture2D" uid="uid://dbhomhy8cj4vg" path="res://art/relics/dwarvenmead.png" id="9_lghy4"]
+[ext_resource type="Texture2D" uid="uid://cs7fd1gn33c07" path="res://art/relics/evensteven.png" id="10_ro5bg"]
+[ext_resource type="Texture2D" uid="uid://4w05gn70ppqk" path="res://art/relics/highroller.png" id="11_jtcby"]
+[ext_resource type="Texture2D" uid="uid://dckytbh8gvga4" path="res://art/relics/momsstew.png" id="12_fjvrm"]
+[ext_resource type="Texture2D" uid="uid://d1d8xophkgrjs" path="res://art/relics/sacredpower.png" id="13_f7ylb"]
+[ext_resource type="Texture2D" uid="uid://dy7g3i161m07a" path="res://art/relics/sentinelshield.png" id="14_uvy12"]
+[ext_resource type="Texture2D" uid="uid://h60s4q5n5e38" path="res://art/relics/snakefriend.png" id="15_syd4c"]
+[ext_resource type="Texture2D" uid="uid://c3ieul0torqqb" path="res://art/relics/titanbelt.png" id="16_7g1tv"]
+[ext_resource type="Texture2D" uid="uid://dgw1aji20nxtv" path="res://art/relics/trollheart.png" id="17_0rfpu"]
+[ext_resource type="Texture2D" uid="uid://cpfv0vpycoglj" path="res://art/relics/trustyshield.png" id="18_xbtco"]
+[ext_resource type="Texture2D" uid="uid://bscdk4uevbl0w" path="res://art/relics/moreoptions.png" id="19_qhi6f"]
+[ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="20_hsove"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jq6vi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_4jgit")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ugxam")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_kjkjf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_sq0ek")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_c4qeh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_2wukn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_lghy4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_ro5bg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_jtcby")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_fjvrm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_f7ylb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_uvy12")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_syd4c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_7g1tv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_0rfpu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_xbtco")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_qhi6f")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="relic" type="Node2D"]
+script = ExtResource("1_p0s7b")
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Paper-square" type="Sprite2D" parent="Node2D"]
+texture = ExtResource("1_7fhnf")
+
+[node name="Paper-square2" type="Sprite2D" parent="Node2D"]
+position = Vector2(-1, -1)
+texture = ExtResource("3_1oenp")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D"]
+sprite_frames = SubResource("SpriteFrames_jq6vi")
+frame = 16
+
+[node name="Description" type="Node2D" parent="."]
+visible = false
+z_index = 11
+position = Vector2(670, -2)
+
+[node name="ColorRect3" type="ColorRect" parent="Description"]
+offset_left = -610.0
+offset_top = -91.0
+offset_right = -99.0
+offset_bottom = 108.0
+mouse_filter = 2
+color = Color(0.235294, 0.231373, 0.196078, 0.521569)
+
+[node name="ColorRect2" type="ColorRect" parent="Description"]
+offset_left = -601.0
+offset_top = -96.0
+offset_right = -94.0
+offset_bottom = 98.0
+mouse_filter = 2
+color = Color(0.847059, 0.843137, 0.807843, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="Description"]
+offset_left = -601.0
+offset_top = -96.0
+offset_right = -94.0
+offset_bottom = 98.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.0745098)
+
+[node name="Label2" type="Label" parent="Description"]
+modulate = Color(0.14902, 0.14902, 0.14902, 1)
+offset_left = -595.0
+offset_top = -89.0
+offset_right = -101.0
+offset_bottom = 91.0
+theme_override_fonts/font = ExtResource("20_hsove")
+theme_override_font_sizes/font_size = 24
+text = "Deal X damage
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -46.0
+offset_top = -40.0
+offset_right = 43.0
+offset_bottom = 40.0
+color = Color(1, 1, 1, 0)
+
+[connection signal="mouse_entered" from="ColorRect" to="." method="_on_color_rect_mouse_entered"]
+[connection signal="mouse_exited" from="ColorRect" to="." method="_on_color_rect_mouse_exited"]

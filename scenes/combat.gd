@@ -34,6 +34,8 @@ func _ready():
 	for i in 6:
 		ability_boxes[i].init(i+1, GameState.player.abilities[i])
 	
+	$RelicHolder.update_relics()
+	
 	Events.connect("coins_updated", anim_coins)
 	Events.connect("health_updated", render_health)
 	Events.connect("abilities_updated", update_abilities_with_player_vals)
@@ -169,7 +171,15 @@ func process_new_turn():
 	print("starting turn ", turn_counter)
 	
 	# process relics
-	process_relics()
+	if turn_counter == 0 && GameState.player.has_relic(Relic.TYPE.TITAN_BELT):
+		$RelicHolder.update_relic_type(Relic.TYPE.TITAN_BELT)
+		add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.STRENGTH, 1, false)
+	if turn_counter == 0 && GameState.player.has_relic(Relic.TYPE.CAT_SLIPPERS):
+		$RelicHolder.update_relic_type(Relic.TYPE.CAT_SLIPPERS)
+		add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.DEXTERITY, 1, false)
+	if turn_counter == 0 && GameState.player.has_relic(Relic.TYPE.SENTINEL_SHIELD):
+		$RelicHolder.update_relic_type(Relic.TYPE.SENTINEL_SHIELD)
+		add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.EVADE, 1, true)
 	
 	# process statuses on player and monster
 	if turn_counter > 0:
@@ -214,6 +224,18 @@ func process_new_turn():
 	
 	# trying this
 	rerolls = 2
+	if turn_counter == 0 && GameState.player.has_relic(Relic.TYPE.TRUSTY_SHIELD):
+		$RelicHolder.update_relic_type(Relic.TYPE.TRUSTY_SHIELD)
+		rerolls += 1
+		change_block(AbilityEffect.TARGET.PLAYER, 2)
+		render_health()
+	if GameState.player.has_relic(Relic.TYPE.MORE_OPTIONS):
+		$RelicHolder.update_relic_type(Relic.TYPE.MORE_OPTIONS)
+		var r: Relic = GameState.player.get_relic(Relic.TYPE.MORE_OPTIONS)
+		r.value += 1
+		if r.value >= 3:
+			r.value = 0
+			rerolls += 1
 	
 	print("player statuses:")
 	for s in statuses[0]:
@@ -331,6 +353,9 @@ func _on_ability_clicked(val):
 		combat_win()
 		return
 	
+	if GameState.player.has_relic(Relic.TYPE.BACKUP_PLANS) && GameState.player.block == 0:
+		change_block(AbilityEffect.TARGET.PLAYER, 2)
+		$RelicHolder.update_relic_type(Relic.TYPE.BACKUP_PLANS)
 	var fortify_val: int = get_status_value(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.FORTIFY)
 	if fortify_val > 0:
 		change_block(AbilityEffect.TARGET.PLAYER, fortify_val)
@@ -463,7 +488,6 @@ func process_effect(effect: AbilityEffect, face:int = 0) -> Dictionary:
 
 func process_end_turn():
 	combat_state = CombatState.END_TURN
-	process_relics()
 	
 	var fortify_val: int = get_status_value(AbilityEffect.TARGET.MONSTER, AbilityEffect.TYPE.FORTIFY)
 	if fortify_val > 0:
@@ -492,6 +516,10 @@ func combat_win():
 	await wait_secs(0.5)
 	
 	update_abilities_with_player_vals(false)
+	
+	if GameState.player.has_relic(Relic.TYPE.TROLL_HEART):
+		$RelicHolder.update_relic_type(Relic.TYPE.TROLL_HEART)
+		change_health(AbilityEffect.TARGET.PLAYER, 1)
 	#generate loot scene
 		# coins, and relic
 	# which will then generate the ability screen
@@ -500,10 +528,6 @@ func combat_win():
 func combat_loss():
 	print("YOU DIED")
 	pass
-
-func process_relics():
-	for r in GameState.player.relics:
-		r.process_relic(self)
 
 func render_health():
 	$PlayerUI/PlayerHealth.text = str(GameState.player.health) + "/" + str(GameState.player.max_health)
@@ -642,6 +666,7 @@ func anim_coins():
 	$PlayerUI/PlayerCoins.scale = Vector2.ONE * 1.5
 	var tween = get_tree().create_tween()
 	tween.tween_property($PlayerUI/PlayerCoins, "scale", Vector2.ONE, 0.5)
+	SfxHandler.play_sfx(SfxHandler.COIN_SFX, self, 0.5)
 
 func update_abilities_with_player_vals(disable:bool):
 	for i in 6:
@@ -693,6 +718,10 @@ func process_heal():
 	dice_mgr.dice.clear()
 	dice_mgr.add_die([1,2,6,5,3,4], Color.DARK_RED)
 	dice_mgr.add_die([1,2,6,5,3,4], Color.DARK_RED)
+	if GameState.player.has_relic(Relic.TYPE.DWARVEN_MEAD):
+		$RelicHolder.update_relic_type(Relic.TYPE.DWARVEN_MEAD)
+		dice_mgr.add_die([1,2,6,5,3,4], Color.DARK_RED)
+		dice_mgr.add_die([1,2,6,5,3,4], Color.DARK_RED)
 	dice_mgr.drop_all_dice()
 
 func rest_screen_on_roll_complete(_results):

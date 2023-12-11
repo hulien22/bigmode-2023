@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cehv6h6nyl21y"]
+
+[ext_resource type="Script" path="res://scenes/RelicHolder.gd" id="1_2ctil"]
+
+[node name="RelicHolder" type="Node2D"]
+script = ExtResource("1_2ctil")
+
+[node name="Relics" type="Node2D" parent="."]
