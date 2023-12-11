@@ -66,27 +66,18 @@ offset_bottom = 44.3476
 position = Vector2(954, 663)
 rotation = -0.00178233
 
-[node name="Text2" type="Label" parent="Relic"]
-modulate = Color(0.121569, 0.117647, 0.121569, 1)
-offset_left = -45.9225
-offset_top = -28.6595
-offset_right = 237.077
-offset_bottom = 32.3405
-rotation = -0.00178233
-theme_override_fonts/font = ExtResource("3_c46e1")
-theme_override_font_sizes/font_size = 50
-text = "10 coins"
-
 [node name="relic" parent="Relic" instance=ExtResource("5_rt4dt")]
-position = Vector2(-100.221, -2.63132)
-rotation = 0.00178233
+position = Vector2(2.13153, -3.86621)
+scale = Vector2(1.2, 1.2)
 
-[node name="Button" type="Button" parent="Relic"]
+[node name="RelicButton" type="Button" parent="Relic"]
 modulate = Color(1, 1, 1, 0)
-offset_left = -158.923
-offset_top = -43.6595
-offset_right = 191.077
-offset_bottom = 43.3405
+offset_left = -80.8684
+offset_top = -73.8663
+offset_right = 75.1316
+offset_bottom = 70.1337
+focus_mode = 0
+mouse_filter = 1
 
 [node name="NextButton" parent="." instance=ExtResource("6_dlf2o")]
 position = Vector2(958, 993)
@@ -95,6 +86,6 @@ scale = Vector2(0.767455, 0.767455)
 [connection signal="mouse_entered" from="Coins/Button" to="." method="_on_button_mouse_entered"]
 [connection signal="mouse_exited" from="Coins/Button" to="." method="_on_button_mouse_exited"]
 [connection signal="pressed" from="Coins/Button" to="." method="_on_button_pressed"]
-[connection signal="mouse_entered" from="Relic/Button" to="." method="_on_button_mouse_entered"]
-[connection signal="mouse_exited" from="Relic/Button" to="." method="_on_button_mouse_exited"]
-[connection signal="pressed" from="Relic/Button" to="." method="_on_button_pressed"]
+[connection signal="mouse_entered" from="Relic/RelicButton" to="." method="_on_relic_button_mouse_entered"]
+[connection signal="mouse_exited" from="Relic/RelicButton" to="." method="_on_relic_button_mouse_exited"]
+[connection signal="pressed" from="Relic/RelicButton" to="." method="_on_relic_button_pressed"]

@@ -26,6 +26,7 @@ func init_slime():
 #	repeat_abilities = [Global.monster_abilities[3]]
 
 func init_monster(m:MonsterType):
+	is_elite = false
 	match m:
 		MonsterType.SLIME:
 			max_health = 10
@@ -73,7 +74,19 @@ func init_monster(m:MonsterType):
 
 func get_next_move(turn: int) -> Ability:
 	if turn < starting_abilities.size():
+		if is_elite:
+			return Global.get_upgraded_monster_ability(starting_abilities[turn])
 		return starting_abilities[turn]
-	return repeat_abilities[(turn - starting_abilities.size()) % repeat_abilities.size()]
+	
+	var ab:Ability = repeat_abilities[(turn - starting_abilities.size()) % repeat_abilities.size()]
+	if is_elite:
+		return Global.get_upgraded_monster_ability(ab)
+	return ab
 
+func set_elite():
+	is_elite = true
+	name_ += "+"
+	max_health *= 1.5
+	health = max_health
+	coins_dropped = floor(1.5 * coins_dropped)
 

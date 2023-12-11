@@ -58,10 +58,10 @@ func add_new_relic(t:Relic.TYPE):
 		Relic.TYPE.MOMS_STEW:
 			max_health += 5
 			health += 5
-			Events.signal("health_updated")
+			Events.emit_signal("health_updated")
 		Relic.TYPE.BAG_OF_HOLDING:
 			coins += 10
-			Events.signal("coins_updated")
+			Events.emit_signal("coins_updated")
 
 func has_relic(t:Relic.TYPE) -> bool:
 	for r in relics:

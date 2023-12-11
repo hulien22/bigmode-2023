@@ -72,6 +72,10 @@ func go_to_scene(gs: GameState.GameScene):
 			$MonsterUI.show()
 			$Combatscreen.show()
 			process_start_combat()
+		GameState.GameScene.ELITE:
+			$MonsterUI.show()
+			$Combatscreen.show()
+			process_start_combat(true)
 		GameState.GameScene.SELECT_ABILITY:
 			var new_abs:Array[Ability] = [Global.abilities[2], Global.abilities[3], Global.abilities[6]]
 			$AbilityChoiceScreen.init(ability_boxes, new_abs)
@@ -80,7 +84,8 @@ func go_to_scene(gs: GameState.GameScene):
 			animate_abilities_slide(true)
 		GameState.GameScene.LOOT:
 			var c = 2 if monster == null else monster.coins_dropped
-			$LootScreen.init(c, null)
+			var r = null if !monster.is_elite else GameState.generate_new_relic()
+			$LootScreen.init(c, r)
 			$LootScreen.connect("gg_go_next", go_to_scene.bind(GameState.GameScene.SELECT_ABILITY))
 			$LootScreen.connect("add_coins", add_coins)
 			$LootScreen.show()
@@ -132,9 +137,11 @@ func _on_door_selected(gs: GameState.GameScene):
 ####################################################################################################
 ####################################################################################################
 ####################################################################################################
-func process_start_combat():
+func process_start_combat(is_elite: bool = false):
 	disable_abilities_and_rerollbtn()
 	monster.init_monster(GameState.generate_monster_to_fight())
+	if is_elite:
+		monster.set_elite()
 	$MonsterUI/character2.init(monster.image)
 	$MonsterUI/MonsterName.text = monster.name_
 

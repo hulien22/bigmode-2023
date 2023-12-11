@@ -4,20 +4,21 @@ signal gg_go_next()
 signal add_coins(amt)
 
 var coins:int = 0
-var relic = null
 
 func _ready():
 	$NextButton.connect("pressed", _on_nextbtn_pressed)
 	$NextButton.set_disabled(false)
 #	init([], [Global.abilities[0],Global.abilities[2],Global.abilities[4]])
 
-func init(num_coins: int, r):
+func init(num_coins: int, r = null):
 	coins = num_coins
 	$Coins.scale = Vector2.ONE
 	$Coins/Text2.text = str(coins) + " coins"
 	$Coins.visible = coins > 0
 	# TODO relics
 	if r:
+		$Relic/relic.relic = r
+		$Relic/relic.update_sprite()
 		$Relic.show()
 	else:
 		$Relic.hide()
@@ -25,7 +26,7 @@ func init(num_coins: int, r):
 	$NextButton.set_disabled(false)
 
 func update_btn_text():
-	if coins > 0 || relic != null:
+	if coins > 0 || $Relic/relic.visible:
 		$NextButton.set_text("Skip")
 	else:
 		$NextButton.set_text("Next")
@@ -47,3 +48,17 @@ func _on_button_pressed():
 	$Coins.visible = false
 	coins = 0
 	update_btn_text()
+
+
+func _on_relic_button_pressed():
+	GameState.player.add_new_relic($Relic/relic.relic.type)
+	Events.emit_signal("relics_updated")
+	$Relic/RelicButton.hide()
+	$Relic/relic.hide()
+	update_btn_text()
+
+func _on_relic_button_mouse_entered():
+	$Relic/relic._on_color_rect_mouse_entered()
+
+func _on_relic_button_mouse_exited():
+	$Relic/relic._on_color_rect_mouse_exited()

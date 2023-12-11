@@ -48,7 +48,7 @@ func generate_next_doors() -> Array[GameScene]:
 		0,1,6:
 			return [GameScene.COMBAT]
 		3,7:
-			return [GameScene.COMBAT, GameScene.COMBAT]
+			return [GameScene.COMBAT, GameScene.ELITE]
 		2,5:
 			var a = randi_range(0, NONCOMBATSCENES.size()-1)
 			var b = randi_range(0, NONCOMBATSCENES.size()-1)
