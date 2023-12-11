@@ -8,16 +8,21 @@ var abilities: Array[Ability]
 var dice: Array
 var relics: Array[Relic]
 
+func set_abilities(a: Array[Ability]):
+	abilities = []
+	for x in a:
+		abilities.append(Ability.new(x.name_, x.desc_, x.effects_, x.rarity_))
+
 func init_warrior():
 	max_health = 10
 	health = 10
 	coins = 5
-	abilities = [Global.get_ability_by_name("Strike"),
+	set_abilities([Global.get_ability_by_name("Strike"),
 				 Global.get_ability_by_name("Strike"), 
 				 Global.get_ability_by_name("Block"), 
 				 Global.get_ability_by_name("Block"), 
 				 Global.get_ability_by_name("Wide Swing"), 
-				 Global.get_ability_by_name("Power Up")]
+				 Global.get_ability_by_name("Power Up")])
 	dice = [[[1,2,6,5,3,4], Color.LIGHT_SEA_GREEN],
 			[[1,2,6,5,3,4], Color.CRIMSON],
 			[[1,2,6,5,3,4], Color.PURPLE],
