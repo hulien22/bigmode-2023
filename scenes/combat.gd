@@ -260,7 +260,10 @@ func _on_complete_roll(results):
 	$Combatscreen/ModeVal.text = "Mode=" + ",".join(modes) + " | X=" + str(occurences)
 	animate_abilities_slide(true)
 	
-	if rerolls > 0:
+	if has_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.STUNNED):
+		$Combatscreen/RerollButton.set_disabled(true)
+		$Combatscreen/RerollButton.set_text("STUNNED")
+	elif rerolls > 0:
 		$Combatscreen/RerollButton.set_disabled(false)
 		$Combatscreen/RerollButton.set_text("REROLL! (" + str(rerolls) + ")")
 
@@ -283,6 +286,8 @@ func _on_ability_clicked(val):
 	print("selected ability ", ability_boxes[val-1].ability.name_)
 
 	combat_state = CombatState.PLAYER_ABILITY
+	
+	var health_on_lethal: int = 0
 	
 	var num_loops:int = 1
 	var haste_status:Status = get_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.HASTE)
@@ -307,7 +312,8 @@ func _on_ability_clicked(val):
 				cur_abilities[val-1].limited_uses_left -= 1
 				if cur_abilities[val-1].limited_uses_left <= 0:
 					cur_abilities[val-1] = AbilityDesc.new(Global.depleted_ability)
-					
+			if d.has("health_on_lethal"):
+				health_on_lethal += d.get("health_on_lethal", 0)
 		$PlayerUI/character.play_attack()
 		await wait_secs(0.5)
 		animate_status_changes()
@@ -316,6 +322,9 @@ func _on_ability_clicked(val):
 
 	# check if anyone died
 	if monster.health <= 0:
+		if health_on_lethal > 0:
+			GameState.player.max_health += health_on_lethal
+			render_health()
 		combat_win()
 		return
 	if GameState.player.health <= 0:
@@ -364,19 +373,19 @@ func process_effect(effect: AbilityEffect, face:int = 0) -> Dictionary:
 	var dict:Dictionary = {}
 	match effect.type_:
 		AbilityEffect.TYPE.DAMAGE:
-			var dmg = effect.process_value(occurences, face)
+			var dmg = effect.process_value(occurences, face, rerolls, GameState.player.block)
 			# process other statuses (eg strength, weaknesses)
 			inflict_damage(effect.target_, max(0, compute_damage(dmg, (effect.target_ + 1) % 2, effect.target_)))
 		AbilityEffect.TYPE.SHIELD:
-			var amt = effect.process_value(occurences, face)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
 			# process other statuses (eg strength)
 			change_block(effect.target_, amt)
 		AbilityEffect.TYPE.VULNERABLE:
-			var amt = effect.process_value(occurences, face)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
 			# process other statuses (eg strength)
 			add_status(effect.target_, AbilityEffect.TYPE.VULNERABLE, amt, true)
 		AbilityEffect.TYPE.STRENGTH:
-			var amt = effect.process_value(occurences, face)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
 			# process other statuses (eg strength)
 			add_status(effect.target_, AbilityEffect.TYPE.STRENGTH, amt, false)
 #		AbilityEffect.TYPE.LIMITED_USES:
@@ -384,51 +393,68 @@ func process_effect(effect: AbilityEffect, face:int = 0) -> Dictionary:
 #			if effect.uses_left <= 0:
 #				dict["deplete_ability"] = true
 		AbilityEffect.TYPE.HEAL:
-			var amt = effect.process_value(occurences, face)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
 			change_health(effect.target_, -1 * amt)
 		AbilityEffect.TYPE.SELF_DMG:
-			var dmg = effect.process_value(occurences, face)
+			var dmg = effect.process_value(occurences, face, rerolls, GameState.player.block)
 			# don't include strength, do include vulnerable
 			inflict_damage(effect.target_, max(0, compute_damage(dmg, AbilityEffect.TARGET.NOONE, effect.target_)))
 		AbilityEffect.TYPE.DISABLE_ABILITY1:
-			var amt = effect.process_value(occurences, face)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
 			add_status(effect.target_, AbilityEffect.TYPE.DISABLE_ABILITY1, amt, true)
 		AbilityEffect.TYPE.DISABLE_ABILITY2:
-			var amt = effect.process_value(occurences, face)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
 			add_status(effect.target_, AbilityEffect.TYPE.DISABLE_ABILITY2, amt, true)
 		AbilityEffect.TYPE.DISABLE_ABILITY3:
-			var amt = effect.process_value(occurences, face)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
 			add_status(effect.target_, AbilityEffect.TYPE.DISABLE_ABILITY3, amt, true)
 		AbilityEffect.TYPE.DISABLE_ABILITY4:
-			var amt = effect.process_value(occurences, face)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
 			add_status(effect.target_, AbilityEffect.TYPE.DISABLE_ABILITY4, amt, true)
 		AbilityEffect.TYPE.DISABLE_ABILITY5:
-			var amt = effect.process_value(occurences, face)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
 			add_status(effect.target_, AbilityEffect.TYPE.DISABLE_ABILITY5, amt, true)
 		AbilityEffect.TYPE.DISABLE_ABILITY6:
-			var amt = effect.process_value(occurences, face)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
 			add_status(effect.target_, AbilityEffect.TYPE.DISABLE_ABILITY6, amt, true)
 		AbilityEffect.TYPE.DISABLE_ABILITYR:
-			var amt = effect.process_value(occurences, face)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
 			add_status(effect.target_, AbilityEffect.TYPE.DISABLE_ABILITYR, amt, true)
 		AbilityEffect.TYPE.CONFUSE:
-			var amt = effect.process_value(occurences, face)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
 			add_status(effect.target_, AbilityEffect.TYPE.CONFUSE, amt, true)
 		AbilityEffect.TYPE.BURN:
-			var amt = effect.process_value(occurences, face)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
 			add_status(effect.target_, AbilityEffect.TYPE.BURN, amt, true)
 		AbilityEffect.TYPE.FREEZE:
-			var amt = effect.process_value(occurences, face)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
 			add_status(effect.target_, AbilityEffect.TYPE.FREEZE, amt, true)
 		AbilityEffect.TYPE.EVADE:
-			var amt = effect.process_value(occurences, face)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
 			add_status(effect.target_, AbilityEffect.TYPE.EVADE, amt, true)
 		AbilityEffect.TYPE.FORTIFY:
-			var amt = effect.process_value(occurences, face)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
 			add_status(effect.target_, AbilityEffect.TYPE.FORTIFY, amt, false)
 		AbilityEffect.TYPE.HASTE:
-			var amt = effect.process_value(occurences, face)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
 			add_status(effect.target_, AbilityEffect.TYPE.HASTE, amt, false)
+		AbilityEffect.TYPE.LOOT:
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			add_coins(amt)
+		AbilityEffect.TYPE.SCAVENGE:
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			for i in amt:
+				dice_mgr.add_die(DiceConstructor.generate_random_die(), DiceConstructor.generate_random_die_color())
+		AbilityEffect.TYPE.RUMMAGE:
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			for i in amt:
+				dice_mgr.add_die([1,2,6,5,3,4], DiceConstructor.generate_random_die_color())
+		AbilityEffect.TYPE.STUNNED:
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			add_status(effect.target_, AbilityEffect.TYPE.STUNNED, amt, true)
+		AbilityEffect.TYPE.HEALTH_ON_LETHAL:
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			dict["health_on_lethal"] = amt
 	return dict
 
 func process_end_turn():
@@ -491,6 +517,10 @@ func change_health(target: AbilityEffect.TARGET, amount: int):
 #	render_health()
 
 func change_block(target: AbilityEffect.TARGET, amount: int):
+	if amount > 0:
+		var dex_status: Status = get_status(target, AbilityEffect.TYPE.DEXTERITY)
+		if dex_status != null:
+			amount += dex_status.amount
 	if target == AbilityEffect.TARGET.PLAYER:
 		GameState.player.block += amount
 	else:
@@ -561,19 +591,19 @@ func get_monster_desc() -> String:
 	if s.contains("[D]"):
 		for e in monster_intent.effects_:
 			if e.type_ == AbilityEffect.TYPE.DAMAGE && e.target_ == AbilityEffect.TARGET.PLAYER:
-				var dmg = e.process_value(0,0)
+				var dmg = e.process_value(0,0, rerolls, monster.block)
 				s = s.replace("[D]", str(compute_damage(dmg, AbilityEffect.TARGET.MONSTER, AbilityEffect.TARGET.PLAYER)))
 				break
 	if s.contains("[B]"):
 		for e in monster_intent.effects_:
 			if e.type_ == AbilityEffect.TYPE.SHIELD && e.target_ == AbilityEffect.TARGET.MONSTER:
-				var v = e.process_value(0,0)
+				var v = e.process_value(0,0, rerolls, monster.block)
 				s = s.replace("[B]", str(v))
 				break
 	if s.contains("[S]"):
 		for e in monster_intent.effects_:
 			if e.type_ == AbilityEffect.TYPE.STRENGTH && e.target_ == AbilityEffect.TARGET.MONSTER:
-				var v = e.process_value(0,0)
+				var v = e.process_value(0,0, rerolls, monster.block)
 				s = s.replace("[S]", str(v))
 				break
 	return s

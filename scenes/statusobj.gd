@@ -33,6 +33,10 @@ func init(s: Status):
 			$holder/Icon.frame = 18
 		AbilityEffect.TYPE.HASTE:
 			$holder/Icon.frame = 19
+		AbilityEffect.TYPE.STUNNED:
+			$holder/Icon.frame = 8
+		AbilityEffect.TYPE.DEXTERITY:
+			$holder/Icon.frame = 20
 		_:
 			$holder/Icon.frame = 10
 	if amount == 0:

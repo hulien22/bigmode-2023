@@ -47,9 +47,11 @@
 			[0, 4, 1]
 		], 1],
 		["Loot", "Gain 1 gold (once per combat)", [
+			[0, 22, 1],
 			[0, 4, 1]
 		], 2],
 		["Loot+", "Gain 2 gold (once per combat)", [
+			[0, 22, 2],
 			[0, 4, 1]
 		], 2],
 		["Double Slap", "Attack twice for 1 damage", [
@@ -62,8 +64,10 @@
 			[1, 0, "1"],
 		], 1],
 		["Haste", "Gain 1 Hastened", [
+			[0, 20, 1]
 		], 3],
 		["Haste+", "Gain 2 Hastened", [
+			[0, 20, 2]
 		], 3],
 		["Fortify", "Gain 1 Fortify (once per combat)", [
 			[0, 20, 1],
@@ -74,8 +78,11 @@
 			[0, 4, 1]
 		], 3],
 		["Shield Throw", "Deal damage equal to your block", [
+			[1, 0, "b"],
 		], 2],
 		["Shield Throw+", "Gain 2 shield, Deal damage equal to your block", [
+			[0, 1, "2"],
+			[1, 0, "b"]
 		], 2],
 		["Guarding Blow", "Deal X-2 damage, Gain X-2 shield", [
 			[1, 0, "x-2"],
@@ -101,17 +108,29 @@
 			[1, 2, 5],
 			[0, 4, 1]
 		], 2],
-		["Rummage", "Gain a temp die (3x per combat)", [
-			[0, 4, 3]
+		["Scavenge", "Gain a random temp die (once per combat)", [
+			[0, 23, 1],
+			[0, 4, 1]
+		], 2],
+		["Scavenge+", "Gain 2 random temp dice (once per combat)", [
+			[0, 23, 2],
+			[0, 4, 1]
+		], 2],
+		["Rummage", "Gain a temp die (once per combat)", [
+			[0, 24, 1],
+			[0, 4, 1]
 		], 3],
-		["Rummage+", "Gain a temp die (5x per combat)", [
-			[0, 4, 5]
+		["Rummage+", "Gain 2 temp dice (twice per combat)", [
+			[0, 24, 2],
+			[0, 4, 2]
 		], 3],
 		["Feast", "Deal 1 damage, if lethal gain 2 max health", [
 			[1, 0, "1"],
+			[0, 19, 2]
 		], 3],
 		["Feast+", "Deal 2 damage, if lethal gain 3 max health", [
 			[1, 0, "2"],
+			[0, 19, 3]
 		], 3],
 		["Enrage", "Take 2 damage, gain X Strength", [
 			[0, 3, "x"],
@@ -122,10 +141,12 @@
 			[0, 6, "2"]
 		], 2],
 		["Panicked Block", "Gain X+3 shield, Gain 2 Frightened", [
-			[0, 1, "x+3"]
+			[0, 1, "x+3"],
+			[0, 13, 2]
 		], 1],
 		["Panicked Block+", "Gain X+5 shield, Gain 2 Frightened", [
-			[0, 1, "x+5"]
+			[0, 1, "x+5"],
+			[0, 13, 2]
 		], 1],
 		["Face Tank", "Gain [die face] shield", [
 			[0, 1, "f"]
@@ -139,31 +160,56 @@
 		["Low Kick+", "Deal 10-X damage", [
 			[1, 0, "10-x"],
 		], 1],
-		["Evade", "Gain 1 Dodge", [
+		["Evade", "Gain 1 Dodge (once per combat)", [
+			[0, 18, "1"]
 		], 2],
 		["Evade+", "Gain X Dodge (once per combat)", [
+			[0, 18, "x"]
 		], 2],
 	],
 	"monster_abilities" : [
 		["Bite", "Deal [D] damage", [
 			[0, 0, 2]
 		]],
+		["Bite+", "Deal [D] damage", [
+			[0, 0, 4]
+		]],
 		["Curl Up", "Gain [B] block", [
 			[1, 1, 2]
+		]],
+		["Curl Up", "Gain [B] block", [
+			[1, 1, 4]
 		]],
 		["Strengthen", "Gain [S] STR", [
 			[1, 3, 1]
 		]],
+		["Strengthen+", "Gain [S] STR", [
+			[1, 3, 2]
+		]],
 		["Distract", "Inflict 1 Vulnerable", [
 			[0, 2, 1]
+		]],
+		["Distract+", "Inflict 2 Vulnerable", [
+			[0, 2, 2]
 		]],
 		["Tri-Attack", "Deal 3*[D] damage", [
 			[0, 0, 1],
 			[0, 0, 1],
 			[0, 0, 1]
 		]],
+		["Tri-Attack+", "Deal 3*[D] damage", [
+			[0, 0, 2],
+			[0, 0, 2],
+			[0, 0, 2]
+		]],
 		["Engulf", "Disable top and bottom skills", [
 			[0, 7, 1],
+			[0, 12, 1],
+		]],
+		["Engulf+", "Disable top 2 and bottom 2 skills", [
+			[0, 7, 1],
+			[0, 8, 1],
+			[0, 11, 1],
 			[0, 12, 1],
 		]],
 	]

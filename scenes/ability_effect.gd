@@ -25,6 +25,11 @@ enum TYPE {
 	HEALTH_ON_LETHAL,	#19
 	FORTIFY,			#20
 	HASTE,				#21
+	LOOT,				#22
+	SCAVENGE,			#23
+	RUMMAGE,			#24
+	STUNNED,			#25
+	DEXTERITY,			#26
 }
 
 var target_: TARGET;
@@ -36,11 +41,11 @@ func _init(target: int, type: int, value: String):
 	type_ = type;
 	value_ = value;
 
-func process_value(x:int, f:int) -> int:
+func process_value(x:int, f:int, r:int, b:int) -> int:
 	var expr = Expression.new()
-	expr.parse(value_, ["x", "f"])
+	expr.parse(value_, ["x", "f", "r", "b"])
 	# todo replace other things
-	return expr.execute([x, f])
+	return expr.execute([x, f, r, b])
 
 func is_status_inflict() -> bool:
 	match type_:
@@ -68,6 +73,8 @@ func is_status_inflict() -> bool:
 			return true
 		TYPE.BLIND:
 			return true
+		TYPE.STUNNED:
+			return true
 		_:
 			return false
 
@@ -92,7 +99,7 @@ static func get_status_desc(t:TYPE) -> String:
 		TYPE.DISABLE_ABILITY6:
 			return "Disabled 6: Can't use your 6th ability"
 		TYPE.DISABLE_ABILITYR:
-			return "Disabled R: Can't use a random ability"
+			return "Frightened: A random ability is disabled"
 		TYPE.CONFUSE:
 			return "Confused: Randomly shuffle your abilities"
 		TYPE.BURN:
@@ -107,6 +114,10 @@ static func get_status_desc(t:TYPE) -> String:
 			return "Fortify: Gain block at the end of the turn"
 		TYPE.HASTE:
 			return "Hastened: repeat the next ability twice"
+		TYPE.STUNNED:
+			return "Stunned: can't reroll dice"
+		TYPE.DEXTERITY:
+			return "Dexterity: gain extra block"
 		_:
 			return ""
 		
