@@ -41,3 +41,4 @@ autowrap_mode = 3
 [node name="NextButton" parent="." instance=ExtResource("6_gmnhp")]
 position = Vector2(958, 993)
 scale = Vector2(0.767455, 0.767455)
+text = "Next"

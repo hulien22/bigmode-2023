@@ -29,6 +29,10 @@ func init(s: Status):
 			$holder/Icon.frame = 15
 		AbilityEffect.TYPE.EVADE:
 			$holder/Icon.frame = 6
+		AbilityEffect.TYPE.FORTIFY:
+			$holder/Icon.frame = 18
+		AbilityEffect.TYPE.HASTE:
+			$holder/Icon.frame = 19
 		_:
 			$holder/Icon.frame = 10
 	if amount == 0:

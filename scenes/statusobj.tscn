@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bmqm3htxfa4fv"]
+[gd_scene load_steps=24 format=3 uid="uid://bmqm3htxfa4fv"]
 
 [ext_resource type="Script" path="res://scenes/statusobj.gd" id="1_88vg2"]
 [ext_resource type="Texture2D" uid="uid://cetupre532drl" path="res://art/icons/spiral.png" id="2_y62y4"]
@@ -20,6 +20,8 @@
 [ext_resource type="Texture2D" uid="uid://cv6s4o6qwwj5b" path="res://art/icons/power.png" id="18_vklo6"]
 [ext_resource type="Texture2D" uid="uid://bi2w1o133l2hb" path="res://art/icons/freeze.png" id="19_rmggo"]
 [ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="19_vk7cy"]
+[ext_resource type="Texture2D" uid="uid://c8orjss7difow" path="res://art/icons/castle.png" id="20_uu45r"]
+[ext_resource type="Texture2D" uid="uid://crh4jg5qmtgy0" path="res://art/icons/haste.png" id="21_l1d0i"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6g7fp"]
 animations = [{
@@ -77,6 +79,12 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("19_rmggo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_uu45r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_l1d0i")
 }],
 "loop": true,
 "name": &"default",

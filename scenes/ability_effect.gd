@@ -22,6 +22,9 @@ enum TYPE {
 	FREEZE,				#16
 	BLIND,				#17
 	EVADE,				#18
+	HEALTH_ON_LETHAL,	#19
+	FORTIFY,			#20
+	HASTE,				#21
 }
 
 var target_: TARGET;
@@ -100,6 +103,10 @@ static func get_status_desc(t:TYPE) -> String:
 			return "Blinded: Can't see dice faces"
 		TYPE.EVADE:
 			return "Evading: Dodge all damage"
+		TYPE.FORTIFY:
+			return "Fortify: Gain block at the end of the turn"
+		TYPE.HASTE:
+			return "Hastened: repeat the next ability twice"
 		_:
 			return ""
 		

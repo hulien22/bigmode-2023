@@ -157,6 +157,7 @@ func process_start_combat():
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.CONFUSE, 99, true)
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BURN, 99, true)
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BLIND, 2, true)
+	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.HASTE, 2, false)
 	
 	process_new_turn()
 	#todo timer between states? to play anims or smth
@@ -283,32 +284,48 @@ func _on_ability_clicked(val):
 
 	combat_state = CombatState.PLAYER_ABILITY
 	
-	# Only process the selected ability if it is enabled
-	if !cur_abilities[val-1].is_disabled:
-		var d:Dictionary = process_ability(ability_boxes[val-1].ability, val, false)
-	#	if d.get("deplete_ability", false):
-	#		ability_boxes[val-1].init(val, Global.depleted_ability)
-		if cur_abilities[val-1].has_limited_uses:
-			cur_abilities[val-1].limited_uses_left -= 1
-			if cur_abilities[val-1].limited_uses_left <= 0:
-				cur_abilities[val-1] = AbilityDesc.new(Global.depleted_ability)
+	var num_loops:int = 1
+	var haste_status:Status = get_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.HASTE)
+	if haste_status != null:
+		num_loops = 2
 	
-#	animate_status_changes()
-	
+	for loop in num_loops:
+		if loop == 1 && haste_status != null:
+			haste_status.add_amount(-1)
+			if haste_status.amount <= 0:
+				for i in statuses[AbilityEffect.TARGET.PLAYER].size():
+					if statuses[AbilityEffect.TARGET.PLAYER][i].type == AbilityEffect.TYPE.HASTE:
+						statuses[AbilityEffect.TARGET.PLAYER].remove_at(i)
+						break
+			animate_status_changes()
+		# Only process the selected ability if it is enabled
+		if !cur_abilities[val-1].is_disabled:
+			var d:Dictionary = process_ability(ability_boxes[val-1].ability, val, false)
+		#	if d.get("deplete_ability", false):
+		#		ability_boxes[val-1].init(val, Global.depleted_ability)
+			if cur_abilities[val-1].has_limited_uses:
+				cur_abilities[val-1].limited_uses_left -= 1
+				if cur_abilities[val-1].limited_uses_left <= 0:
+					cur_abilities[val-1] = AbilityDesc.new(Global.depleted_ability)
+					
+		$PlayerUI/character.play_attack()
+		await wait_secs(0.5)
+		animate_status_changes()
+		render_health()
+		await wait_secs(0.5)
+
 	# check if anyone died
-	
-	$PlayerUI/character.play_attack()
-	await wait_secs(0.5)
-	animate_status_changes()
-	render_health()
-	await wait_secs(0.5)
-	
 	if monster.health <= 0:
 		combat_win()
 		return
 	if GameState.player.health <= 0:
 		combat_loss()
 		return
+	
+	var fortify_status: Status = get_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.FORTIFY)
+	if fortify_status != null:
+		change_block(AbilityEffect.TARGET.PLAYER, fortify_status.amount)
+		render_health()
 	
 	process_monster_turn()
 
@@ -394,18 +411,34 @@ func process_effect(effect: AbilityEffect, face:int = 0) -> Dictionary:
 		AbilityEffect.TYPE.DISABLE_ABILITYR:
 			var amt = effect.process_value(occurences, face)
 			add_status(effect.target_, AbilityEffect.TYPE.DISABLE_ABILITYR, amt, true)
+		AbilityEffect.TYPE.CONFUSE:
+			var amt = effect.process_value(occurences, face)
+			add_status(effect.target_, AbilityEffect.TYPE.CONFUSE, amt, true)
+		AbilityEffect.TYPE.BURN:
+			var amt = effect.process_value(occurences, face)
+			add_status(effect.target_, AbilityEffect.TYPE.BURN, amt, true)
+		AbilityEffect.TYPE.FREEZE:
+			var amt = effect.process_value(occurences, face)
+			add_status(effect.target_, AbilityEffect.TYPE.FREEZE, amt, true)
+		AbilityEffect.TYPE.EVADE:
+			var amt = effect.process_value(occurences, face)
+			add_status(effect.target_, AbilityEffect.TYPE.EVADE, amt, true)
+		AbilityEffect.TYPE.FORTIFY:
+			var amt = effect.process_value(occurences, face)
+			add_status(effect.target_, AbilityEffect.TYPE.FORTIFY, amt, false)
+		AbilityEffect.TYPE.HASTE:
+			var amt = effect.process_value(occurences, face)
+			add_status(effect.target_, AbilityEffect.TYPE.HASTE, amt, false)
 	return dict
 
 func process_end_turn():
 	combat_state = CombatState.END_TURN
 	process_relics()
 	
-	print("player statuses:")
-	for s in statuses[0]:
-		print(s.as_string())
-	print("monster statuses:")
-	for s in statuses[1]:
-		print(s.as_string())
+	var fortify_status: Status = get_status(AbilityEffect.TARGET.MONSTER, AbilityEffect.TYPE.FORTIFY)
+	if fortify_status != null:
+		change_block(AbilityEffect.TARGET.MONSTER, fortify_status.amount)
+		render_health()
 	
 	process_new_turn()
 
@@ -677,8 +710,15 @@ func end_ritual_scene():
 	dice_mgr.dice.clear()
 	generate_next_door_scene()
 
-func has_status(c: AbilityEffect.TARGET, t: AbilityEffect.TYPE):
+func has_status(c: AbilityEffect.TARGET, t: AbilityEffect.TYPE) -> bool:
 	for s in statuses[c]:
 		if s.type == t:
 			return true
 	return false
+
+func get_status(c: AbilityEffect.TARGET, t: AbilityEffect.TYPE) -> Status:
+	for s in statuses[c]:
+		if s.type == t:
+			return s
+	return null
+
