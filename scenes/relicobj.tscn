@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://x3clfwsacs1s"]
+[gd_scene load_steps=32 format=3 uid="uid://x3clfwsacs1s"]
 
 [ext_resource type="Texture2D" uid="uid://col80tyqs1tj6" path="res://art/paper-square.png" id="1_7fhnf"]
 [ext_resource type="Script" path="res://scenes/relicobj.gd" id="1_p0s7b"]
@@ -21,6 +21,15 @@
 [ext_resource type="Texture2D" uid="uid://cpfv0vpycoglj" path="res://art/relics/trustyshield.png" id="18_xbtco"]
 [ext_resource type="Texture2D" uid="uid://bscdk4uevbl0w" path="res://art/relics/moreoptions.png" id="19_qhi6f"]
 [ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="20_hsove"]
+[ext_resource type="Texture2D" uid="uid://djtfg6pmpfjo0" path="res://art/relics/devil.png" id="21_d6g5p"]
+[ext_resource type="Texture2D" uid="uid://dblv3n1bo3vkx" path="res://art/relics/drunkenbrawler.png" id="22_d7adv"]
+[ext_resource type="Texture2D" uid="uid://8crxroc3ulkx" path="res://art/relics/frostsuit.png" id="23_nhq1p"]
+[ext_resource type="Texture2D" uid="uid://c1wjohlonifv5" path="res://art/relics/greed.png" id="24_25plo"]
+[ext_resource type="Texture2D" uid="uid://cwosgje304ia6" path="res://art/relics/masochist.png" id="25_jpntp"]
+[ext_resource type="Texture2D" uid="uid://cdhyilashkpso" path="res://art/relics/infernalengine.png" id="26_1nea3"]
+[ext_resource type="Texture2D" uid="uid://cumxnjcqo3xcp" path="res://art/relics/rations.png" id="27_x0dev"]
+[ext_resource type="Texture2D" uid="uid://dexal3goxhk60" path="res://art/relics/sunglasses.png" id="28_suetp"]
+[ext_resource type="Texture2D" uid="uid://ct6kmpjcufrq7" path="res://art/relics/timer.png" id="29_hdqx1"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jq6vi"]
 animations = [{
@@ -75,6 +84,33 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("19_qhi6f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_d6g5p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_d7adv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_nhq1p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_25plo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_jpntp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_1nea3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_x0dev")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_suetp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_hdqx1")
 }],
 "loop": true,
 "name": &"default",

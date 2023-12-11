@@ -18,7 +18,16 @@ enum TYPE {
 	SENTINEL_SHIELD,
 	MOMS_STEW,
 	TROLL_HEART,
-	BAG_OF_HOLDING
+	BAG_OF_HOLDING,
+	COOL_GUY_GLASSES,
+	DEAL_WITH_THE_DEVIL,
+	RATIONS,
+	FRONTLOADED,
+	INFERNAL_ENGINE,
+	FROZEN_SUPERSUIT,
+	DRUNKEN_BRAWLER,
+	GREED,
+	MASOCHIST,
 }
 
 const regular_relics: Array[TYPE] = [
@@ -38,6 +47,18 @@ const regular_relics: Array[TYPE] = [
 	TYPE.MOMS_STEW, 
 	TYPE.TROLL_HEART, 
 	TYPE.BAG_OF_HOLDING
+]
+
+const boss_relics: Array[TYPE] = [
+	TYPE.COOL_GUY_GLASSES,
+	TYPE.DEAL_WITH_THE_DEVIL,
+	TYPE.RATIONS,
+	TYPE.FRONTLOADED,
+	TYPE.INFERNAL_ENGINE,
+	TYPE.FROZEN_SUPERSUIT,
+	TYPE.DRUNKEN_BRAWLER,
+	TYPE.GREED,
+	TYPE.MASOCHIST,
 ]
 
 var name_: String = ""
@@ -103,4 +124,32 @@ func init_relic(t: TYPE):
 		TYPE.BAG_OF_HOLDING:
 			name_ = "Bag of Holding"
 			description = "Gain 10 coins"
+		TYPE.COOL_GUY_GLASSES:
+			name_ = "Cool Guy Glasses"
+			description = "Gain 3 more dice, but start each turn dazzled\n---\nDazzled: Randomize all dice faces"
+		TYPE.DEAL_WITH_THE_DEVIL:
+			name_ = "Deal with the Devil"
+			description = "Can reroll extra times at the cost of 2 health"
+		TYPE.RATIONS:
+			name_ = "Rations"
+			description = "Relics with limited uses get one more use"
+		TYPE.FRONTLOADED:
+			name_ = "Frontloaded"
+			description = "Start with 10 rerolls for the entire combat. No longer gain 3 at the start of each turn"
+		TYPE.INFERNAL_ENGINE:
+			name_ = "Infernal Engine"
+			description = "Gain 2 random dice, start each fight with 3 Burn\n---\nBurned: Increase all dice values by 1 (max value is still 6)"
+		TYPE.FROZEN_SUPERSUIT:
+			name_ = "Frozen Super Suit"
+			description = "Gain 2 random dice, start each fight with 3 Frozen\n---\nFrozen: Decrease all dice values by 1 (min value is still 1)"
+		TYPE.DRUNKEN_BRAWLER:
+			name_ = "Drunken Brawler"
+			description = "Start each combat with 3 Dexterity and 2 Blinded\n---\nBlinded: Can't see dice faces"
+		TYPE.GREED:
+			name_ = "Greed"
+			description = "Gain 1 extra reroll per turn, but can no longer gain gold"
+		TYPE.MASOCHIST:
+			name_ = "Masochist"
+			description = "Gain 1 permanent strength each time you hurt yourself"
+			value = 0
 

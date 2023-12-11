@@ -41,6 +41,25 @@ func update_sprite():
 			$Node2D/AnimatedSprite2D.frame = 14
 		Relic.TYPE.BAG_OF_HOLDING:
 			$Node2D/AnimatedSprite2D.frame = 1
+		Relic.TYPE.COOL_GUY_GLASSES:
+			$Node2D/AnimatedSprite2D.frame = 24
+		Relic.TYPE.DEAL_WITH_THE_DEVIL:
+			$Node2D/AnimatedSprite2D.frame = 17
+		Relic.TYPE.RATIONS:
+			$Node2D/AnimatedSprite2D.frame = 23
+		Relic.TYPE.FRONTLOADED:
+			$Node2D/AnimatedSprite2D.frame = 25
+		Relic.TYPE.INFERNAL_ENGINE:
+			$Node2D/AnimatedSprite2D.frame = 22
+		Relic.TYPE.FROZEN_SUPERSUIT:
+			$Node2D/AnimatedSprite2D.frame = 19
+		Relic.TYPE.DRUNKEN_BRAWLER:
+			$Node2D/AnimatedSprite2D.frame = 18
+		Relic.TYPE.GREED:
+			$Node2D/AnimatedSprite2D.frame = 20
+		Relic.TYPE.MASOCHIST:
+			$Node2D/AnimatedSprite2D.frame = 21
+			extra_text = " (Bonus: " + str(relic.value) + ")"
 	$Description/Label2.text = "~ " + relic.name_ + extra_text + " ~\n" + relic.description
 
 
