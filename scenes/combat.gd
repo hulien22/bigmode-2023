@@ -177,7 +177,7 @@ func process_start_combat(is_elite: bool = false):
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.CONFUSE, 99, true)
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BURN, 99, true)
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BLIND, 2, true)
-	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.STRENGTH, 99, false)
+#	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.STRENGTH, 99, false)
 	
 	process_new_turn()
 	#todo timer between states? to play anims or smth
@@ -622,9 +622,8 @@ func compute_damage(base_dmg: int, source: AbilityEffect.TARGET, target: Ability
 		if has_status(source, AbilityEffect.TYPE.EXHAUSTED):
 			dmg /= 2.0
 
-	for s in statuses[target]:
-		if has_status(target, AbilityEffect.TYPE.VULNERABLE):
-			dmg *= 2.0
+	if has_status(target, AbilityEffect.TYPE.VULNERABLE):
+		dmg *= 2.0
 	return dmg
 
 func get_monster_desc() -> String:

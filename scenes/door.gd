@@ -3,7 +3,7 @@ class_name Door
 
 signal door_selected()
 
-func init(gs: GameState.GameScene = -1):
+func init(gs: GameState.GameScene):
 	$AnimatedSprite2D.frame = 0
 	$AnimatedSprite2D2.show()
 	match gs:
