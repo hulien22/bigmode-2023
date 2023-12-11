@@ -22,6 +22,8 @@ var statuses_to_inflict: Array[AbilityEffect]
 
 var occurences:int = 0
 
+var ritual_count = 0
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	ability_boxes = [$Abilities/ability_box1, $Abilities/ability_box2, \
@@ -104,6 +106,7 @@ func go_to_scene(gs: GameState.GameScene):
 			$RestScreen.connect("begin_heal", process_heal)
 			animate_abilities_slide(false)
 		GameState.GameScene.RITUAL:
+			ritual_count = 0
 			$RitualScreen.connect("gg_go_next", end_ritual_scene)
 			$RitualScreen.show()
 			init_ritual_scene()
@@ -756,6 +759,7 @@ func end_rest_scene():
 	generate_next_door_scene()
 
 func init_ritual_scene():
+	ritual_count += 1
 	$RitualScreen/NextButton.set_disabled(true)
 	dice_mgr.line_up_dice_after_roll = true
 #	dice_mgr.line_up_dice_after_roll = false
@@ -781,7 +785,12 @@ func sacrificed_die(index:int):
 func end_ritual_scene():
 	dice_mgr.fade_away_dice()
 	dice_mgr.dice.clear()
-	generate_next_door_scene()
+	
+	if GameState.player.has_relic(Relic.TYPE.CULTIST_HEAD) && ritual_count < 2:
+		$RelicHolder.update_relic_type(Relic.TYPE.CULTIST_HEAD)
+		init_ritual_scene()
+	else:
+		generate_next_door_scene()
 
 func has_status(c: AbilityEffect.TARGET, t: AbilityEffect.TYPE) -> bool:
 	for s in statuses[c]:
