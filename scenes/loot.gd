@@ -21,6 +21,7 @@ func init(num_coins: int, r):
 	else:
 		$Relic.hide()
 	update_btn_text()
+	$NextButton.set_disabled(false)
 
 func update_btn_text():
 	if coins > 0 || relic != null:

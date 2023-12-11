@@ -30,6 +30,7 @@ enum TYPE {
 	RUMMAGE,			#24
 	STUNNED,			#25
 	DEXTERITY,			#26
+	EXHAUSTED,			#27
 }
 
 var target_: TARGET;
@@ -75,6 +76,8 @@ func is_status_inflict() -> bool:
 			return true
 		TYPE.STUNNED:
 			return true
+		TYPE.EXHAUSTED:
+			return true
 		_:
 			return false
 
@@ -118,6 +121,8 @@ static func get_status_desc(t:TYPE) -> String:
 			return "Stunned: can't reroll dice"
 		TYPE.DEXTERITY:
 			return "Dexterity: gain extra block"
+		TYPE.EXHAUSTED:
+			return "Exhausted: attacks deal half damage"
 		_:
 			return ""
 		

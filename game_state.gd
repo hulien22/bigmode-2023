@@ -10,7 +10,7 @@ var level: int = 0
 var player: Player
 var monsters_fought:Array[Monster.MonsterType] = []
 
-var first_game = true
+var games_played:int = 0
 
 func _ready():
 	reset_game_state()
@@ -21,6 +21,7 @@ func reset_game_state():
 	player.init_warrior()
 	level = 0
 	monsters_fought = []
+	games_played += 1
 
 func generate_next_doors() -> Array[GameScene]:
 	# 0 based
@@ -61,11 +62,22 @@ func generate_next_doors() -> Array[GameScene]:
 		#TODO check for chest spawn, boss spawn, elite spawns
 	return [GameScene.COMBAT]
 
-
-
+const MonstersPerLevel: Array = [
+	[Monster.MonsterType.SLIME, Monster.MonsterType.BAT, Monster.MonsterType.CULTIST, Monster.MonsterType.SHEEP], # 0-4
+	[], # 5-8
+	[], # 10-14
+	[], # 15-18
+]
 func generate_monster_to_fight() -> Monster.MonsterType:
 	var ret: Monster.MonsterType
-	ret = Monster.MonsterType.SLIME
+	var monster_to_pick_from:Array = MonstersPerLevel[level / 5]
+	while true:
+#		if level == 0 && games_played <= 1:
+#			ret = Monster.MonsterType.SLIME
+#			break
+		ret = monster_to_pick_from.pick_random()
+		if !monsters_fought.has(ret):
+			break
 	
 	monsters_fought.append(ret)
 	return ret

@@ -1,7 +1,7 @@
 extends Resource
 class_name Monster
 
-enum MonsterType {SLIME}
+enum MonsterType {SLIME, BAT, CULTIST, SHEEP}
 
 var name_: String
 var health: int
@@ -24,6 +24,51 @@ func init_slime():
 	image = preload("res://art/characters/slime.png")
 	coins_dropped = 2
 #	repeat_abilities = [Global.monster_abilities[3]]
+
+func init_monster(m:MonsterType):
+	match m:
+		MonsterType.SLIME:
+			max_health = 10
+			health = 10
+			name_ = "Slime"
+			repeat_abilities = [
+				Global.get_monster_ability_by_name("Bite"),
+				Global.get_monster_ability_by_name("Engulf"),
+				Global.get_monster_ability_by_name("Curl Up")]
+			image = preload("res://art/characters/slime.png")
+			coins_dropped = 2
+		MonsterType.BAT:
+			max_health = 10
+			health = 10
+			name_ = "Bat"
+			repeat_abilities = [
+				Global.get_monster_ability_by_name("Fly"),
+				Global.get_monster_ability_by_name("Fly-By"),
+				Global.get_monster_ability_by_name("Screech"),
+				Global.get_monster_ability_by_name("Bite")]
+			image = preload("res://art/characters/bat.png")
+			coins_dropped = 2
+		MonsterType.CULTIST:
+			max_health = 15
+			health = 15
+			name_ = "Cultist"
+			repeat_abilities = [
+				Global.get_monster_ability_by_name("Chant"),
+				Global.get_monster_ability_by_name("Stab"),
+				Global.get_monster_ability_by_name("Burn"),
+				Global.get_monster_ability_by_name("Stab")]
+			image = preload("res://art/characters/cultist.png")
+			coins_dropped = 2
+		MonsterType.SHEEP:
+			max_health = 12
+			health = 12
+			name_ = "Shhh-eep"
+			repeat_abilities = [
+				Global.get_monster_ability_by_name("Snooze"),
+				Global.get_monster_ability_by_name("Fluff Up"),
+				Global.get_monster_ability_by_name("Headbutt")]
+			image = preload("res://art/characters/sheep.png")
+			coins_dropped = 2
 
 
 func get_next_move(turn: int) -> Ability:

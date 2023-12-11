@@ -125,7 +125,7 @@ func _on_door_selected(gs: GameState.GameScene):
 ####################################################################################################
 func process_start_combat():
 	disable_abilities_and_rerollbtn()
-	monster.init_slime()
+	monster.init_monster(GameState.generate_monster_to_fight())
 	$MonsterUI/character2.init(monster.image)
 	$MonsterUI/MonsterName.text = monster.name_
 
@@ -157,7 +157,7 @@ func process_start_combat():
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.CONFUSE, 99, true)
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BURN, 99, true)
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BLIND, 2, true)
-	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.HASTE, 2, false)
+#	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.HASTE, 2, false)
 	
 	process_new_turn()
 	#todo timer between states? to play anims or smth
@@ -320,20 +320,20 @@ func _on_ability_clicked(val):
 		render_health()
 		await wait_secs(0.5)
 
-	# check if anyone died
+	# check if anyone died, check player first for game over
+	if GameState.player.health <= 0:
+		combat_loss()
+		return
 	if monster.health <= 0:
 		if health_on_lethal > 0:
 			GameState.player.max_health += health_on_lethal
 			render_health()
 		combat_win()
 		return
-	if GameState.player.health <= 0:
-		combat_loss()
-		return
 	
-	var fortify_status: Status = get_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.FORTIFY)
-	if fortify_status != null:
-		change_block(AbilityEffect.TARGET.PLAYER, fortify_status.amount)
+	var fortify_val: int = get_status_value(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.FORTIFY)
+	if fortify_val > 0:
+		change_block(AbilityEffect.TARGET.PLAYER, fortify_val)
 		render_health()
 	
 	process_monster_turn()
@@ -348,11 +348,12 @@ func process_monster_turn():
 	render_health()
 	await wait_secs(0.5)
 	
-	if monster.health <= 0:
-		combat_win()
-		return
+	# check player first for game over
 	if GameState.player.health <= 0:
 		combat_loss()
+		return
+	if monster.health <= 0:
+		combat_win()
 		return
 	
 	process_end_turn()
@@ -455,15 +456,18 @@ func process_effect(effect: AbilityEffect, face:int = 0) -> Dictionary:
 		AbilityEffect.TYPE.HEALTH_ON_LETHAL:
 			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
 			dict["health_on_lethal"] = amt
+		AbilityEffect.TYPE.EXHAUSTED:
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			add_status(effect.target_, AbilityEffect.TYPE.EXHAUSTED, amt, true)
 	return dict
 
 func process_end_turn():
 	combat_state = CombatState.END_TURN
 	process_relics()
 	
-	var fortify_status: Status = get_status(AbilityEffect.TARGET.MONSTER, AbilityEffect.TYPE.FORTIFY)
-	if fortify_status != null:
-		change_block(AbilityEffect.TARGET.MONSTER, fortify_status.amount)
+	var fortify_val: int = get_status_value(AbilityEffect.TARGET.MONSTER, AbilityEffect.TYPE.FORTIFY)
+	if fortify_val > 0:
+		change_block(AbilityEffect.TARGET.MONSTER, fortify_val)
 		render_health()
 	
 	process_new_turn()
@@ -518,9 +522,8 @@ func change_health(target: AbilityEffect.TARGET, amount: int):
 
 func change_block(target: AbilityEffect.TARGET, amount: int):
 	if amount > 0:
-		var dex_status: Status = get_status(target, AbilityEffect.TYPE.DEXTERITY)
-		if dex_status != null:
-			amount += dex_status.amount
+		var dex_val: int = get_status_value(target, AbilityEffect.TYPE.DEXTERITY)
+		amount += dex_val
 	if target == AbilityEffect.TARGET.PLAYER:
 		GameState.player.block += amount
 	else:
@@ -572,18 +575,14 @@ func compute_damage(base_dmg: int, source: AbilityEffect.TARGET, target: Ability
 	var dmg = base_dmg
 	# first go through strength modifiers
 	if source != AbilityEffect.TARGET.NOONE:
-		for s in statuses[source]:
-			match s.type:
-				AbilityEffect.TYPE.STRENGTH:
-					dmg += s.amount
-				_:
-					pass
+		var str:int = get_status_value(source, AbilityEffect.TYPE.STRENGTH)
+		dmg += str
+		if has_status(source, AbilityEffect.TYPE.EXHAUSTED):
+			dmg /= 2.0
+
 	for s in statuses[target]:
-		match s.type:
-			AbilityEffect.TYPE.VULNERABLE:
-				dmg *= 2
-			_:
-				pass
+		if has_status(target, AbilityEffect.TYPE.VULNERABLE):
+			dmg *= 2.0
 	return dmg
 
 func get_monster_desc() -> String:
@@ -751,4 +750,10 @@ func get_status(c: AbilityEffect.TARGET, t: AbilityEffect.TYPE) -> Status:
 		if s.type == t:
 			return s
 	return null
+
+func get_status_value(c: AbilityEffect.TARGET, t: AbilityEffect.TYPE) -> int:
+	var s: Status = get_status(c, t)
+	if s == null:
+		return 0
+	return s.amount
 

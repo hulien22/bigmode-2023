@@ -161,10 +161,12 @@
 			[1, 0, "10-x"],
 		], 1],
 		["Evade", "Gain 1 Dodge (once per combat)", [
-			[0, 18, "1"]
+			[0, 18, "1"],
+			[0, 4, 1]
 		], 2],
 		["Evade+", "Gain X Dodge (once per combat)", [
-			[0, 18, "x"]
+			[0, 18, "x"],
+			[0, 4, 1]
 		], 2],
 	],
 	"monster_abilities" : [
@@ -177,13 +179,13 @@
 		["Curl Up", "Gain [B] block", [
 			[1, 1, 2]
 		]],
-		["Curl Up", "Gain [B] block", [
+		["Curl Up+", "Gain [B] block", [
 			[1, 1, 4]
 		]],
-		["Strengthen", "Gain [S] STR", [
+		["Chant", "Gain [S] Strength", [
 			[1, 3, 1]
 		]],
-		["Strengthen+", "Gain [S] STR", [
+		["Chant+", "Gain [S] Strength", [
 			[1, 3, 2]
 		]],
 		["Distract", "Inflict 1 Vulnerable", [
@@ -211,6 +213,62 @@
 			[0, 8, 1],
 			[0, 11, 1],
 			[0, 12, 1],
+		]],
+		["Fly", "Disable bottom 2 skills", [
+			[0, 7, 1],
+			[0, 8, 1],
+		]],
+		["Fly+", "Disable bottom 4 skills", [
+			[0, 7, 1],
+			[0, 8, 1],
+			[0, 9, 1],
+			[0, 10, 1],
+		]],
+		["Fly-By", "Deal 2*[D] damage", [
+			[0, 0, 1],
+			[0, 0, 1]
+		]],
+		["Fly-By+", "Deal 2*[D] damage", [
+			[0, 0, 2],
+			[0, 0, 2]
+		]],
+		["Screech", "Inflict 1 Vulnerable", [
+			[0, 2, 1]
+		]],
+		["Screech+", "Inflict 2 Vulnerable", [
+			[0, 2, 2]
+		]],
+		["Stab", "Deal [D] damage", [
+			[0, 0, 1]
+		]],
+		["Stab+", "Deal [D] damage", [
+			[0, 0, 2]
+		]],
+		["Burn", "Inflict 1 Burn", [
+			[0, 15, 1]
+		]],
+		["Burn+", "Inflict 2 Burn", [
+			[0, 15, 2]
+		]],
+		["Snooze", "Inflict 1 Exhausted", [
+			[0, 27, 1]
+		]],
+		["Snooze+", "Inflict 2 Exhausted", [
+			[0, 27, 2]
+		]],
+		["Fluff Up", "Gain [B] block", [
+			[1, 1, 2]
+		]],
+		["Fluff Up+", "Gain [B] block", [
+			[1, 1, 4]
+		]],
+		["Headbutt", "Deal [D] damage, take 2 damage", [
+			[0, 0, 2],
+			[1, 6, "1"]
+		]],
+		["Headbutt+", "Deal [D] damage, take 2 damage", [
+			[0, 0, 4],
+			[1, 6, "1"]
 		]],
 	]
 }
