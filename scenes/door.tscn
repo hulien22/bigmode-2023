@@ -1,11 +1,17 @@
-[gd_scene load_steps=9 format=3 uid="uid://celrm1ptr8kir"]
+[gd_scene load_steps=15 format=3 uid="uid://celrm1ptr8kir"]
 
 [ext_resource type="Texture2D" uid="uid://du25qhwo265h0" path="res://art/doors/door.png" id="1_km3x3"]
 [ext_resource type="Script" path="res://scenes/door.gd" id="1_tb2nq"]
 [ext_resource type="Texture2D" uid="uid://dlykr1gklixmi" path="res://art/doors/dooropen.png" id="2_jwqn2"]
-[ext_resource type="Texture2D" uid="uid://beadn6txbq5s1" path="res://art/icons/sword.png" id="4_tg02c"]
-[ext_resource type="Texture2D" uid="uid://coe7kceohvvpq" path="res://art/icons/die.png" id="5_syf8w"]
-[ext_resource type="Texture2D" uid="uid://bnxxyd3r1dwl1" path="res://art/icons/fire.png" id="6_nf4jj"]
+[ext_resource type="Texture2D" uid="uid://dkobkli33ffts" path="res://art/door_symbols/book.png" id="4_t0ilw"]
+[ext_resource type="Texture2D" uid="uid://lw21shac8qhe" path="res://art/door_symbols/boss.png" id="5_3ccu6"]
+[ext_resource type="Texture2D" uid="uid://ca1fwq1ibv7nt" path="res://art/door_symbols/campfire.png" id="6_i73du"]
+[ext_resource type="Texture2D" uid="uid://mpqpd2x5wi1b" path="res://art/door_symbols/chest.png" id="7_yw3ko"]
+[ext_resource type="Texture2D" uid="uid://dwsiny46y7api" path="res://art/door_symbols/dice.png" id="8_brfmd"]
+[ext_resource type="Texture2D" uid="uid://byeqhyac44r5t" path="res://art/door_symbols/diceshop.png" id="9_5p4o5"]
+[ext_resource type="Texture2D" uid="uid://5b7tf0c2fmr8" path="res://art/door_symbols/elite.png" id="10_o6p4x"]
+[ext_resource type="Texture2D" uid="uid://dgyo3p5krfv7u" path="res://art/door_symbols/ritual.png" id="11_r583b"]
+[ext_resource type="Texture2D" uid="uid://hhi1sbb4s61l" path="res://art/door_symbols/sword.png" id="12_g67ud"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_g6332"]
 animations = [{
@@ -25,13 +31,31 @@ animations = [{
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_tg02c")
+"texture": ExtResource("4_t0ilw")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_syf8w")
+"texture": ExtResource("5_3ccu6")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_nf4jj")
+"texture": ExtResource("6_i73du")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_yw3ko")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_brfmd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_5p4o5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_o6p4x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_r583b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_g67ud")
 }],
 "loop": true,
 "name": &"default",

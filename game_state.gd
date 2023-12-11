@@ -1,6 +1,6 @@
 extends Node
 
-enum GameScene {INTRO, DOORS, COMBAT, LOOT, SELECT_ABILITY, DICE_SHOP, REST, RITUAL, ABILITY_SHOP, CHEST, RELIC_SHOP}
+enum GameScene {INTRO, DOORS, COMBAT, LOOT, SELECT_ABILITY, DICE_SHOP, REST, RITUAL, ABILITY_SHOP, CHEST, RELIC_SHOP, BOSS, ELITE}
 # TODO separate rest into ability_upgrade and heal?
 # could make heal - heal for value of 2 dice rolls?
 const NONCOMBATSCENES:Array[GameScene] = [GameScene.REST, GameScene.DICE_SHOP, GameScene.RITUAL]
