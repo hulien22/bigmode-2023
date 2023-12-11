@@ -70,6 +70,7 @@ func init_monster(m:MonsterType):
 				Global.get_monster_ability_by_name("Headbutt")]
 			image = preload("res://art/characters/sheep.png")
 			coins_dropped = 2
+	
 
 
 func get_next_move(turn: int) -> Ability:

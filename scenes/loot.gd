@@ -4,6 +4,7 @@ signal gg_go_next()
 signal add_coins(amt)
 
 var coins:int = 0
+var has_relic:bool = false
 
 func _ready():
 	$NextButton.connect("pressed", _on_nextbtn_pressed)
@@ -20,13 +21,15 @@ func init(num_coins: int, r = null):
 		$Relic/relic.relic = r
 		$Relic/relic.update_sprite()
 		$Relic.show()
+		has_relic = true
 	else:
 		$Relic.hide()
+		has_relic = false
 	update_btn_text()
 	$NextButton.set_disabled(false)
 
 func update_btn_text():
-	if coins > 0 || $Relic/relic.visible:
+	if coins > 0 || has_relic:
 		$NextButton.set_text("Skip")
 	else:
 		$NextButton.set_text("Next")
@@ -55,6 +58,7 @@ func _on_relic_button_pressed():
 	Events.emit_signal("relics_updated")
 	$Relic/RelicButton.hide()
 	$Relic/relic.hide()
+	has_relic = false
 	update_btn_text()
 
 func _on_relic_button_mouse_entered():

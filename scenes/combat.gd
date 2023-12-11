@@ -50,6 +50,7 @@ func _ready():
 func go_to_scene(gs: GameState.GameScene):
 	GameState.game_scene = gs
 	hide_all_scenes()
+	update_abilities_with_player_vals(false)
 	match gs:
 		GameState.GameScene.INTRO:
 			var doors:Array[GameState.GameScene] = [GameState.GameScene.COMBAT]
@@ -77,7 +78,7 @@ func go_to_scene(gs: GameState.GameScene):
 			$Combatscreen.show()
 			process_start_combat(true)
 		GameState.GameScene.SELECT_ABILITY:
-			var new_abs:Array[Ability] = [Global.abilities[2], Global.abilities[3], Global.abilities[6]]
+			var new_abs:Array[Ability] = Global.generate_abilities(3, GameState.level)
 			$AbilityChoiceScreen.init(ability_boxes, new_abs)
 			$AbilityChoiceScreen.connect("gg_go_next", generate_next_door_scene)
 			$AbilityChoiceScreen.show()
@@ -546,7 +547,7 @@ func combat_loss():
 func render_health():
 	$PlayerUI/PlayerHealth.text = str(GameState.player.health) + "/" + str(GameState.player.max_health)
 	$PlayerUI/PlayerBlock.text = str(GameState.player.block)
-	if monster && GameState.game_scene == GameState.GameScene.COMBAT:
+	if monster && (GameState.game_scene == GameState.GameScene.COMBAT || GameState.game_scene == GameState.GameScene.ELITE || GameState.game_scene == GameState.GameScene.BOSS):
 		$MonsterUI/MonsterHealth.text = str(monster.health) + "/" + str(monster.max_health)
 		$MonsterUI/MonsterBlock.text = str(monster.block)
 

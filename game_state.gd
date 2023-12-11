@@ -3,7 +3,7 @@ extends Node
 enum GameScene {INTRO, DOORS, COMBAT, LOOT, SELECT_ABILITY, DICE_SHOP, REST, RITUAL, ABILITY_SHOP, CHEST, RELIC_SHOP, BOSS, ELITE}
 # TODO separate rest into ability_upgrade and heal?
 # could make heal - heal for value of 2 dice rolls?
-const NONCOMBATSCENES:Array[GameScene] = [GameScene.REST, GameScene.DICE_SHOP, GameScene.RITUAL]
+const NONCOMBATSCENES:Array[GameScene] = [GameScene.REST, GameScene.DICE_SHOP, ]#GameScene.RITUAL]
 
 var game_scene: GameScene
 var level: int = 0
@@ -31,8 +31,8 @@ func generate_next_doors() -> Array[GameScene]:
 	# 2 NonCombatOption / NonCombatOption
 	# 3 Combat          / Elite
 	# 4 Chest
-	# 5 NonCombatOption / NonCombatOption
-	# 6 Combat
+	# 5 Combat
+	# 6 NonCombatOption / NonCombatOption
 	# 7 Combat          / Elite
 	# 8 Rest            / NonCombatOption
 	# 9 Boss
@@ -45,11 +45,11 @@ func generate_next_doors() -> Array[GameScene]:
 #		return [GameScene.COMBAT, GameScene.COMBAT]
 
 	match level:
-		0,1,6:
+		0,1,5:
 			return [GameScene.COMBAT]
 		3,7:
 			return [GameScene.COMBAT, GameScene.ELITE]
-		2,5:
+		2,6:
 			var a = randi_range(0, NONCOMBATSCENES.size()-1)
 			var b = randi_range(0, NONCOMBATSCENES.size()-1)
 			while a == b:

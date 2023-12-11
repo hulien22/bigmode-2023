@@ -44,7 +44,7 @@ func add_new_relic(t:Relic.TYPE):
 	# on pickup relics
 	match t:
 		Relic.TYPE.SNAKE_FRIEND:
-			dice.append([[1,1,1,1,1], Color.SEA_GREEN])
+			dice.append([[1,1,1,1,1,1], Color.SEA_GREEN])
 		Relic.TYPE.EVEN_STEVEN:
 			dice.append([[2,2,2,2,2,2], Color.SADDLE_BROWN])
 		Relic.TYPE.SACRED_POWER:

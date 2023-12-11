@@ -33,7 +33,7 @@ func _process(delta):
 			var die = selection.get("collider", null)
 			if die:
 				match GameState.game_scene:
-					GameState.GameScene.COMBAT:
+					GameState.GameScene.COMBAT, GameState.GameScene.ELITE, GameState.GameScene.BOSS:
 						if Input.is_key_pressed(KEY_SHIFT):
 							toggle_all.emit(die.get_top_val(), !die.is_locked())
 						else:

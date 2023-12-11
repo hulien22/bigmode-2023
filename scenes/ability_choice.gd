@@ -90,7 +90,7 @@ func _on_ability_clicked(val, selected_val):
 			new_ability = $Abilities/ability_box3.ability
 			$Abilities/ability_box3.disconnect("ability_clicked", _go_back_to_selection)
 	
-	GameState.player.abilities[val - 1] = new_ability 
+	GameState.player.abilities[val - 1].copy_from(new_ability)
 	ability_boxes[val - 1].init(val, new_ability)
 	for ab in ability_boxes:
 		ab.disconnect("ability_clicked", _on_ability_clicked)

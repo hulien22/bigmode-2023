@@ -47,6 +47,7 @@ func heal():
 	$Text.text = "You spend some time to tend to your wounds\n\n(Click on dice to heal)"
 
 func upgrade():
+	ua = null
 	begin_upgrade.emit()
 	$Upgrade.hide()
 	$Rest.hide()
@@ -62,7 +63,7 @@ func show_preview(v: int, upgraded: Ability):
 
 func upgrade_ability(val: int):
 	if ua:
-		GameState.player.abilities[val - 1] = ua
+		GameState.player.abilities[val - 1].copy_from(ua)
 		$Text.text = "You spend some time practicing your moves - ability upgraded!"
 		Events.emit_signal("abilities_updated", true)
 		$AbilityPreview.hide()
