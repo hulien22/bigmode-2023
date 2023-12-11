@@ -146,6 +146,7 @@ offset_left = -46.0
 offset_top = -40.0
 offset_right = 43.0
 offset_bottom = 40.0
+mouse_filter = 1
 color = Color(1, 1, 1, 0)
 
 [connection signal="mouse_entered" from="ColorRect" to="." method="_on_color_rect_mouse_entered"]

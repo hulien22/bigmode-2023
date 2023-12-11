@@ -6,6 +6,7 @@ signal begin_heal()
 
 func _ready():
 	$NextButton.set_text("Next")
+	$NextButton.set_disabled(false)
 	$NextButton.connect("pressed", _on_nextbtn_pressed)
 	$Rest/Button.connect("mouse_entered", _on_button_mouse_entered.bind($Rest))
 	$Rest/Button.connect("mouse_exited", _on_button_mouse_exited.bind($Rest))

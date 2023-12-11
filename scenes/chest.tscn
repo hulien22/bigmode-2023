@@ -1,0 +1,104 @@
+[gd_scene load_steps=9 format=3 uid="uid://c8tdsd1u8p3qt"]
+
+[ext_resource type="Script" path="res://scenes/chest.gd" id="1_k7j3u"]
+[ext_resource type="Texture2D" uid="uid://cpy0266ipvs8r" path="res://art/prototyping/realtabletest3.png" id="2_7arkj"]
+[ext_resource type="PackedScene" uid="uid://3m5ea5q8mf5e" path="res://scenes/character.tscn" id="3_yy8eo"]
+[ext_resource type="Texture2D" uid="uid://c0nn180i17at6" path="res://art/characters/chest.png" id="4_bn7ru"]
+[ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="5_ljynm"]
+[ext_resource type="PackedScene" uid="uid://bedbnvcvmg5r0" path="res://scenes/postitbtn.tscn" id="6_ilsru"]
+[ext_resource type="PackedScene" uid="uid://x3clfwsacs1s" path="res://scenes/relicobj.tscn" id="7_3rjmi"]
+[ext_resource type="Texture2D" uid="uid://bqq35spx7laod" path="res://art/line.png" id="8_dy6ya"]
+
+[node name="ChestScreen" type="Node2D"]
+script = ExtResource("1_k7j3u")
+
+[node name="Realtabletest3" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(960, 540)
+texture = ExtResource("2_7arkj")
+
+[node name="character2" parent="." instance=ExtResource("3_yy8eo")]
+position = Vector2(1103, 184)
+sprite_ = ExtResource("4_bn7ru")
+
+[node name="Text" type="Label" parent="."]
+modulate = Color(0.121569, 0.117647, 0.121569, 1)
+offset_left = 201.0
+offset_top = 331.0
+offset_right = 1729.0
+offset_bottom = 758.0
+rotation = -0.00178233
+theme_override_fonts/font = ExtResource("5_ljynm")
+theme_override_font_sizes/font_size = 50
+text = "You find a chest with some cool treasure inside!"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="NextButton" parent="." instance=ExtResource("6_ilsru")]
+position = Vector2(958, 993)
+scale = Vector2(0.767455, 0.767455)
+
+[node name="relic" parent="." instance=ExtResource("7_3rjmi")]
+position = Vector2(953, 560)
+scale = Vector2(1.2, 1.2)
+
+[node name="Line" type="Sprite2D" parent="relic"]
+position = Vector2(-115, -67.5001)
+rotation = 0.461455
+scale = Vector2(0.78286, 0.78286)
+texture = ExtResource("8_dy6ya")
+region_enabled = true
+region_rect = Rect2(104.513, 240.872, 120.82, 81.8461)
+
+[node name="Line2" type="Sprite2D" parent="relic"]
+position = Vector2(-139.167, 4.16666)
+rotation = -0.0102675
+scale = Vector2(0.78286, 0.78286)
+texture = ExtResource("8_dy6ya")
+region_enabled = true
+region_rect = Rect2(104.513, 240.872, 120.82, 81.8461)
+
+[node name="Line3" type="Sprite2D" parent="relic"]
+position = Vector2(-121.667, 63.3333)
+rotation = -0.364207
+scale = Vector2(0.78286, 0.78286)
+texture = ExtResource("8_dy6ya")
+region_enabled = true
+region_rect = Rect2(104.513, 240.872, 120.82, 81.8461)
+
+[node name="Line4" type="Sprite2D" parent="relic"]
+position = Vector2(87.5, 74.1666)
+rotation = -2.56903
+scale = Vector2(0.78286, 0.78286)
+texture = ExtResource("8_dy6ya")
+region_enabled = true
+region_rect = Rect2(104.513, 240.872, 120.82, 81.8461)
+
+[node name="Line5" type="Sprite2D" parent="relic"]
+position = Vector2(135.833, 22.5001)
+rotation = -3.03625
+scale = Vector2(0.78286, 0.78286)
+texture = ExtResource("8_dy6ya")
+region_enabled = true
+region_rect = Rect2(104.513, 240.872, 120.82, 81.8461)
+
+[node name="Line6" type="Sprite2D" parent="relic"]
+position = Vector2(106.667, -56.6666)
+rotation = -3.48197
+scale = Vector2(0.78286, 0.78286)
+texture = ExtResource("8_dy6ya")
+region_enabled = true
+region_rect = Rect2(104.513, 240.872, 120.82, 81.8461)
+
+[node name="RelicButton" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_left = 870.0
+offset_top = 490.0
+offset_right = 1026.0
+offset_bottom = 634.0
+focus_mode = 0
+mouse_filter = 1
+
+[connection signal="mouse_entered" from="RelicButton" to="." method="_on_relic_button_mouse_entered"]
+[connection signal="mouse_exited" from="RelicButton" to="." method="_on_relic_button_mouse_exited"]
+[connection signal="pressed" from="RelicButton" to="." method="_on_relic_button_pressed"]

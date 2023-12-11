@@ -55,6 +55,9 @@ func generate_next_doors() -> Array[GameScene]:
 			while a == b:
 				b = randi_range(0, NONCOMBATSCENES.size()-1)
 			return [NONCOMBATSCENES[a],NONCOMBATSCENES[b]]
+		4:
+			var b = randi_range(0, NONCOMBATSCENES.size()-1)
+			return [GameScene.CHEST,NONCOMBATSCENES[b]]
 		8:
 			var a = 0
 			var b = randi_range(1, NONCOMBATSCENES.size()-1)
@@ -81,3 +84,12 @@ func generate_monster_to_fight() -> Monster.MonsterType:
 	
 	monsters_fought.append(ret)
 	return ret
+
+func generate_new_relic() -> Relic:
+	while true:
+		var t:Relic.TYPE = Relic.regular_relics.pick_random()
+		if !player.has_relic(t):
+			var r: Relic = Relic.new()
+			r.init_relic(t)
+			return r
+	return null

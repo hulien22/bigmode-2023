@@ -39,6 +39,7 @@ func _ready():
 	Events.connect("coins_updated", anim_coins)
 	Events.connect("health_updated", render_health)
 	Events.connect("abilities_updated", update_abilities_with_player_vals)
+	Events.connect("relics_updated", render_relics)
 	Events.connect("sacrificed_die", sacrificed_die)
 #	process_start_combat()
 
@@ -101,6 +102,11 @@ func go_to_scene(gs: GameState.GameScene):
 			$RitualScreen.show()
 			init_ritual_scene()
 			animate_abilities_slide(false)
+		GameState.GameScene.CHEST:
+			$ChestScreen.connect("gg_go_next", generate_next_door_scene)
+			$ChestScreen.init(GameState.generate_new_relic())
+			$ChestScreen.show()
+			animate_abilities_slide(false)
 
 
 func hide_all_scenes():
@@ -112,6 +118,7 @@ func hide_all_scenes():
 	$DiceShopScreen.hide()
 	$RestScreen.hide()
 	$RitualScreen.hide()
+	$ChestScreen.hide()
 
 
 func generate_next_door_scene():
@@ -159,7 +166,7 @@ func process_start_combat():
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.CONFUSE, 99, true)
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BURN, 99, true)
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BLIND, 2, true)
-#	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.HASTE, 2, false)
+	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.STRENGTH, 99, false)
 	
 	process_new_turn()
 	#todo timer between states? to play anims or smth
@@ -786,3 +793,5 @@ func get_status_value(c: AbilityEffect.TARGET, t: AbilityEffect.TYPE) -> int:
 		return 0
 	return s.amount
 
+func render_relics():
+	$RelicHolder.update_relics()

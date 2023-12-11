@@ -8,6 +8,7 @@ var relic = null
 
 func _ready():
 	$NextButton.connect("pressed", _on_nextbtn_pressed)
+	$NextButton.set_disabled(false)
 #	init([], [Global.abilities[0],Global.abilities[2],Global.abilities[4]])
 
 func init(num_coins: int, r):
