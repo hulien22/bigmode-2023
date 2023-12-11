@@ -227,8 +227,8 @@ func process_new_turn():
 	_on_monster_intent_exited()
 #	print("monster intent: ", monster_intent.name_)
 	
-	$Combatscreen/RerollButton.disabled = false
-	$Combatscreen/RerollButton.text = "ROLL"
+	$Combatscreen/RerollButton.set_disabled(false)
+	$Combatscreen/RerollButton.set_text("ROLL!")
 	$Combatscreen/ModeVal.text = "Mode: ? | X=?"
 	
 
@@ -260,8 +260,8 @@ func _on_complete_roll(results):
 	animate_abilities_slide(true)
 	
 	if rerolls > 0:
-		$Combatscreen/RerollButton.disabled = false
-		$Combatscreen/RerollButton.text = "REROLL (" + str(rerolls) + ")"
+		$Combatscreen/RerollButton.set_disabled(false)
+		$Combatscreen/RerollButton.set_text("REROLL! (" + str(rerolls) + ")")
 
 func _on_reroll_button_pressed():
 	if combat_state == CombatState.NEW_TURN:
@@ -269,7 +269,7 @@ func _on_reroll_button_pressed():
 		combat_state = CombatState.ROLLING
 	else:
 		rerolls -= 1
-		$Combatscreen/RerollButton.text = "REROLL (" + str(rerolls) + ")"
+		$Combatscreen/RerollButton.set_text("REROLL! (" + str(rerolls) + ")")
 	dice_mgr.drop_all_dice()
 	disable_abilities_and_rerollbtn()
 
@@ -481,7 +481,7 @@ func inflict_damage(target: AbilityEffect.TARGET, dmg: int):
 
 func disable_abilities_and_rerollbtn():
 #	animate_abilities_slide(false)
-	$Combatscreen/RerollButton.disabled = true
+	$Combatscreen/RerollButton.set_disabled(true)
 	$Combatscreen/ModeVal.text = "Mode: ? | X=?"
 	for ab in ability_boxes:
 		ab.set_enabled(false)
@@ -595,7 +595,7 @@ func update_abilities_with_current_vals():
 			ability_boxes[i].init(i+1, cur_abilities[i].ab)
 
 func init_dice_shop():
-	$DiceShopScreen/NextButton.disabled = true
+	$DiceShopScreen/NextButton.set_disabled(true)
 	dice_mgr.line_up_dice_after_roll = true
 #	dice_mgr.line_up_dice_after_roll = false
 	dice_mgr.dice_box_rect = Rect2(-7, -1.5, 4, 5.5)
@@ -607,7 +607,7 @@ func init_dice_shop():
 	dice_mgr.drop_all_dice()
 
 func dice_shop_on_complete_roll(_results):
-	$DiceShopScreen/NextButton.disabled = false
+	$DiceShopScreen/NextButton.set_disabled(false)
 	dice_mgr.disconnect("complete_roll", dice_shop_on_complete_roll)
 
 func end_dice_shop():
@@ -623,7 +623,7 @@ func process_upgrade():
 		ability_boxes[i].set_enabled(ability_boxes[i].ability.is_upgradeable())
 
 func process_heal():
-	$RestScreen/NextButton.disabled = true
+	$RestScreen/NextButton.set_disabled(true)
 	dice_mgr.line_up_dice_after_roll = true
 	dice_mgr.mouse_handler.remove_on_select = true
 	dice_mgr.dice_box_rect = Rect2(-7, -1.5, 4, 5.5)
@@ -634,7 +634,7 @@ func process_heal():
 	dice_mgr.drop_all_dice()
 
 func rest_screen_on_roll_complete(_results):
-	$RestScreen/NextButton.disabled = false
+	$RestScreen/NextButton.set_disabled(false)
 	dice_mgr.disconnect("complete_roll", rest_screen_on_roll_complete)
 
 func show_preview(val):
@@ -650,7 +650,7 @@ func end_rest_scene():
 	generate_next_door_scene()
 
 func init_ritual_scene():
-	$RitualScreen/NextButton.disabled = true
+	$RitualScreen/NextButton.set_disabled(true)
 	dice_mgr.line_up_dice_after_roll = true
 #	dice_mgr.line_up_dice_after_roll = false
 	dice_mgr.dice_box_rect = Rect2(-7, -1.5, 9.5, 5.5)
@@ -662,7 +662,7 @@ func init_ritual_scene():
 	dice_mgr.drop_all_dice()
 
 func ritual_screen_on_roll_complete(_results):
-	$RitualScreen/NextButton.disabled = false
+	$RitualScreen/NextButton.set_disabled(false)
 	dice_mgr.disconnect("complete_roll", ritual_screen_on_roll_complete)
 
 func sacrificed_die(index:int):

@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://chht5vf7n33tl"]
+[gd_scene load_steps=7 format=3 uid="uid://chht5vf7n33tl"]
 
 [ext_resource type="Script" path="res://scenes/loot.gd" id="1_4atpw"]
 [ext_resource type="Texture2D" uid="uid://cpy0266ipvs8r" path="res://art/prototyping/realtabletest3.png" id="2_v73s8"]
 [ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="3_c46e1"]
 [ext_resource type="Texture2D" uid="uid://dp4mbownqfhu3" path="res://art/icons/coin.png" id="4_jch7k"]
 [ext_resource type="PackedScene" uid="uid://x3clfwsacs1s" path="res://scenes/relic.tscn" id="5_rt4dt"]
+[ext_resource type="PackedScene" uid="uid://bedbnvcvmg5r0" path="res://scenes/postitbtn.tscn" id="6_dlf2o"]
 
 [node name="LootScreen" type="Node2D"]
 script = ExtResource("1_4atpw")
@@ -80,15 +81,9 @@ offset_top = -43.6595
 offset_right = 191.077
 offset_bottom = 43.3405
 
-[node name="NextButton" type="Button" parent="."]
-offset_left = 838.0
-offset_top = 933.0
-offset_right = 1082.0
-offset_bottom = 1056.0
-focus_mode = 0
-theme_override_fonts/font = ExtResource("3_c46e1")
-theme_override_font_sizes/font_size = 70
-text = "Skip"
+[node name="NextButton" parent="." instance=ExtResource("6_dlf2o")]
+position = Vector2(958, 993)
+scale = Vector2(0.767455, 0.767455)
 
 [connection signal="mouse_entered" from="Coins/Button" to="." method="_on_button_mouse_entered"]
 [connection signal="mouse_exited" from="Coins/Button" to="." method="_on_button_mouse_exited"]

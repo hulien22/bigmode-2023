@@ -4,6 +4,8 @@ const GROUND_SFX = preload("res://sounds/ground.mp3")
 const DICE_SFX = preload("res://sounds/dice.mp3")
 const PAPER_SFX = preload("res://sounds/paper.mp3")
 const PAPER_HIT_SFX = preload("res://sounds/paper_hit1.mp3")
+const PAPER_FLIP_SFX = preload("res://sounds/paperflip1.mp3")
+const PAPER_FLICK_SFX = preload("res://sounds/paperflick2.mp3")
 
 func play_sfx(sound: AudioStream, parent: Node, impact:float):
 	if sound == null or parent == null:

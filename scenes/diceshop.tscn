@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://culwykxollff1"]
+[gd_scene load_steps=7 format=3 uid="uid://culwykxollff1"]
 
 [ext_resource type="Script" path="res://scenes/diceshop.gd" id="1_55gts"]
 [ext_resource type="Texture2D" uid="uid://cpy0266ipvs8r" path="res://art/prototyping/realtabletest3.png" id="2_rt6fx"]
 [ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="3_5puu7"]
 [ext_resource type="PackedScene" uid="uid://3m5ea5q8mf5e" path="res://scenes/character.tscn" id="3_22kap"]
 [ext_resource type="Texture2D" uid="uid://canavrt88q2vv" path="res://art/characters/diceshop.png" id="4_bnq0h"]
+[ext_resource type="PackedScene" uid="uid://bedbnvcvmg5r0" path="res://scenes/postitbtn.tscn" id="6_gmnhp"]
 
 [node name="DiceShop2" type="Node2D"]
 script = ExtResource("1_55gts")
@@ -37,12 +38,6 @@ text = "Buy some dice?
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="NextButton" type="Button" parent="."]
-offset_left = 838.0
-offset_top = 933.0
-offset_right = 1082.0
-offset_bottom = 1056.0
-focus_mode = 0
-theme_override_fonts/font = ExtResource("3_5puu7")
-theme_override_font_sizes/font_size = 70
-text = "Next"
+[node name="NextButton" parent="." instance=ExtResource("6_gmnhp")]
+position = Vector2(958, 993)
+scale = Vector2(0.767455, 0.767455)

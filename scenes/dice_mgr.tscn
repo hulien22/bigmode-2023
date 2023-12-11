@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://clmylfodosp03"]
+[gd_scene load_steps=7 format=3 uid="uid://clmylfodosp03"]
 
 [ext_resource type="Script" path="res://scenes/dicemgr.gd" id="1_awq12"]
 [ext_resource type="Script" path="res://scenes/MouseHandler.gd" id="2_4wxpe"]
-[ext_resource type="PackedScene" uid="uid://do6bmme07wvfm" path="res://scenes/die.tscn" id="2_b458g"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_1eocf"]
 
@@ -119,10 +118,6 @@ distance_fade_enabled = true
 distance_fade_begin = 60.0
 distance_fade_shadow = 60.0
 spot_range = 60.0
-
-[node name="die" parent="." instance=ExtResource("2_b458g")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.5, 4)
-visible = false
 
 [node name="AnimTimer" type="Timer" parent="."]
 wait_time = 0.5

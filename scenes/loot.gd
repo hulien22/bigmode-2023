@@ -24,9 +24,9 @@ func init(num_coins: int, r):
 
 func update_btn_text():
 	if coins > 0 || relic != null:
-		$NextButton.text = "Skip"
+		$NextButton.set_text("Skip")
 	else:
-		$NextButton.text = "Next"
+		$NextButton.set_text("Next")
 
 func _on_nextbtn_pressed():
 	gg_go_next.emit()

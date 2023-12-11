@@ -9,11 +9,11 @@ func _on_nextbtn_pressed():
 	gg_go_next.emit()
 
 func init():
-	$NextButton.text = "Skip"
+	$NextButton.set_text("Skip")
 	$Text.text = "You find a ritual circle glowing with power\n\nYour dice tremble in fear\n\nSacrifice a die?"
 
 func sacrificed_die():
-	$NextButton.text = "Continue"
+	$NextButton.set_text("Continue")
 	if randi_range(0,3) <= 2: #75% chance
 		$Text.text = "The die disappears in a blast of dark energy\n\nYou feel a surge of power strengthen you\n\nMax health increased!"
 		GameState.player.max_health += 5

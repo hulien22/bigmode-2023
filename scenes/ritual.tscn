@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cb57lhpjwpcfx"]
+[gd_scene load_steps=7 format=3 uid="uid://cb57lhpjwpcfx"]
 
 [ext_resource type="Script" path="res://scenes/ritual.gd" id="1_xx4u2"]
 [ext_resource type="Texture2D" uid="uid://cpy0266ipvs8r" path="res://art/prototyping/realtabletest3.png" id="2_gdndg"]
 [ext_resource type="PackedScene" uid="uid://3m5ea5q8mf5e" path="res://scenes/character.tscn" id="3_c1i3m"]
 [ext_resource type="Texture2D" uid="uid://sn62swogegbj" path="res://art/characters/ritual.png" id="4_nx2nx"]
 [ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="5_tufhi"]
+[ext_resource type="PackedScene" uid="uid://bedbnvcvmg5r0" path="res://scenes/postitbtn.tscn" id="6_ftldl"]
 
 [node name="DiceShop" type="Node2D"]
 script = ExtResource("1_xx4u2")
@@ -35,12 +36,6 @@ Sacrifice a die?"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="NextButton" type="Button" parent="."]
-offset_left = 838.0
-offset_top = 933.0
-offset_right = 1082.0
-offset_bottom = 1056.0
-focus_mode = 0
-theme_override_fonts/font = ExtResource("5_tufhi")
-theme_override_font_sizes/font_size = 70
-text = "Skip"
+[node name="NextButton" parent="." instance=ExtResource("6_ftldl")]
+position = Vector2(958, 993)
+scale = Vector2(0.767455, 0.767455)

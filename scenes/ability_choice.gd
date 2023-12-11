@@ -47,7 +47,7 @@ func _on_new_ability_clicked(_unused, val):
 		ab.connect("ability_clicked", _on_ability_clicked.bind(val))
 		ab.set_enabled(true)
 	$Text.text = "Pick an ability to swap with"
-	$NextButton.disabled = true
+	$NextButton.set_disabled(true)
 
 
 func _go_back_to_selection(_unused, val):
@@ -71,8 +71,8 @@ func _go_back_to_selection(_unused, val):
 			ab.disconnect("ability_clicked", _on_ability_clicked)
 			ab.set_enabled(false)
 	$Text.text = "Pick a new ability!"
-	$NextButton.disabled = false
-	$NextButton.text = "Skip"
+	$NextButton.set_disabled(false)
+	$NextButton.set_text("Skip")
 	$Abilities.show()
 	
 
@@ -98,8 +98,8 @@ func _on_ability_clicked(val, selected_val):
 	$Abilities.hide()
 	$Text.text = "New ability gained!"
 	
-	$NextButton.disabled = false
-	$NextButton.text = "Next"
+	$NextButton.set_disabled(false)
+	$NextButton.set_text("Next")
 
 
 func _on_nextbtn_pressed():

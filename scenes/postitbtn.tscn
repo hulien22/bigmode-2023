@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=3 uid="uid://bedbnvcvmg5r0"]
+
+[ext_resource type="Script" path="res://scenes/postitbtn.gd" id="1_5kvvi"]
+[ext_resource type="Texture2D" uid="uid://b4hq0galhmeaj" path="res://art/halfpostit.png" id="1_epi4l"]
+[ext_resource type="Texture2D" uid="uid://c5fd0eeocf31v" path="res://art/postitnote2.png" id="2_6lsq3"]
+[ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="3_q4o72"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ke5x1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_epi4l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_6lsq3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="postitbtn" type="Node2D"]
+script = ExtResource("1_5kvvi")
+
+[node name="Node2D2" type="Node2D" parent="."]
+modulate = Color(0.745098, 0.745098, 0.745098, 1)
+
+[node name="Node2D" type="Node2D" parent="Node2D2"]
+position = Vector2(-57, 394)
+scale = Vector2(0.325, 0.325)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D2/Node2D"]
+position = Vector2(178.462, -1215.38)
+sprite_frames = SubResource("SpriteFrames_ke5x1")
+offset = Vector2(-70.7692, 381.539)
+
+[node name="Text" type="Label" parent="Node2D2"]
+modulate = Color(0.121569, 0.117647, 0.121569, 1)
+offset_left = -195.0
+offset_top = -75.0
+offset_right = 207.0
+offset_bottom = 77.0
+rotation = -0.00178233
+theme_override_fonts/font = ExtResource("3_q4o72")
+theme_override_font_sizes/font_size = 70
+text = "ROLL!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+uppercase = true
+
+[node name="Button" type="Button" parent="Node2D2"]
+modulate = Color(1, 1, 1, 0)
+offset_left = -205.0
+offset_top = -84.0
+offset_right = 214.0
+offset_bottom = 83.0
+focus_mode = 0
+
+[connection signal="mouse_entered" from="Node2D2/Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="Node2D2/Button" to="." method="_on_button_mouse_exited"]
+[connection signal="pressed" from="Node2D2/Button" to="." method="_on_button_pressed"]
