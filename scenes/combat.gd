@@ -622,6 +622,7 @@ func change_block(target: AbilityEffect.TARGET, amount: int):
 	#animate?
 #	render_health()
 
+var DAMAGE_NUMBER_SCENE = preload("res://scenes/damagenumbers.tscn")
 func inflict_damage(target: AbilityEffect.TARGET, dmg: int):
 	if has_status(target, AbilityEffect.TYPE.EVADE):
 		# ignore damage if evading
@@ -635,6 +636,15 @@ func inflict_damage(target: AbilityEffect.TARGET, dmg: int):
 	else:
 		change_health(target, cur_block - dmg)
 		change_block(target, -cur_block)
+	if dmg >= 0:
+		var ds = DAMAGE_NUMBER_SCENE.instantiate()
+		ds.init(dmg)
+		if target == AbilityEffect.TARGET.PLAYER:
+			ds.position = Vector2(828,184)
+		else:
+			ds.position = Vector2(1104,184)
+		add_child(ds)
+
 
 func disable_abilities_and_rerollbtn():
 #	animate_abilities_slide(false)
