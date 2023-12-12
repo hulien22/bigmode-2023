@@ -247,13 +247,13 @@ uppercase = true
 position = Vector2(230, 175)
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_yu820")
-frame_progress = 0.459847
+frame_progress = 0.773725
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
 position = Vector2(1693, 175)
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_yu820")
-frame_progress = 0.800003
+frame_progress = 0.486128
 speed_scale = -1.0
 
 [connection signal="mouse_entered" from="PlayWarrior" to="." method="_on_play_warrior_mouse_entered"]

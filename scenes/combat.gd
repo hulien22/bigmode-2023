@@ -777,6 +777,7 @@ func init_dice_shop():
 func dice_shop_on_complete_roll(_results):
 	$DiceShopScreen/NextButton.set_disabled(false)
 	dice_mgr.disconnect("complete_roll", dice_shop_on_complete_roll)
+	animate_abilities_slide(true)
 
 func end_dice_shop():
 	dice_mgr.fade_away_dice()
