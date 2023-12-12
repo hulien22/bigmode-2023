@@ -2,6 +2,8 @@ extends Node2D
 class_name PostItButton
 
 signal pressed()
+signal mouse_entered()
+signal mouse_exited()
 
 @export
 var text:String = ""
@@ -33,6 +35,8 @@ func _on_button_mouse_entered():
 	if !disabled:
 		SfxHandler.play_sfx(SfxHandler.PAPER_FLICK_SFX, self, 0.9)
 		$Node2D2.scale = Vector2.ONE * 1.1
+	mouse_entered.emit()
 
 func _on_button_mouse_exited():
 	$Node2D2.scale = Vector2.ONE
+	mouse_exited.emit()

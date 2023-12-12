@@ -64,6 +64,15 @@ func drop_all_dice():
 			d.visible = true;
 			d.drop()
 
+func throw_all_dice():
+	if can_drop():
+		state = STATE.DROPPING
+		$Camera3D2.enable_mouse_events(false)
+		for d in dice:
+			d.enable(true)
+			d.visible = true;
+			d.throw()
+
 #todo die type? or type of die or smth
 func add_die(faces:Array, die_color:Color):
 	var d = DIE_SCENE.instantiate()

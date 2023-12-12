@@ -1,0 +1,130 @@
+[gd_scene load_steps=12 format=3 uid="uid://d0squ2u7y17ut"]
+
+[ext_resource type="Texture2D" uid="uid://cpy0266ipvs8r" path="res://art/prototyping/realtabletest3.png" id="1_gh2gp"]
+[ext_resource type="Script" path="res://scenes/mainmenu.gd" id="1_pslgc"]
+[ext_resource type="PackedScene" uid="uid://3m5ea5q8mf5e" path="res://scenes/character.tscn" id="2_mv76y"]
+[ext_resource type="Texture2D" uid="uid://cxfo4uhd5w1xn" path="res://art/title.png" id="3_m2l6q"]
+[ext_resource type="Texture2D" uid="uid://bqq35spx7laod" path="res://art/line.png" id="4_3i44w"]
+[ext_resource type="PackedScene" uid="uid://clmylfodosp03" path="res://scenes/dice_mgr.tscn" id="4_bp57q"]
+[ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="6_vre42"]
+[ext_resource type="PackedScene" uid="uid://bedbnvcvmg5r0" path="res://scenes/postitbtn.tscn" id="7_isevr"]
+[ext_resource type="Texture2D" uid="uid://bbaywftojs0o3" path="res://art/characters/warrior.png" id="9_vu7e0"]
+[ext_resource type="Texture2D" uid="uid://b0adw0ny1rt00" path="res://art/characters/rogue.png" id="10_4pj60"]
+[ext_resource type="Texture2D" uid="uid://c4hnuhsgp413s" path="res://art/characters/wiz.png" id="11_08ua8"]
+
+[node name="mainmenu" type="Node2D"]
+script = ExtResource("1_pslgc")
+
+[node name="Realtabletest" type="Sprite2D" parent="."]
+position = Vector2(960, 540)
+texture = ExtResource("1_gh2gp")
+
+[node name="Title" type="Sprite2D" parent="."]
+position = Vector2(960, 540)
+texture = ExtResource("3_m2l6q")
+
+[node name="Line" type="Sprite2D" parent="."]
+position = Vector2(959, 513)
+rotation = -0.0114122
+texture = ExtResource("4_3i44w")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+z_index = 10
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="DiceMgr" parent="SubViewportContainer/SubViewport" instance=ExtResource("4_bp57q")]
+
+[node name="Label" type="Label" parent="."]
+modulate = Color(0.0392157, 0.0392157, 0.0392157, 1)
+offset_left = 1310.0
+offset_top = 996.0
+offset_right = 1846.0
+offset_bottom = 1085.0
+theme_override_fonts/font = ExtResource("6_vre42")
+theme_override_font_sizes/font_size = 22
+text = "a game by: hulien22
+music: \"tavern music\" by tabletopaudio.com"
+horizontal_alignment = 2
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 1
+
+[node name="Label2" type="Label" parent="."]
+modulate = Color(0.305882, 0.305882, 0.305882, 1)
+offset_left = 115.0
+offset_top = 301.0
+offset_right = 1857.0
+offset_bottom = 390.0
+theme_override_fonts/font = ExtResource("6_vre42")
+theme_override_font_sizes/font_size = 70
+text = "Select your champion:"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 1
+uppercase = true
+
+[node name="PlayWarrior" parent="." instance=ExtResource("7_isevr")]
+position = Vector2(436, 783)
+text = "Warrior"
+
+[node name="character" parent="." instance=ExtResource("2_mv76y")]
+position = Vector2(427, 535)
+scale = Vector2(-1, 1)
+sprite_ = ExtResource("9_vu7e0")
+
+[node name="PlayRogue" parent="." instance=ExtResource("7_isevr")]
+position = Vector2(988, 783)
+text = "Rogue"
+disabled = true
+
+[node name="character2" parent="." instance=ExtResource("2_mv76y")]
+position = Vector2(981, 535)
+rotation = 3.14159
+scale = Vector2(1, -1)
+sprite_ = ExtResource("10_4pj60")
+
+[node name="PlayWizard" parent="." instance=ExtResource("7_isevr")]
+position = Vector2(1527, 783)
+text = "Wizard"
+disabled = true
+
+[node name="character3" parent="." instance=ExtResource("2_mv76y")]
+position = Vector2(1534, 535)
+rotation = -3.14159
+scale = Vector2(1, -1)
+sprite_ = ExtResource("11_08ua8")
+
+[node name="Desc" type="Label" parent="."]
+modulate = Color(0.305882, 0.305882, 0.305882, 1)
+offset_left = 109.0
+offset_top = 870.0
+offset_right = 1851.0
+offset_bottom = 1010.0
+theme_override_fonts/font = ExtResource("6_vre42")
+theme_override_font_sizes/font_size = 42
+horizontal_alignment = 1
+clip_text = true
+text_overrun_behavior = 1
+uppercase = true
+
+[connection signal="mouse_entered" from="PlayWarrior" to="." method="_on_play_warrior_mouse_entered"]
+[connection signal="mouse_exited" from="PlayWarrior" to="." method="_on_play_btn_mouse_exited"]
+[connection signal="mouse_entered" from="PlayRogue" to="." method="_on_play_rogue_mouse_entered"]
+[connection signal="mouse_exited" from="PlayRogue" to="." method="_on_play_btn_mouse_exited"]
+[connection signal="mouse_entered" from="PlayWizard" to="." method="_on_play_wizard_mouse_entered"]
+[connection signal="mouse_exited" from="PlayWizard" to="." method="_on_play_btn_mouse_exited"]

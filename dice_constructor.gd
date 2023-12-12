@@ -43,6 +43,10 @@ func generate_random_die() -> Array:
 	return a
 
 
-const DICE_COLORS: Array[Color] = [Color.CORNFLOWER_BLUE, Color.CHARTREUSE, Color.HOT_PINK, Color.TOMATO]
+const DICE_COLORS: Array[Color] = [
+	Color.CORNFLOWER_BLUE, Color.CHARTREUSE, Color.HOT_PINK, 
+	Color.TOMATO, Color.CADET_BLUE, Color.DARK_GREEN, 
+	Color.MEDIUM_SLATE_BLUE, Color.NAVAJO_WHITE, Color.KHAKI,
+	Color.ORANGE, Color.LIME, Color.MEDIUM_ORCHID]
 func generate_random_die_color() -> Color:
 	return DICE_COLORS[randi_range(0, DICE_COLORS.size() - 1)]
