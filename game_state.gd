@@ -12,8 +12,8 @@ var monsters_fought:Array[Monster.MonsterType] = []
 
 var games_played:int = 0
 
-func _ready():
-	reset_game_state()
+#func _ready():
+#	reset_game_state()
 
 func reset_game_state():
 	game_scene = GameScene.INTRO
@@ -39,7 +39,7 @@ func generate_next_doors() -> Array[GameScene]:
 	# TODO Modulo these for later floors?
 	
 	# do smth special on first play through? to intro special dice early?
-	# REST / RITUAL?
+	# REST / RITUAL?	
 #	if level == 1 && first_game:
 #		first_game = false
 #		return [GameScene.COMBAT, GameScene.COMBAT]
@@ -77,9 +77,9 @@ func generate_monster_to_fight() -> Monster.MonsterType:
 	var ret: Monster.MonsterType
 	var monster_to_pick_from:Array = MonstersPerLevel[level / 5]
 	while true:
-#		if level == 0 && games_played <= 1:
-#			ret = Monster.MonsterType.SLIME
-#			break
+		if level == 0 && games_played <= 1:
+			ret = Monster.MonsterType.SLIME
+			break
 		ret = monster_to_pick_from.pick_random()
 		if !monsters_fought.has(ret):
 			break

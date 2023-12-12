@@ -1,0 +1,65 @@
+[gd_scene load_steps=4 format=3 uid="uid://7mthupf4e6fj"]
+
+[ext_resource type="Script" path="res://scenes/gameover.gd" id="1_56rj8"]
+[ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="2_i5rvq"]
+[ext_resource type="PackedScene" uid="uid://bedbnvcvmg5r0" path="res://scenes/postitbtn.tscn" id="3_s5biu"]
+
+[node name="gameover" type="Node2D"]
+script = ExtResource("1_56rj8")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -38.0
+offset_top = -30.0
+offset_right = 1942.0
+offset_bottom = 1114.0
+color = Color(0, 0, 0, 0.870588)
+
+[node name="Titlee" type="Label" parent="."]
+modulate = Color(0.686275, 0.686275, 0.686275, 1)
+offset_left = 123.0
+offset_top = -10.0
+offset_right = 1854.0
+offset_bottom = 334.0
+theme_override_fonts/font = ExtResource("2_i5rvq")
+theme_override_font_sizes/font_size = 222
+text = "Game Over"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 1
+
+[node name="text" type="Label" parent="."]
+modulate = Color(0.686275, 0.686275, 0.686275, 1)
+offset_left = 110.0
+offset_top = 332.0
+offset_right = 1841.0
+offset_bottom = 590.0
+theme_override_fonts/font = ExtResource("2_i5rvq")
+theme_override_font_sizes/font_size = 72
+text = "You have been slain...
+
+Made it to Floor "
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 1
+
+[node name="LevelText" type="Label" parent="."]
+modulate = Color(0.686275, 0.686275, 0.686275, 1)
+offset_left = 1251.0
+offset_top = 418.0
+offset_right = 1589.0
+offset_bottom = 676.0
+theme_override_fonts/font = ExtResource("2_i5rvq")
+theme_override_font_sizes/font_size = 72
+text = "5
+"
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 1
+
+[node name="MainMenu" parent="." instance=ExtResource("3_s5biu")]
+position = Vector2(974, 861)
+text = "Menu"
+
+[connection signal="pressed" from="MainMenu" to="." method="_on_main_menu_pressed"]

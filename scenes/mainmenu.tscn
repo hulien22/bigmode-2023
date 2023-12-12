@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://d0squ2u7y17ut"]
+[gd_scene load_steps=13 format=3 uid="uid://d0squ2u7y17ut"]
 
 [ext_resource type="Texture2D" uid="uid://cpy0266ipvs8r" path="res://art/prototyping/realtabletest3.png" id="1_gh2gp"]
 [ext_resource type="Script" path="res://scenes/mainmenu.gd" id="1_pslgc"]
 [ext_resource type="PackedScene" uid="uid://3m5ea5q8mf5e" path="res://scenes/character.tscn" id="2_mv76y"]
+[ext_resource type="PackedScene" uid="uid://ccl2kenwh73ve" path="res://scenes/combat.tscn" id="2_tbmhh"]
 [ext_resource type="Texture2D" uid="uid://cxfo4uhd5w1xn" path="res://art/title.png" id="3_m2l6q"]
 [ext_resource type="Texture2D" uid="uid://bqq35spx7laod" path="res://art/line.png" id="4_3i44w"]
 [ext_resource type="PackedScene" uid="uid://clmylfodosp03" path="res://scenes/dice_mgr.tscn" id="4_bp57q"]
@@ -14,6 +15,7 @@
 
 [node name="mainmenu" type="Node2D"]
 script = ExtResource("1_pslgc")
+COMBAT_SCENE = ExtResource("2_tbmhh")
 
 [node name="Realtabletest" type="Sprite2D" parent="."]
 position = Vector2(960, 540)

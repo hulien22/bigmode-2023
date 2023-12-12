@@ -2,6 +2,9 @@ extends Node2D
 
 func _ready():
 	$PlayWarrior.set_disabled(false)
+	print("menu ready!")
+
+
 
 # Called when the node enters the scene tree for the first time.
 #func _ready():
@@ -31,8 +34,10 @@ func _on_play_rogue_mouse_entered():
 func _on_play_wizard_mouse_entered():
 	$Desc.text = "(Coming soon)\nA powerful spellcaster\nHas a large arsenal of spells\nStarts with Oaken Staff"
 
-var COMBAT_SCENE = preload("res://scenes/combat.tscn")
-
+@export var COMBAT_SCENE: PackedScene
 func _on_play_warrior_pressed():
 	get_tree().change_scene_to_packed(COMBAT_SCENE)
+#	var s = COMBAT_SCENE.instantiate()
+#	get_tree().root.add_child(s)
+#	queue_free()
 

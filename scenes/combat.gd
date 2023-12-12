@@ -31,6 +31,7 @@ func _ready():
 					$Abilities/ability_box3, $Abilities/ability_box4, \
 					$Abilities/ability_box5, $Abilities/ability_box6]
 	monster = Monster.new()
+	GameState.reset_game_state()
 	render_health()
 	add_coins(0)
 	go_to_scene(GameState.GameScene.INTRO)
@@ -44,6 +45,8 @@ func _ready():
 	Events.connect("abilities_updated", update_abilities_with_player_vals)
 	Events.connect("relics_updated", render_relics)
 	Events.connect("sacrificed_die", sacrificed_die)
+	
+	$GameoverScreen.connect("gg_go_home", return_to_main_menu)
 #	process_start_combat()
 
 
@@ -567,6 +570,8 @@ func combat_win():
 	go_to_scene(GameState.GameScene.LOOT)
 
 func combat_loss():
+	$GameoverScreen.set_level(GameState.level)
+	$GameoverScreen.show()
 	print("YOU DIED")
 	pass
 
@@ -834,3 +839,9 @@ func get_status_value(c: AbilityEffect.TARGET, t: AbilityEffect.TYPE) -> int:
 
 func render_relics():
 	$RelicHolder.update_relics()
+
+func return_to_main_menu():
+	get_tree().change_scene_to_file("res://scenes/mainmenu.tscn")
+#	var s = MENU_SCENE.instantiate()
+#	get_tree().root.add_child(s)
+#	queue_free()
