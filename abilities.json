@@ -499,5 +499,115 @@
 			[1, 5, 10],
 			[1, 3, 2]
 		]],
+		["Stomp", "Deal [D] damage and inflict 1 Stunned", [
+			[0, 0, 4],
+			[0, 25, 1]
+		]],
+		["Stomp+", "Deal [D] damage and inflict 2 Stunned", [
+			[0, 0, 6],
+			[0, 25, 2]
+		]],
+		["Giant Regen", "Heal 3", [
+			[1, 5, 3]
+		]],
+		["Giant Regen+", "Heal 6", [
+			[1, 5, 6]
+		]],
+		["Mage Armor", "Gain [B] block", [
+			[1, 1, 15]
+		]],
+		["Mage Armor+", "Gain [B] block", [
+			[1, 1, 30]
+		]],
+		["Fireball!", "Deal [D] damage and inflict 1 Burned", [
+			[0, 0, 4],
+			[0, 15, 1]
+		]],
+		["Fireball!+", "Deal [D] damage and inflict 2 Burned", [
+			[0, 0, 6],
+			[0, 15, 2]
+		]],
+		["Fireball!!", "Deal [D] damage and inflict 1 Burned", [
+			[0, 0, 3],
+			[0, 15, 1]
+		]],
+		["Fireball!!+", "Deal [D] damage and inflict 2 Burned", [
+			[0, 0, 5],
+			[0, 15, 2]
+		]],
+		["Fireball!!", "Deal [D] damage and inflict 1 Burned", [
+			[0, 0, 5],
+			[0, 15, 1]
+		]],
+		["Fireball!!+", "Deal [D] damage and inflict 2 Burned", [
+			[0, 0, 7],
+			[0, 15, 2]
+		]],
+		["Prep Spells", "Refreshing spells", [
+		]],
+		["Prep Spells+", "Refreshing spells", [
+		]],
+		["Freeze Gaze", "Inflict 1 Freeze and 1 Frightened", [
+			[0, 16, 1],
+			[0, 13, 1]
+		]],
+		["Freeze Gaze+", "Inflict 2 Freeze and 2 Frightened", [
+			[0, 16, 2],
+			[0, 13, 2]
+		]],
+		["Snowball", "Inflict 1 Freeze and [D] damage", [
+			[0, 16, 1],
+			[0, 0, 5]
+		]],
+		["Snowball+", "Inflict 2 Freeze and [D] damage", [
+			[0, 16, 2],
+			[0, 0, 8]
+		]],
+		["Snow Fort", "Gain [B] block", [
+			[1, 1, 5]
+		]],
+		["Snow Fort+", "Gain [B] block", [
+			[1, 1, 8]
+		]],
+		["Blinding Strike", "Inflict 1 Blind and [D] damage", [
+			[0, 17, 1],
+			[0, 0, 3]
+		]],
+		["Blinding Strike+", "Inflict 2 Blind and [D] damage", [
+			[0, 17, 2],
+			[0, 0, 5]
+		]],
+		["Jet Off", "Gain 1 Evade", [
+			[1, 18, 1]
+		]],
+		["Jet Off+", "Gain 2 Evade", [
+			[1, 18, 2]
+		]],
+		["Octo Whip", "Deal 8*[D] damage", [
+			[0, 0, 1],
+			[0, 0, 1],
+			[0, 0, 1],
+			[0, 0, 1],
+			[0, 0, 1],
+			[0, 0, 1],
+			[0, 0, 1],
+			[0, 0, 1]
+		]],
+		["Octo Whip+", "Deal 8*[D] damage", [
+			[0, 0, 2],
+			[0, 0, 2],
+			[0, 0, 2],
+			[0, 0, 2],
+			[0, 0, 2],
+			[0, 0, 2],
+			[0, 0, 2],
+			[0, 0, 2]
+		]],
+		["Entangle", "Inflict 1 Stunned", [
+			[0, 25, 1]
+		]],
+		["Entangle+", "Inflict 2 Stunned", [
+			[0, 25, 2]
+		]],
 	]
 }

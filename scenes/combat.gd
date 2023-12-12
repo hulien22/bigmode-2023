@@ -208,6 +208,8 @@ func process_new_turn():
 		add_status(AbilityEffect.TARGET.MONSTER, AbilityEffect.TYPE.EVADE, 1, true)
 	if turn_counter == 0 && monster.type == Monster.MonsterType.MIMIC:
 		add_status(AbilityEffect.TARGET.MONSTER, AbilityEffect.TYPE.MIMICKING, 1, false)
+	if turn_counter == 0 && monster.type == Monster.MonsterType.GIANT:
+		add_status(AbilityEffect.TARGET.MONSTER, AbilityEffect.TYPE.THIKKSKIN, 3, false)
 	
 	# process statuses on player and monster
 	if turn_counter > 0:
@@ -653,7 +655,9 @@ func compute_damage(base_dmg: int, source: AbilityEffect.TARGET, target: Ability
 		dmg += str
 		if has_status(source, AbilityEffect.TYPE.EXHAUSTED):
 			dmg /= 2.0
-
+	
+	if has_status(target, AbilityEffect.TYPE.THIKKSKIN):
+		dmg = max(0, dmg - 3)
 	if has_status(target, AbilityEffect.TYPE.VULNERABLE):
 		dmg *= 2.0
 	return dmg

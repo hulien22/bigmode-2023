@@ -41,6 +41,8 @@ func init(s: Status):
 			$holder/Icon.frame = 12
 		AbilityEffect.TYPE.MIMICKING:
 			$holder/Icon.frame = 10
+		AbilityEffect.TYPE.THIKKSKIN:
+			$holder/Icon.frame = 11
 		_:
 			$holder/Icon.frame = 10
 	if amount == 0:

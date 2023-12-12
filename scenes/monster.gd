@@ -196,8 +196,8 @@ func init_monster(m:MonsterType):
 			image = preload("res://art/characters/yoyokid.png")
 			coins_dropped = 5
 		MonsterType.BERSERKER:
-			max_health = 60
-			health = 60
+			max_health = 70
+			health = 70
 			name_ = "Berserker"
 			starting_abilities = [
 				Global.get_monster_ability_by_name("Time To Rage")]
@@ -207,6 +207,49 @@ func init_monster(m:MonsterType):
 				Global.get_monster_ability_by_name("Toughen Up")]
 			image = preload("res://art/characters/viking.png")
 			coins_dropped = 5
+		MonsterType.GIANT:
+			max_health = 60
+			health = 30
+			name_ = "Injured Giant"
+			repeat_abilities = [
+				Global.get_monster_ability_by_name("Stomp"),
+				Global.get_monster_ability_by_name("Giant Regen")]
+			image = preload("res://art/characters/giant.png")
+			coins_dropped = 6
+		MonsterType.PYRO:
+			max_health = 12
+			health = 12
+			name_ = "Pyro"
+			starting_abilities = [
+				Global.get_monster_ability_by_name("Mage Armor")]
+			repeat_abilities = [
+				Global.get_monster_ability_by_name("Fireball!"),
+				Global.get_monster_ability_by_name("Fireball!!"),
+				Global.get_monster_ability_by_name("Fireball!!!"),
+				Global.get_monster_ability_by_name("Prep Spells")]
+			image = preload("res://art/characters/wizard.png")
+			coins_dropped = 6
+		MonsterType.YETI:
+			max_health = 36
+			health = 36
+			name_ = "Yeti"
+			repeat_abilities = [
+				Global.get_monster_ability_by_name("Freeze Gaze"),
+				Global.get_monster_ability_by_name("Snowball"),
+				Global.get_monster_ability_by_name("Snow Fort")]
+			image = preload("res://art/characters/yeti.png")
+			coins_dropped = 6
+		MonsterType.KRAKEN:
+			max_health = 38
+			health = 38
+			name_ = "Kraken"
+			repeat_abilities = [
+				Global.get_monster_ability_by_name("Blinding Strike"),
+				Global.get_monster_ability_by_name("Jet Off"),
+				Global.get_monster_ability_by_name("Octo Whip"),
+				Global.get_monster_ability_by_name("Entangle")]
+			image = preload("res://art/characters/squid.png")
+			coins_dropped = 6
 	
 
 
