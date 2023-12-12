@@ -199,6 +199,8 @@ func process_new_turn():
 	if turn_counter == 0 && GameState.player.has_relic(Relic.TYPE.SENTINEL_SHIELD):
 		$RelicHolder.update_relic_type(Relic.TYPE.SENTINEL_SHIELD)
 		add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.EVADE, 1, true)
+	if turn_counter == 0 && monster.type == Monster.MonsterType.ARCHER:
+		add_status(AbilityEffect.TARGET.MONSTER, AbilityEffect.TYPE.EVADE, 1, true)
 	
 	# process statuses on player and monster
 	if turn_counter > 0:

@@ -11,6 +11,7 @@ enum MonsterType {
 	TWINDRAGON, PIRAT, GUNHOLDER
 }
 
+var type: MonsterType = MonsterType.SLIME
 var name_: String
 var health: int
 var max_health: int
@@ -23,18 +24,19 @@ var coins_dropped:int = 2
 # elite has 25% more health and uses upgraded abilities?
 var is_elite:bool = false
 
-func init_slime():
-	max_health = 10
-	health = 10
-	name_ = "Slime"
-#	starting_abilities = [Global.monster_abilities[2]]
-	repeat_abilities = [Global.get_monster_ability_by_name("Bite"), Global.get_monster_ability_by_name("Engulf"), Global.get_monster_ability_by_name("Curl Up")]
-	image = preload("res://art/characters/slime.png")
-	coins_dropped = 2
-#	repeat_abilities = [Global.monster_abilities[3]]
+#func init_slime():
+#	max_health = 10
+#	health = 10
+#	name_ = "Slime"
+##	starting_abilities = [Global.monster_abilities[2]]
+#	repeat_abilities = [Global.get_monster_ability_by_name("Bite"), Global.get_monster_ability_by_name("Engulf"), Global.get_monster_ability_by_name("Curl Up")]
+#	image = preload("res://art/characters/slime.png")
+#	coins_dropped = 2
+##	repeat_abilities = [Global.monster_abilities[3]]
 
 func init_monster(m:MonsterType):
 	is_elite = false
+	type = m
 	match m:
 		MonsterType.SLIME:
 			max_health = 10
