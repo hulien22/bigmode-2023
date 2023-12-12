@@ -16,9 +16,10 @@ func init(s: Status):
 			$holder/Icon.frame = 16
 		AbilityEffect.TYPE.DISABLE_ABILITY1, AbilityEffect.TYPE.DISABLE_ABILITY2, \
 		AbilityEffect.TYPE.DISABLE_ABILITY3, AbilityEffect.TYPE.DISABLE_ABILITY4, \
-		AbilityEffect.TYPE.DISABLE_ABILITY5, AbilityEffect.TYPE.DISABLE_ABILITY6, \
-		AbilityEffect.TYPE.DISABLE_ABILITYR:
+		AbilityEffect.TYPE.DISABLE_ABILITY5, AbilityEffect.TYPE.DISABLE_ABILITY6:
 			$holder/Icon.frame = 9
+		AbilityEffect.TYPE.DISABLE_ABILITYR:
+			$holder/Icon.frame = 14
 		AbilityEffect.TYPE.CONFUSE:
 			$holder/Icon.frame = 0
 		AbilityEffect.TYPE.BURN:
@@ -44,7 +45,7 @@ func init(s: Status):
 		AbilityEffect.TYPE.THIKKSKIN:
 			$holder/Icon.frame = 11
 		AbilityEffect.TYPE.DAZZLED:
-			$holder/Icon.frame = 14
+			$holder/Icon.frame = 22
 		AbilityEffect.TYPE.FORESIGHT:
 			$holder/Icon.frame = 4
 		AbilityEffect.TYPE.BREATH_RECHARGE:

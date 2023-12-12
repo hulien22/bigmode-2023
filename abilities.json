@@ -124,12 +124,12 @@
 			[0, 24, 2],
 			[0, 4, 2]
 		], 3],
-		["Feast", "Deal 1 damage, if lethal gain 2 max health", [
-			[1, 0, "1"],
+		["Feast", "Deal X damage, if lethal gain 2 max health", [
+			[1, 0, "x"],
 			[0, 19, 2]
 		], 3],
-		["Feast+", "Deal 2 damage, if lethal gain 3 max health", [
-			[1, 0, "2"],
+		["Feast+", "Deal X+2 damage, if lethal gain 4 max health", [
+			[1, 0, "x+2"],
 			[0, 19, 3]
 		], 3],
 		["Enrage", "Take 2 damage, gain X Strength", [
