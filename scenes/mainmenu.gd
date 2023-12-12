@@ -30,3 +30,9 @@ func _on_play_rogue_mouse_entered():
 
 func _on_play_wizard_mouse_entered():
 	$Desc.text = "(Coming soon)\nA powerful spellcaster\nHas a large arsenal of spells\nStarts with Oaken Staff"
+
+var COMBAT_SCENE = preload("res://scenes/combat.tscn")
+
+func _on_play_warrior_pressed():
+	get_tree().change_scene_to_packed(COMBAT_SCENE)
+

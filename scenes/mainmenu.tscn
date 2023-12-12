@@ -23,6 +23,21 @@ texture = ExtResource("1_gh2gp")
 position = Vector2(960, 540)
 texture = ExtResource("3_m2l6q")
 
+[node name="Titlee" type="Label" parent="."]
+visible = false
+modulate = Color(0.0392157, 0.0392157, 0.0392157, 1)
+offset_left = 123.0
+offset_top = -10.0
+offset_right = 1854.0
+offset_bottom = 334.0
+theme_override_fonts/font = ExtResource("6_vre42")
+theme_override_font_sizes/font_size = 222
+text = "TIME  TO  DIE"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 1
+
 [node name="Line" type="Sprite2D" parent="."]
 position = Vector2(959, 513)
 rotation = -0.0114122
@@ -124,6 +139,7 @@ uppercase = true
 
 [connection signal="mouse_entered" from="PlayWarrior" to="." method="_on_play_warrior_mouse_entered"]
 [connection signal="mouse_exited" from="PlayWarrior" to="." method="_on_play_btn_mouse_exited"]
+[connection signal="pressed" from="PlayWarrior" to="." method="_on_play_warrior_pressed"]
 [connection signal="mouse_entered" from="PlayRogue" to="." method="_on_play_rogue_mouse_entered"]
 [connection signal="mouse_exited" from="PlayRogue" to="." method="_on_play_btn_mouse_exited"]
 [connection signal="mouse_entered" from="PlayWizard" to="." method="_on_play_wizard_mouse_entered"]
