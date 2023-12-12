@@ -330,12 +330,12 @@
 			[0, 8, 1]
 		]],
 		["Home Run", "Deal [D] damage and gain [B] block", [
-			[0, 0, 3],
-			[1, 1, 3]
-		]],
-		["Home Run+", "Deal [D] damage and gain [B] block", [
 			[0, 0, 5],
 			[1, 1, 5]
+		]],
+		["Home Run+", "Deal [D] damage and gain [B] block", [
+			[0, 0, 8],
+			[1, 1, 8]
 		]],
 		["Poison Spray", "Inflict 1 Vulnerable and 1 Exhausted", [
 			[0, 2, 1],
@@ -608,6 +608,52 @@
 		]],
 		["Entangle+", "Inflict 2 Stunned", [
 			[0, 25, 2]
+		]],
+		["Dazzle", "Inflict 1 Dazzled", [
+			[0, 31, 1]
+		]],
+		["Dazzle+", "Inflict 2 Dazzled", [
+			[0, 31, 2]
+		]],
+		["Cold Touch", "Inflict 1 Freeze and [D] damage", [
+			[0, 16, 1],
+			[0, 0, 3]
+		]],
+		["Cold Touch+", "Inflict 2 Freeze and [D] damage", [
+			[0, 16, 2],
+			[0, 0, 5]
+		]],
+		["Stunning Smile", "Inflict 1 Stunned", [
+			[0, 25, 1]
+		]],
+		["Stunning Smile+", "Inflict 2 Stunned", [
+			[0, 25, 2]
+		]],
+		["Poop", "Inflict 1 Exhausted", [
+			[0, 27, 1]
+		]],
+		["Poop+", "Inflict 2 Exhausted", [
+			[0, 27, 2]
+		]],
+		["Vicious Bite", "Deal [D] damage", [
+			[0, 0, 15]
+		]],
+		["Vicious Bite+", "Deal [D] damage", [
+			[0, 0, 22]
+		]],
+		["Shell Armor", "Gain 1 Fortify", [
+			[1, 20, 1]
+		]],
+		["Shell Armor+", "Gain 2 Fortify", [
+			[1, 20, 2]
+		]],
+		["Head Flail", "Deal [D] damage, take 2 damage", [
+			[0, 0, 5],
+			[1, 6, "2"]
+		]],
+		["Head Flail+", "Deal [D] damage, take 2 damage", [
+			[0, 0, 8],
+			[1, 6, "2"]
 		]],
 	]
 }

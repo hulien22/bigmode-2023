@@ -69,10 +69,10 @@ func generate_next_doors() -> Array[GameScene]:
 const MonstersPerLevel: Array = [
 	[Monster.MonsterType.SLIME, Monster.MonsterType.BAT, Monster.MonsterType.CULTIST, Monster.MonsterType.SHEEP], # 0-4
 	[Monster.MonsterType.FARMER, Monster.MonsterType.BIRDMAN, Monster.MonsterType.GOBLIN], # 5-8
-	[Monster.MonsterType.BATWITHBAT, Monster.MonsterType.NYRAT, Monster.MonsterType.ARCHER, Monster.MonsterType.GHOST], # 10-14
-	[Monster.MonsterType.MIMIC, Monster.MonsterType.YOYOKID, Monster.MonsterType.BERSERKER,], # 15-18
-	[], # 20-24
-	[]  # 25-28
+	[Monster.MonsterType.COOLGUY, Monster.MonsterType.NYRAT, Monster.MonsterType.ARCHER, Monster.MonsterType.GHOST], # 10-14
+	[Monster.MonsterType.MIMIC, Monster.MonsterType.YOYOKID, Monster.MonsterType.BERSERKER], # 15-18
+	[Monster.MonsterType.GIANT, Monster.MonsterType.PYRO, Monster.MonsterType.YETI, Monster.MonsterType.KRAKEN], # 20-24
+	[Monster.MonsterType.GOOSE, Monster.MonsterType.HYPNOSNAIL, Monster.MonsterType.BATWITHBAT]  # 25-28
 ]
 
 func generate_monster_to_fight() -> Monster.MonsterType:

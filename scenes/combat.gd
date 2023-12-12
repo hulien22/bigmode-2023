@@ -242,6 +242,12 @@ func process_new_turn():
 	else :
 		dice_mgr.unblind_all_dice()
 	
+	if has_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.DAZZLED):
+		var num_dice:int = dice_mgr.dice.size()
+		dice_mgr.dice.clear()
+		for i in num_dice:
+			dice_mgr.add_die(DiceConstructor.generate_random_die(), DiceConstructor.generate_random_die_color())
+	
 	# Reset disabled abilities
 	for i in 6:
 		cur_abilities[i].is_disabled = false
@@ -414,6 +420,12 @@ func process_monster_turn():
 	combat_state = CombatState.MONSTER_ABILITY
 	process_ability(monster_intent, 0, true)
 	
+
+	var fortify_val: int = get_status_value(AbilityEffect.TARGET.MONSTER, AbilityEffect.TYPE.FORTIFY)
+	if fortify_val > 0:
+		change_block(AbilityEffect.TARGET.MONSTER, fortify_val)
+		render_health()
+	
 	$MonsterUI/character2.play_attack()
 	await wait_secs(0.5)
 	animate_status_changes()
@@ -534,6 +546,9 @@ func process_effect(effect: AbilityEffect, face:int = 0) -> Dictionary:
 		AbilityEffect.TYPE.TRAPPED:
 			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
 			add_status(effect.target_, AbilityEffect.TYPE.TRAPPED, amt, true)
+		AbilityEffect.TYPE.DAZZLED:
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			add_status(effect.target_, AbilityEffect.TYPE.DAZZLED, amt, true)
 	return dict
 
 func process_end_turn():

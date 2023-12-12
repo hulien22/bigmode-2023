@@ -43,6 +43,8 @@ func init(s: Status):
 			$holder/Icon.frame = 10
 		AbilityEffect.TYPE.THIKKSKIN:
 			$holder/Icon.frame = 11
+		AbilityEffect.TYPE.DAZZLED:
+			$holder/Icon.frame = 14
 		_:
 			$holder/Icon.frame = 10
 	if amount == 0:

@@ -34,6 +34,7 @@ enum TYPE {
 	TRAPPED,			#28
 	MIMICKING,			#29
 	THIKKSKIN,			#30
+	DAZZLED,			#31
 }
 
 var target_: TARGET;
@@ -87,6 +88,8 @@ func is_status_inflict() -> bool:
 			return true
 		TYPE.THIKKSKIN:
 			return true
+		TYPE.DAZZLED:
+			return true
 		_:
 			return false
 
@@ -138,6 +141,8 @@ static func get_status_desc(t:TYPE) -> String:
 			return "Mimic: using random monster abilities"
 		TYPE.THIKKSKIN:
 			return "Thick Skin: takes 3 less damage from all sources"
+		TYPE.DAZZLED:
+			return "Dazzled: Randomize all dice faces"
 		_:
 			return ""
 		

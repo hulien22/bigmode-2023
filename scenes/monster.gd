@@ -113,17 +113,16 @@ func init_monster(m:MonsterType):
 				Global.get_monster_ability_by_name("Cower")]
 			image = preload("res://art/characters/gobbo.png")
 			coins_dropped = 3
-		MonsterType.BATWITHBAT:
+		MonsterType.COOLGUY:
 			max_health = 24
 			health = 24
-			name_ = "Bat with bat"
+			name_ = "Cool Guy"
 			repeat_abilities = [
-				Global.get_monster_ability_by_name("Wind Up"),
-				Global.get_monster_ability_by_name("Fly Ball"),
-				Global.get_monster_ability_by_name("Wind Up"),
-				Global.get_monster_ability_by_name("Homerun")]
-			image = preload("res://art/characters/batwithbat.png")
-			coins_dropped = 4
+				Global.get_monster_ability_by_name("Dazzle"),
+				Global.get_monster_ability_by_name("Cold Touch"),
+				Global.get_monster_ability_by_name("Stunning Smile")]
+			image = preload("res://art/characters/coolguy.png")
+			coins_dropped = 3
 		MonsterType.NYRAT:
 			max_health = 28
 			health = 28
@@ -250,6 +249,40 @@ func init_monster(m:MonsterType):
 				Global.get_monster_ability_by_name("Entangle")]
 			image = preload("res://art/characters/squid.png")
 			coins_dropped = 6
+		MonsterType.GOOSE:
+			max_health = 36
+			health = 36
+			name_ = "Canada Goose"
+			repeat_abilities = [
+				Global.get_monster_ability_by_name("Poop"),
+				Global.get_monster_ability_by_name("Fly"),
+				Global.get_monster_ability_by_name("Poop"),
+				Global.get_monster_ability_by_name("Fly"),
+				Global.get_monster_ability_by_name("Vicious Bite")]
+			image = preload("res://art/characters/goose.png")
+			coins_dropped = 7
+		MonsterType.HYPNOSNAIL:
+			max_health = 30
+			health = 30
+			name_ = "Hypno-Snail"
+			starting_abilities = [
+				Global.get_monster_ability_by_name("Shell Armor")]
+			repeat_abilities = [
+				Global.get_monster_ability_by_name("Hypnotize"),
+				Global.get_monster_ability_by_name("Head Flail")]
+			image = preload("res://art/characters/snail.png")
+			coins_dropped = 7
+		MonsterType.BATWITHBAT:
+			max_health = 37
+			health = 37
+			name_ = "Bat with bat"
+			repeat_abilities = [
+				Global.get_monster_ability_by_name("Wind Up"),
+				Global.get_monster_ability_by_name("Fly Ball"),
+				Global.get_monster_ability_by_name("Wind Up"),
+				Global.get_monster_ability_by_name("Homerun")]
+			image = preload("res://art/characters/batwithbat.png")
+			coins_dropped = 7
 	
 
 
