@@ -31,6 +31,7 @@ enum TYPE {
 	STUNNED,			#25
 	DEXTERITY,			#26
 	EXHAUSTED,			#27
+	TRAPPED,			#28
 }
 
 var target_: TARGET;
@@ -78,6 +79,8 @@ func is_status_inflict() -> bool:
 			return true
 		TYPE.EXHAUSTED:
 			return true
+		TYPE.TRAPPED:
+			return true
 		_:
 			return false
 
@@ -123,6 +126,8 @@ static func get_status_desc(t:TYPE) -> String:
 			return "Dexterity: gain extra shield"
 		TYPE.EXHAUSTED:
 			return "Exhausted: attacks deal half damage"
+		TYPE.TRAPPED:
+			return "Trapped: disable last used mode"
 		_:
 			return ""
 		

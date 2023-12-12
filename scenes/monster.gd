@@ -1,7 +1,15 @@
 extends Resource
 class_name Monster
 
-enum MonsterType {SLIME, BAT, CULTIST, SHEEP}
+enum MonsterType {
+	SLIME, BAT, CULTIST, SHEEP,
+	FARMER, BIRDMAN, GOBLIN,
+	BATWITHBAT, NYRAT, ARCHER, GHOST,
+	MIMIC, YOYOKID, BERSERKER,
+	GIANT, PYRO, YETI, KRAKEN,
+	GOOSE, HYPNOSNAIL, COOLGUY,
+	TWINDRAGON, PIRAT, GUNHOLDER
+}
 
 var name_: String
 var health: int
@@ -70,6 +78,86 @@ func init_monster(m:MonsterType):
 				Global.get_monster_ability_by_name("Headbutt")]
 			image = preload("res://art/characters/sheep.png")
 			coins_dropped = 2
+		MonsterType.FARMER:
+			max_health = 15
+			health = 15
+			name_ = "Farmer"
+			repeat_abilities = [
+				Global.get_monster_ability_by_name("Burn"),
+				Global.get_monster_ability_by_name("Tri-Attack"),
+				Global.get_monster_ability_by_name("Harvest")]
+			image = preload("res://art/characters/farmer.png")
+			coins_dropped = 3
+		MonsterType.BIRDMAN:
+			max_health = 17
+			health = 17
+			name_ = "Birdman"
+			repeat_abilities = [
+				Global.get_monster_ability_by_name("Peck"),
+				Global.get_monster_ability_by_name("Fly"),
+				Global.get_monster_ability_by_name("Imprison")]
+			image = preload("res://art/characters/birdman.png")
+			coins_dropped = 3
+		MonsterType.GOBLIN:
+			max_health = 18
+			health = 18
+			name_ = "Gobbo"
+			starting_abilities = [
+				Global.get_monster_ability_by_name("Set Traps")
+			]
+			repeat_abilities = [
+				Global.get_monster_ability_by_name("Trip"),
+				Global.get_monster_ability_by_name("Bash"),
+				Global.get_monster_ability_by_name("Cower")]
+			image = preload("res://art/characters/gobbo.png")
+			coins_dropped = 3
+		MonsterType.BATWITHBAT:
+			max_health = 24
+			health = 24
+			name_ = "Bat with bat"
+			repeat_abilities = [
+				Global.get_monster_ability_by_name("Wind Up"),
+				Global.get_monster_ability_by_name("Fly Ball"),
+				Global.get_monster_ability_by_name("Wind Up"),
+				Global.get_monster_ability_by_name("Homerun")]
+			image = preload("res://art/characters/batwithbat.png")
+			coins_dropped = 4
+		MonsterType.NYRAT:
+			max_health = 28
+			health = 28
+			name_ = "NY Rat"
+			repeat_abilities = [
+				Global.get_monster_ability_by_name("Poison Spray"),
+				Global.get_monster_ability_by_name("Crunch"),
+				Global.get_monster_ability_by_name("Subway Surf"),
+				Global.get_monster_ability_by_name("Cardboard Box")]
+			image = preload("res://art/characters/nyrat.png")
+			coins_dropped = 4
+		MonsterType.ARCHER:
+			max_health = 27
+			health = 27
+			name_ = "Archer"
+			starting_abilities = [
+				Global.get_monster_ability_by_name("He Shot First")
+			]
+			repeat_abilities = [
+				Global.get_monster_ability_by_name("Duck"),
+				Global.get_monster_ability_by_name("Net Arrow"),
+				Global.get_monster_ability_by_name("Duck"),
+				Global.get_monster_ability_by_name("Barrage")]
+			image = preload("res://art/characters/archer.png")
+			coins_dropped = 4
+		MonsterType.GHOST:
+			max_health = 25
+			health = 25
+			name_ = "Ghost"
+			repeat_abilities = [
+				Global.get_monster_ability_by_name("Vanish"),
+				Global.get_monster_ability_by_name("Lick"),
+				Global.get_monster_ability_by_name("Haunt"),
+				Global.get_monster_ability_by_name("Wither Touch")]
+			image = preload("res://art/characters/ghost.png")
+			coins_dropped = 4
 	
 
 

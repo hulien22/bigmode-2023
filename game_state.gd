@@ -62,15 +62,17 @@ func generate_next_doors() -> Array[GameScene]:
 			var a = 0
 			var b = randi_range(1, NONCOMBATSCENES.size()-1)
 			return [NONCOMBATSCENES[a],NONCOMBATSCENES[b]]
-		#TODO check for chest spawn, boss spawn, elite spawns
+		9:
+			return [GameScene.BOSS]
 	return [GameScene.COMBAT]
 
 const MonstersPerLevel: Array = [
 	[Monster.MonsterType.SLIME, Monster.MonsterType.BAT, Monster.MonsterType.CULTIST, Monster.MonsterType.SHEEP], # 0-4
-	[], # 5-8
-	[], # 10-14
+	[Monster.MonsterType.FARMER, Monster.MonsterType.BIRDMAN, Monster.MonsterType.GOBLIN], # 5-8
+	[Monster.MonsterType.BATWITHBAT, Monster.MonsterType.NYRAT, Monster.MonsterType.ARCHER, Monster.MonsterType.GHOST], # 10-14
 	[], # 15-18
 ]
+
 func generate_monster_to_fight() -> Monster.MonsterType:
 	var ret: Monster.MonsterType
 	var monster_to_pick_from:Array = MonstersPerLevel[level / 5]

@@ -21,6 +21,7 @@ var statuses:Array[Array] = [[], []]
 var statuses_to_inflict: Array[AbilityEffect]
 
 var occurences:int = 0
+var last_mode_used:int = 0
 
 var ritual_count = 0
 
@@ -208,6 +209,21 @@ func process_new_turn():
 		reduce_statuses(AbilityEffect.TARGET.MONSTER)
 		# animate status changes
 	statuses_to_inflict.clear()
+	
+	if has_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.TRAPPED):
+		match last_mode_used:
+			0:
+				add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.DISABLE_ABILITY1, 1, true)
+			1:
+				add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.DISABLE_ABILITY2, 1, true)
+			2:
+				add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.DISABLE_ABILITY3, 1, true)
+			3:
+				add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.DISABLE_ABILITY4, 1, true)
+			4:
+				add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.DISABLE_ABILITY5, 1, true)
+			5:
+				add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.DISABLE_ABILITY6, 1, true)
 	animate_status_changes()
 	
 	if has_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BLIND):
@@ -323,6 +339,8 @@ func _on_ability_clicked(val):
 	if combat_state != CombatState.ROLLING:
 		return
 	combat_state = CombatState.ABILITY_SELECTED
+	
+	last_mode_used = val - 1
 	print("selected ability ", ability_boxes[val-1].ability.name_)
 
 	combat_state = CombatState.PLAYER_ABILITY
@@ -502,6 +520,9 @@ func process_effect(effect: AbilityEffect, face:int = 0) -> Dictionary:
 		AbilityEffect.TYPE.EXHAUSTED:
 			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
 			add_status(effect.target_, AbilityEffect.TYPE.EXHAUSTED, amt, true)
+		AbilityEffect.TYPE.TRAPPED:
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			add_status(effect.target_, AbilityEffect.TYPE.TRAPPED, amt, true)
 	return dict
 
 func process_end_turn():
