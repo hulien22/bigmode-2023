@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bmqm3htxfa4fv"]
+[gd_scene load_steps=26 format=3 uid="uid://bmqm3htxfa4fv"]
 
 [ext_resource type="Script" path="res://scenes/statusobj.gd" id="1_88vg2"]
 [ext_resource type="Texture2D" uid="uid://cetupre532drl" path="res://art/icons/spiral.png" id="2_y62y4"]
@@ -23,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://c8orjss7difow" path="res://art/icons/castle.png" id="20_uu45r"]
 [ext_resource type="Texture2D" uid="uid://crh4jg5qmtgy0" path="res://art/icons/haste.png" id="21_l1d0i"]
 [ext_resource type="Texture2D" uid="uid://bh64j3c1tiox0" path="res://art/icons/naruto.png" id="22_d4ijh"]
+[ext_resource type="Texture2D" uid="uid://b6fcfdh3byq6s" path="res://art/icons/recharge.png" id="23_vdlcg"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6g7fp"]
 animations = [{
@@ -89,6 +90,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("22_d4ijh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_vdlcg")
 }],
 "loop": true,
 "name": &"default",

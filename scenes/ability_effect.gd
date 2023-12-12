@@ -35,6 +35,9 @@ enum TYPE {
 	MIMICKING,			#29
 	THIKKSKIN,			#30
 	DAZZLED,			#31
+	DIESTEAL,			#32
+	FORESIGHT,			#33
+	BREATH_RECHARGE,	#34
 }
 
 var target_: TARGET;
@@ -90,6 +93,10 @@ func is_status_inflict() -> bool:
 			return true
 		TYPE.DAZZLED:
 			return true
+		TYPE.FORESIGHT:
+			return true
+		TYPE.BREATH_RECHARGE:
+			return true
 		_:
 			return false
 
@@ -143,6 +150,10 @@ static func get_status_desc(t:TYPE) -> String:
 			return "Thick Skin: takes 3 less damage from all sources"
 		TYPE.DAZZLED:
 			return "Dazzled: Randomize all dice faces"
+		TYPE.FORESIGHT:
+			return "Foresight: Attacks based on last mode"
+		TYPE.BREATH_RECHARGE:
+			return "Recharge 5-6: If player uses a 5 or 6 ability, recharge breath attack"
 		_:
 			return ""
 		

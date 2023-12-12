@@ -549,6 +549,9 @@ func process_effect(effect: AbilityEffect, face:int = 0) -> Dictionary:
 		AbilityEffect.TYPE.DAZZLED:
 			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
 			add_status(effect.target_, AbilityEffect.TYPE.DAZZLED, amt, true)
+		AbilityEffect.TYPE.FORESIGHT:
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			add_status(effect.target_, AbilityEffect.TYPE.FORESIGHT, amt, false)
 	return dict
 
 func process_end_turn():

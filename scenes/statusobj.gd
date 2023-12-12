@@ -45,6 +45,10 @@ func init(s: Status):
 			$holder/Icon.frame = 11
 		AbilityEffect.TYPE.DAZZLED:
 			$holder/Icon.frame = 14
+		AbilityEffect.TYPE.FORESIGHT:
+			$holder/Icon.frame = 4
+		AbilityEffect.TYPE.BREATH_RECHARGE:
+			$holder/Icon.frame = 21
 		_:
 			$holder/Icon.frame = 10
 	if amount == 0:
