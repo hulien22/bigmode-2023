@@ -160,10 +160,62 @@ func init_monster(m:MonsterType):
 				Global.get_monster_ability_by_name("Wither Touch")]
 			image = preload("res://art/characters/ghost.png")
 			coins_dropped = 4
+		MonsterType.MIMIC:
+			max_health = 33
+			health = 33
+			name_ = "Mimic"
+			repeat_abilities = [
+				Global.get_monster_ability_by_name("Vanish"),
+				Global.get_monster_ability_by_name("Lick"),
+				Global.get_monster_ability_by_name("Haunt"),
+				Global.get_monster_ability_by_name("Wither Touch"),
+				Global.get_monster_ability_by_name("Hypnotize"),
+				Global.get_monster_ability_by_name("Nosegrind"),
+				Global.get_monster_ability_by_name("180"),
+				Global.get_monster_ability_by_name("Ollie"),
+				Global.get_monster_ability_by_name("Net Arrow"),
+				Global.get_monster_ability_by_name("Duck"),
+				Global.get_monster_ability_by_name("Barrage"),
+				Global.get_monster_ability_by_name("Wind Up"),
+				Global.get_monster_ability_by_name("Whirlwind"),
+				Global.get_monster_ability_by_name("Smash"),
+				Global.get_monster_ability_by_name("Poison Spray"),
+				Global.get_monster_ability_by_name("Toughen Up"),
+				Global.get_monster_ability_by_name("Imprison")]
+			image = preload("res://art/characters/mimic.png")
+			coins_dropped = 5
+		MonsterType.YOYOKID:
+			max_health = 31
+			health = 31
+			name_ = "Yo-Yo Kid"
+			repeat_abilities = [
+				Global.get_monster_ability_by_name("Hypnotize"),
+				Global.get_monster_ability_by_name("Nosegrind"),
+				Global.get_monster_ability_by_name("Ollie"),
+				Global.get_monster_ability_by_name("180"),]
+			image = preload("res://art/characters/yoyokid.png")
+			coins_dropped = 5
+		MonsterType.BERSERKER:
+			max_health = 60
+			health = 60
+			name_ = "Berserker"
+			starting_abilities = [
+				Global.get_monster_ability_by_name("Time To Rage")]
+			repeat_abilities = [
+				Global.get_monster_ability_by_name("Whirlwind"),
+				Global.get_monster_ability_by_name("Smash"),
+				Global.get_monster_ability_by_name("Toughen Up")]
+			image = preload("res://art/characters/viking.png")
+			coins_dropped = 5
 	
 
 
 func get_next_move(turn: int) -> Ability:
+	if type == MonsterType.MIMIC:
+		if is_elite:
+			return Global.get_upgraded_monster_ability(repeat_abilities.pick_random())
+		return repeat_abilities.pick_random()
+	
 	if turn < starting_abilities.size():
 		if is_elite:
 			return Global.get_upgraded_monster_ability(starting_abilities[turn])

@@ -39,6 +39,8 @@ func init(s: Status):
 			$holder/Icon.frame = 20
 		AbilityEffect.TYPE.EXHAUSTED:
 			$holder/Icon.frame = 12
+		AbilityEffect.TYPE.MIMICKING:
+			$holder/Icon.frame = 10
 		_:
 			$holder/Icon.frame = 10
 	if amount == 0:
