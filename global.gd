@@ -79,7 +79,7 @@ func generate_abilities(num:int, level:int) -> Array[Ability]:
 			elif chance < 20 + (level / 2):
 				new_ability = uncommon_abilities.pick_random()
 			else:
-				new_ability = uncommon_abilities.pick_random()
+				new_ability = common_abilities.pick_random()
 		ret.append(new_ability)
 	for i in ret.size():
 		#check if we should upgrade them
