@@ -119,7 +119,6 @@ func go_to_scene(gs: GameState.GameScene):
 			$BossLootScreen.show()
 			animate_abilities_slide(false)
 		GameState.GameScene.DICE_SHOP:
-			$DiceShopScreen.init()
 			$DiceShopScreen.show()
 			animate_abilities_slide(false)
 			#start dice rolls
