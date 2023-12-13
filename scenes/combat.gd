@@ -645,6 +645,7 @@ func process_effect(effect: AbilityEffect, face:int = 0) -> Dictionary:
 		AbilityEffect.TYPE.BREATH_RECHARGE:
 			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			add_status(effect.target_, AbilityEffect.TYPE.BREATH_RECHARGE, amt, false)
+			monster.can_breath_attack = false
 		AbilityEffect.TYPE.DIESTEAL:
 			dice_mgr.remove_random_die()
 	return dict
