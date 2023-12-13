@@ -93,7 +93,7 @@ func go_to_scene(gs: GameState.GameScene):
 			$DoorChoiceScreen.show()
 			animate_abilities_slide(false)
 		GameState.GameScene.COMBAT:
-			if GameState.level == 0 && GameState.games_played <= 1:
+			if GameState.level == 1 && GameState.games_played <= 1:
 				open_tutorial()
 			else:
 				$MonsterUI.show()
@@ -103,6 +103,10 @@ func go_to_scene(gs: GameState.GameScene):
 			$MonsterUI.show()
 			$Combatscreen.show()
 			process_start_combat(true)
+		GameState.GameScene.BOSS:
+			$MonsterUI.show()
+			$Combatscreen.show()
+			process_start_combat(false, true)
 		GameState.GameScene.SELECT_ABILITY:
 			var new_abs:Array[Ability] = Global.generate_abilities(3, GameState.level)
 			$AbilityChoiceScreen.init(ability_boxes, new_abs)
@@ -162,17 +166,21 @@ func generate_next_door_scene():
 
 
 func _on_door_selected(gs: GameState.GameScene):
-	go_to_scene(gs)
 	GameState.level += 1
+	print("entering level ", GameState.level)
+	go_to_scene(gs)
 
 ####################################################################################################
 ####################################################################################################
 ####################################################################################################
-func process_start_combat(is_elite: bool = false):
+func process_start_combat(is_elite: bool = false, is_boss:bool = false):
 	disable_abilities_and_rerollbtn()
-	monster.init_monster(GameState.generate_monster_to_fight())
-	if is_elite:
-		monster.set_elite()
+	if is_boss:
+		monster.init_monster(GameState.generate_boss_to_fight())
+	else:
+		monster.init_monster(GameState.generate_monster_to_fight())
+		if is_elite:
+			monster.set_elite()
 	$MonsterUI/character2.init(monster.image)
 	$MonsterUI/MonsterName.text = monster.name_
 
@@ -207,7 +215,7 @@ func process_start_combat(is_elite: bool = false):
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.CONFUSE, 99, true)
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BURN, 99, true)
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BLIND, 2, true)
-#	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.DAZZLED, 99, false)
+#	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.STRENGTH, 99, false)
 	
 	process_new_turn()
 	#todo timer between states? to play anims or smth
@@ -556,7 +564,7 @@ func process_effect(effect: AbilityEffect, face:int = 0) -> Dictionary:
 #				dict["deplete_ability"] = true
 		AbilityEffect.TYPE.HEAL:
 			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
-			change_health(effect.target_, -1 * amt)
+			change_health(effect.target_, amt)
 		AbilityEffect.TYPE.SELF_DMG:
 			var dmg = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			# don't include strength, do include vulnerable

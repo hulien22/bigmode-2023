@@ -43,7 +43,7 @@ func generate_next_doors() -> Array[GameScene]:
 #	if level == 1 && first_game:
 #		first_game = false
 #		return [GameScene.COMBAT, GameScene.COMBAT]
-	if level >= 40:
+	if level >= 30:
 		return [GameScene.VICTORY]
 	match (level % 10):
 		0,1,5:
@@ -81,8 +81,9 @@ func generate_monster_to_fight() -> Monster.MonsterType:
 	var monster_to_pick_from:Array = MonstersPerLevel[level / 5]
 	while true:
 		if level == 1 && games_played <= 1:
-			monsters_fought.append(ret)
+			print("gen slime first")
 			ret = Monster.MonsterType.SLIME
+			monsters_fought.append(ret)
 			break
 		ret = monster_to_pick_from.pick_random()
 		if !monsters_fought.has(ret):
@@ -90,6 +91,14 @@ func generate_monster_to_fight() -> Monster.MonsterType:
 	
 	monsters_fought.append(ret)
 	return ret
+
+func generate_boss_to_fight() -> Monster.MonsterType:
+	if level == 10:
+		return Monster.MonsterType.TWINDRAGON
+	elif level == 20:
+		return Monster.MonsterType.PIRAT
+	else:
+		return Monster.MonsterType.GUNHOLDER
 
 func generate_new_relic() -> Relic:
 	while true:
