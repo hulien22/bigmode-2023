@@ -93,7 +93,7 @@ func go_to_scene(gs: GameState.GameScene):
 			$DoorChoiceScreen.show()
 			animate_abilities_slide(false)
 		GameState.GameScene.COMBAT:
-			if GameState.games_played <= 1:
+			if GameState.level == 0 && GameState.games_played <= 1:
 				open_tutorial()
 			else:
 				$MonsterUI.show()
@@ -119,15 +119,18 @@ func go_to_scene(gs: GameState.GameScene):
 			$BossLootScreen.show()
 			animate_abilities_slide(false)
 		GameState.GameScene.DICE_SHOP:
+			$DiceShopScreen.init()
 			$DiceShopScreen.show()
 			animate_abilities_slide(false)
 			#start dice rolls
 			init_dice_shop()
 		GameState.GameScene.REST:
+			$RestScreen.init()
 			$RestScreen.show()
 			animate_abilities_slide(false)
 		GameState.GameScene.RITUAL:
 			ritual_count = 0
+			$RitualScreen.init()
 			$RitualScreen.show()
 			init_ritual_scene()
 			animate_abilities_slide(false)

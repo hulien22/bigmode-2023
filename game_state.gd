@@ -80,7 +80,8 @@ func generate_monster_to_fight() -> Monster.MonsterType:
 	var ret: Monster.MonsterType
 	var monster_to_pick_from:Array = MonstersPerLevel[level / 5]
 	while true:
-		if level == 0 && games_played <= 1:
+		if level == 1 && games_played <= 1:
+			monsters_fought.append(ret)
 			ret = Monster.MonsterType.SLIME
 			break
 		ret = monster_to_pick_from.pick_random()
