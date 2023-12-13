@@ -683,6 +683,7 @@ func combat_win():
 	if GameState.player.has_relic(Relic.TYPE.TROLL_HEART):
 		$RelicHolder.update_relic_type(Relic.TYPE.TROLL_HEART)
 		change_health(AbilityEffect.TARGET.PLAYER, 1)
+		render_health()
 	#generate loot scene
 		# coins, and relic
 	# which will then generate the ability screen
