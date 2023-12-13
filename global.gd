@@ -35,9 +35,10 @@ func load_abilities():
 	print("uncommons ", uncommon_abilities.size())
 	print("rares ", rare_abilities.size())
 
-	generate_abilities(3, 5)
-	generate_abilities(3, 5)
-	generate_abilities(3, 5)
+	for j in 5:
+		print(j, "---")
+		for i in generate_abilities(3, 5):
+			print(i.name_)
 
 func get_upgraded_ability(a:Ability) -> Ability:
 	for x in abilities:
@@ -73,10 +74,10 @@ func generate_abilities(num:int, level:int) -> Array[Ability]:
 		var new_ability: Ability = null
 		while new_ability == null || ret.has(new_ability):
 			var chance = randi() % 100
-			if chance < 5 + (level / 2):
+			if chance < 5 + level:
 				# generate rare
 				new_ability = rare_abilities.pick_random()
-			elif chance < 20 + (level / 2):
+			elif chance < 20 + level:
 				new_ability = uncommon_abilities.pick_random()
 			else:
 				new_ability = common_abilities.pick_random()
