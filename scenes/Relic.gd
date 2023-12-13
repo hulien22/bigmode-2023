@@ -135,7 +135,7 @@ func init_relic(t: TYPE):
 			description = "Relics with limited uses get one more use"
 		TYPE.FRONTLOADED:
 			name_ = "Frontloaded"
-			description = "Start with 10 rerolls for the entire combat. No longer gain 3 at the start of each turn"
+			description = "Start with 10 rerolls for the entire combat. No longer gain 2 at the start of each turn"
 		TYPE.INFERNAL_ENGINE:
 			name_ = "Infernal Engine"
 			description = "Gain 2 random dice, start each fight with 3 Burn\n---\nBurned: Increase all dice values by 1 (max value is still 6)"

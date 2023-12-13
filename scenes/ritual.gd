@@ -15,7 +15,7 @@ func init():
 
 func sacrificed_die():
 	$NextButton.set_text("Continue")
-	if randi_range(0,3) <= 2: #75% chance
+	if randi_range(0,3) <= 2 || GameState.player.has_relic(Relic.TYPE.GREED): #75% chance
 		$Text.text = "The die disappears in a blast of dark energy\n\nYou feel a surge of power strengthen you\n\nMax health increased!"
 		GameState.player.max_health += 5
 		GameState.player.health += 5

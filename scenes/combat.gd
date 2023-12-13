@@ -80,7 +80,12 @@ func go_to_scene(gs: GameState.GameScene):
 		GameState.GameScene.DOORS:
 			var doors:Array[GameState.GameScene] = GameState.generate_next_doors()
 			print("LEVEL: ", GameState.level, "DOORS: ", doors)
-			if doors.size() == 1:
+			if GameState.level == 10 || GameState.level == 20:
+				$DoorChoiceScreen.init(doors, "You find an entrance leading to the next level of the dungeon\n\nYou ready yourself to delve deeper and see what lies below\n\nLevel Up! Max health increased!")
+				GameState.player.max_health += 5
+				GameState.player.health = GameState.player.max_health
+				render_health()
+			elif doors.size() == 1:
 				$DoorChoiceScreen.init(doors, "You find yourself in front of a large door")
 			else:
 				$DoorChoiceScreen.init(doors, "You find yourself in front of two doors\nPick a door")
@@ -169,6 +174,8 @@ func process_start_combat(is_elite: bool = false):
 	cur_abilities = []
 	for i in 6:
 		cur_abilities.append(AbilityDesc.new(GameState.player.abilities[i]))
+		if cur_abilities[i].has_limited_uses && GameState.player.has_relic(Relic.TYPE.RATIONS):
+			cur_abilities[i].limited_uses_left += 1
 	update_abilities_with_current_vals()
 
 	for ab in ability_boxes:
@@ -215,6 +222,27 @@ func process_new_turn():
 	if turn_counter == 0 && GameState.player.has_relic(Relic.TYPE.SENTINEL_SHIELD):
 		$RelicHolder.update_relic_type(Relic.TYPE.SENTINEL_SHIELD)
 		add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.EVADE, 1, true)
+
+	if turn_counter == 0 && GameState.player.has_relic(Relic.TYPE.COOL_GUY_GLASSES):
+		$RelicHolder.update_relic_type(Relic.TYPE.COOL_GUY_GLASSES)
+		add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.DAZZLED, 99, true)
+	if turn_counter == 0 && GameState.player.has_relic(Relic.TYPE.FRONTLOADED):
+		$RelicHolder.update_relic_type(Relic.TYPE.FRONTLOADED)
+		rerolls = 10
+	if turn_counter == 0 && GameState.player.has_relic(Relic.TYPE.INFERNAL_ENGINE):
+		$RelicHolder.update_relic_type(Relic.TYPE.INFERNAL_ENGINE)
+		add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BURN, 3, true)
+	if turn_counter == 0 && GameState.player.has_relic(Relic.TYPE.FROZEN_SUPERSUIT):
+		$RelicHolder.update_relic_type(Relic.TYPE.FROZEN_SUPERSUIT)
+		add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.FREEZE, 3, true)
+	if turn_counter == 0 && GameState.player.has_relic(Relic.TYPE.DRUNKEN_BRAWLER):
+		$RelicHolder.update_relic_type(Relic.TYPE.DRUNKEN_BRAWLER)
+		add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BLIND, 2, true)
+		add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.DEXTERITY, 3, false)
+	if turn_counter == 0 &&GameState.player.has_relic(Relic.TYPE.MASOCHIST):
+		$RelicHolder.update_relic_type(Relic.TYPE.MASOCHIST)
+		var r: Relic = GameState.player.get_relic(Relic.TYPE.MASOCHIST)
+		add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.STRENGTH, r.value, false)
 	
 	#monster starting statuses
 	if turn_counter == 0 && monster.type == Monster.MonsterType.ARCHER:
@@ -287,12 +315,17 @@ func process_new_turn():
 	update_abilities_with_current_vals()
 	
 	# trying this
-	rerolls = 2
+	if !GameState.player.has_relic(Relic.TYPE.FRONTLOADED):
+		rerolls = 2
+	
 	if turn_counter == 0 && GameState.player.has_relic(Relic.TYPE.TRUSTY_SHIELD):
 		$RelicHolder.update_relic_type(Relic.TYPE.TRUSTY_SHIELD)
 		rerolls += 1
 		change_block(AbilityEffect.TARGET.PLAYER, 2)
 		render_health()
+	if GameState.player.has_relic(Relic.TYPE.GREED):
+		$RelicHolder.update_relic_type(Relic.TYPE.GREED)
+		rerolls += 1
 	if GameState.player.has_relic(Relic.TYPE.MORE_OPTIONS):
 		$RelicHolder.update_relic_type(Relic.TYPE.MORE_OPTIONS)
 		var r: Relic = GameState.player.get_relic(Relic.TYPE.MORE_OPTIONS)
@@ -352,11 +385,27 @@ func _on_complete_roll(results):
 	elif rerolls > 0:
 		$Combatscreen/RerollButton.set_disabled(false)
 		$Combatscreen/RerollButton.set_text("REROLL! (" + str(rerolls) + ")")
+	elif rerolls == 0 && GameState.player.has_relic(Relic.TYPE.DEAL_WITH_THE_DEVIL):
+		$Combatscreen/RerollButton.set_disabled(false)
+		$Combatscreen/RerollButton.set_text("REROLL! (-2HP)")
+		
 
 func _on_reroll_button_pressed():
 	if combat_state == CombatState.NEW_TURN:
 		dice_mgr.reset_dice()
 		combat_state = CombatState.ROLLING
+	elif rerolls == 0 && GameState.player.has_relic(Relic.TYPE.DEAL_WITH_THE_DEVIL):
+		inflict_damage(AbilityEffect.TARGET.PLAYER, 2)
+		render_health()
+		if GameState.player.health <= 0:
+			combat_loss()
+			return
+		elif GameState.player.has_relic(Relic.TYPE.MASOCHIST):
+			$RelicHolder.update_relic_type(Relic.TYPE.MASOCHIST)
+			var r: Relic = GameState.player.get_relic(Relic.TYPE.MASOCHIST)
+			r.value += 1
+			add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.STRENGTH, 1, false)
+			animate_status_changes()
 	else:
 		rerolls -= 1
 		$Combatscreen/RerollButton.set_text("REROLL! (" + str(rerolls) + ")")
@@ -506,6 +555,11 @@ func process_effect(effect: AbilityEffect, face:int = 0) -> Dictionary:
 			var dmg = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			# don't include strength, do include vulnerable
 			inflict_damage(effect.target_, max(0, compute_damage(dmg, AbilityEffect.TARGET.NOONE, effect.target_)))
+			if effect.target_ == AbilityEffect.TARGET.PLAYER && GameState.player.has_relic(Relic.TYPE.MASOCHIST):
+				$RelicHolder.update_relic_type(Relic.TYPE.MASOCHIST)
+				var r: Relic = GameState.player.get_relic(Relic.TYPE.MASOCHIST)
+				r.value += 1
+				add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.STRENGTH, 1, false)
 		AbilityEffect.TYPE.DISABLE_ABILITY1:
 			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			add_status(effect.target_, AbilityEffect.TYPE.DISABLE_ABILITY1, amt, true)
@@ -766,6 +820,9 @@ func animate_abilities_slide(slide_in:bool):
 	pass
 
 func add_coins(amt: int):
+	if GameState.player.has_relic(Relic.TYPE.GREED):
+		$RelicHolder.update_relic_type(Relic.TYPE.GREED)
+		return
 	GameState.player.coins += amt
 	anim_coins()
 

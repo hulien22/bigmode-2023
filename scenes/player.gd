@@ -65,8 +65,19 @@ func add_new_relic(t:Relic.TYPE):
 			health += 5
 			Events.emit_signal("health_updated")
 		Relic.TYPE.BAG_OF_HOLDING:
-			coins += 10
-			Events.emit_signal("coins_updated")
+			if !has_relic(Relic.TYPE.GREED):
+				coins += 10
+				Events.emit_signal("coins_updated")
+		Relic.TYPE.COOL_GUY_GLASSES:
+			dice.append([[1,2,3,4,5,6], Color.ANTIQUE_WHITE])
+			dice.append([[1,2,3,4,5,6], Color.ANTIQUE_WHITE])
+			dice.append([[1,2,3,4,5,6], Color.ANTIQUE_WHITE])
+		Relic.TYPE.INFERNAL_ENGINE:
+			dice.append([DiceConstructor.generate_random_die(), Color.FIREBRICK])
+			dice.append([DiceConstructor.generate_random_die(), Color.FIREBRICK])
+		Relic.TYPE.FROZEN_SUPERSUIT:
+			dice.append([DiceConstructor.generate_random_die(), Color.LIGHT_SKY_BLUE])
+			dice.append([DiceConstructor.generate_random_die(), Color.LIGHT_SKY_BLUE])
 
 func has_relic(t:Relic.TYPE) -> bool:
 	for r in relics:
