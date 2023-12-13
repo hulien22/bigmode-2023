@@ -82,7 +82,7 @@ func go_to_scene(gs: GameState.GameScene):
 			var doors:Array[GameState.GameScene] = GameState.generate_next_doors()
 			print("LEVEL: ", GameState.level, "DOORS: ", doors)
 			if GameState.level == 10 || GameState.level == 20:
-				$DoorChoiceScreen.init(doors, "You find an entrance leading to the next level of the dungeon\n\nYou ready yourself to delve deeper and see what lies below\n\nLevel Up! Max health increased!")
+				$DoorChoiceScreen.init(doors, "You find an entrance leading to the next level of the dungeon\nYou ready yourself to delve deeper and see what lies below\nLevel Up! Max health increased!")
 				GameState.player.max_health += 5
 				GameState.player.health = GameState.player.max_health
 				render_health()

@@ -41,6 +41,8 @@ func init_monster(m:MonsterType):
 	is_boss = false
 	can_breath_attack = false
 	type = m
+	starting_abilities = []
+	repeat_abilities = []
 	match m:
 		MonsterType.SLIME:
 			max_health = 10

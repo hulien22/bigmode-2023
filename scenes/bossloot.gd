@@ -42,6 +42,14 @@ func _on_relic_button_mouse_exited(extra_arg_0):
 			$Relic3/relic._on_color_rect_mouse_exited()
 
 func _on_relic_button_pressed(extra_arg_0):
+	match extra_arg_0:
+		1:
+			GameState.player.add_new_relic($Relic1/relic.relic.type)
+		2:
+			GameState.player.add_new_relic($Relic2/relic.relic.type)
+		_:
+			GameState.player.add_new_relic($Relic3/relic.relic.type)
+	Events.emit_signal("relics_updated")
 	$Relic1.hide()
 	$Relic2.hide()
 	$Relic3.hide()
