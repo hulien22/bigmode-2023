@@ -103,7 +103,8 @@ func _on_animtimer_timeout():
 
 func reset_dice():
 	for d in dice:
-		d.reset_die()
+		if d != null:
+			d.reset_die()
 
 func fade_away_dice():
 	for d in dice:
@@ -120,3 +121,16 @@ func unblind_all_dice():
 	for d in dice:
 		if d != null:
 			d.unblind_die()
+
+func clear_dice():
+	for d in dice:
+		if d != null:
+			d.queue_free()
+	dice.clear()
+
+func remove_random_die():
+	if dice.size() > 1:
+		var i = randi_range(0, dice.size() - 1)
+		if dice[i] != null:
+			dice[i].queue_free()
+		dice.remove_at(i)

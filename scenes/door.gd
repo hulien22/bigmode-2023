@@ -23,6 +23,8 @@ func init(gs: GameState.GameScene):
 			$AnimatedSprite2D2.frame = 1
 		GameState.GameScene.REST:
 			$AnimatedSprite2D2.frame = 2
+		GameState.GameScene.VICTORY:
+			$AnimatedSprite2D2.frame = 3
 		_:
 			$AnimatedSprite2D2.hide()
 		

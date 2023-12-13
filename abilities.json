@@ -655,5 +655,68 @@
 			[0, 0, 8],
 			[1, 6, "2"]
 		]],
+		["Cold Breath", "Deal [D] damage, Inflict 2 Freeze", [
+			[0, 0, 7],
+			[0, 16, 2],
+			[1, 34, 1],
+		]],
+		["Fire Breath", "Deal [D] damage, Inflict 2 Burn", [
+			[0, 0, 7],
+			[0, 15, 2],
+			[1, 34, 1],
+		]],
+		["Dragon Fear", "Inflict 2 Frightened", [
+			[0, 13, 2]
+		]],
+		["Flame Claws", "Deal [D] damage, Inflict 1 Burn", [
+			[0, 0, 2],
+			[0, 15, 2],
+		]],
+		["Icy Tail", "Deal [D] damage, Inflict 1 Freeze", [
+			[0, 0, 2],
+			[0, 16, 2],
+		]],
+		["Burlap Sack", "Inflict 2 Blind", [
+			[0, 17, 2]
+		]],
+		["Trap", "Inflict 3 Trapped", [
+			[0, 28, 3]
+		]],
+		["Leftovers", "Deal [D] damage (based on number of non-mode dice)", [
+			[0, 0, "l"]
+		]],
+		["Steal", "Steal a die and gain 2 Strength", [
+			[1, 3, 2],
+			[0, 32, 1]
+		]],
+		["Sneak", "Gain 1 Evade", [
+			[1, 18, 1]
+		]],
+		["All Seeing Eye", "Gain 1 Foresight", [
+			[1, 33, 1]
+		]],
+		["Paralyze Gun", "Inflict 1 Stunned and [D] damage", [
+			[0, 25, 1],
+			[0, 0, 5]
+		]],
+		["Fear Gun", "Inflict 1 Frightened and [D] damage", [
+			[0, 13, 1],
+			[0, 0, 5]
+		]],
+		["Confuse Gun", "Inflict 1 Frightened and [D] damage", [
+			[0, 14, 1],
+			[0, 0, 5]
+		]],
+		["Big Gun", "Deal [D] damage", [
+			[0, 0, 12]
+		]],
+		["Blind Gun", "Inflict 1 Blind and [D] damage", [
+			[0, 17, 1],
+			[0, 0, 5]
+		]],
+		["Heal Gun", "Heal 10 health and gain 2 Strength", [
+			[1, 5, 10],
+			[1, 3, 1]
+		]],
 	]
 }

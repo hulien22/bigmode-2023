@@ -1,6 +1,6 @@
 extends Node
 
-enum GameScene {INTRO, DOORS, COMBAT, LOOT, SELECT_ABILITY, DICE_SHOP, REST, RITUAL, ABILITY_SHOP, CHEST, RELIC_SHOP, BOSS, ELITE}
+enum GameScene {INTRO, DOORS, COMBAT, LOOT, SELECT_ABILITY, DICE_SHOP, REST, RITUAL, ABILITY_SHOP, CHEST, RELIC_SHOP, BOSS, ELITE, VICTORY, BOSSLOOT}
 # TODO separate rest into ability_upgrade and heal?
 # could make heal - heal for value of 2 dice rolls?
 const NONCOMBATSCENES:Array[GameScene] = [GameScene.REST, GameScene.DICE_SHOP, GameScene.RITUAL]
@@ -43,8 +43,9 @@ func generate_next_doors() -> Array[GameScene]:
 #	if level == 1 && first_game:
 #		first_game = false
 #		return [GameScene.COMBAT, GameScene.COMBAT]
-
-	match level:
+	if level >= 40:
+		return [GameScene.VICTORY]
+	match (level % 10):
 		0,1,5:
 			return [GameScene.COMBAT]
 		3,7:
@@ -97,3 +98,21 @@ func generate_new_relic() -> Relic:
 			r.init_relic(t)
 			return r
 	return null
+
+func has_rel(rels:Array[Relic], t:Relic.TYPE) -> bool:
+	for rel in rels:
+		if rel.type == t:
+			return true
+	return false
+
+func generate_new_boss_relics() -> Array[Relic]:
+	var rels:Array[Relic] = []
+	for i in 3:
+		while true:
+			var t:Relic.TYPE = Relic.boss_relics.pick_random()
+			if !player.has_relic(t) && !has_rel(rels, t):
+				var r: Relic = Relic.new()
+				r.init_relic(t)
+				rels.append(r)
+				break
+	return rels

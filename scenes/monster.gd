@@ -23,6 +23,8 @@ var coins_dropped:int = 2
 
 # elite has 25% more health and uses upgraded abilities?
 var is_elite:bool = false
+var is_boss:bool = false
+var can_breath_attack: bool = false
 
 #func init_slime():
 #	max_health = 10
@@ -36,6 +38,8 @@ var is_elite:bool = false
 
 func init_monster(m:MonsterType):
 	is_elite = false
+	is_boss = false
+	can_breath_attack = false
 	type = m
 	match m:
 		MonsterType.SLIME:
@@ -89,7 +93,7 @@ func init_monster(m:MonsterType):
 				Global.get_monster_ability_by_name("Tri-Attack"),
 				Global.get_monster_ability_by_name("Harvest")]
 			image = preload("res://art/characters/farmer.png")
-			coins_dropped = 3
+			coins_dropped = 2
 		MonsterType.BIRDMAN:
 			max_health = 17
 			health = 17
@@ -99,7 +103,7 @@ func init_monster(m:MonsterType):
 				Global.get_monster_ability_by_name("Fly"),
 				Global.get_monster_ability_by_name("Imprison")]
 			image = preload("res://art/characters/birdman.png")
-			coins_dropped = 3
+			coins_dropped = 2
 		MonsterType.GOBLIN:
 			max_health = 18
 			health = 18
@@ -112,7 +116,7 @@ func init_monster(m:MonsterType):
 				Global.get_monster_ability_by_name("Bash"),
 				Global.get_monster_ability_by_name("Cower")]
 			image = preload("res://art/characters/gobbo.png")
-			coins_dropped = 3
+			coins_dropped = 2
 		MonsterType.COOLGUY:
 			max_health = 24
 			health = 24
@@ -122,7 +126,7 @@ func init_monster(m:MonsterType):
 				Global.get_monster_ability_by_name("Cold Touch"),
 				Global.get_monster_ability_by_name("Stunning Smile")]
 			image = preload("res://art/characters/coolguy.png")
-			coins_dropped = 3
+			coins_dropped = 2
 		MonsterType.NYRAT:
 			max_health = 28
 			health = 28
@@ -133,7 +137,7 @@ func init_monster(m:MonsterType):
 				Global.get_monster_ability_by_name("Subway Surf"),
 				Global.get_monster_ability_by_name("Cardboard Box")]
 			image = preload("res://art/characters/nyrat.png")
-			coins_dropped = 4
+			coins_dropped = 3
 		MonsterType.ARCHER:
 			max_health = 27
 			health = 27
@@ -147,7 +151,7 @@ func init_monster(m:MonsterType):
 				Global.get_monster_ability_by_name("Duck"),
 				Global.get_monster_ability_by_name("Barrage")]
 			image = preload("res://art/characters/archer.png")
-			coins_dropped = 4
+			coins_dropped = 3
 		MonsterType.GHOST:
 			max_health = 25
 			health = 25
@@ -158,7 +162,7 @@ func init_monster(m:MonsterType):
 				Global.get_monster_ability_by_name("Haunt"),
 				Global.get_monster_ability_by_name("Wither Touch")]
 			image = preload("res://art/characters/ghost.png")
-			coins_dropped = 4
+			coins_dropped = 3
 		MonsterType.MIMIC:
 			max_health = 33
 			health = 33
@@ -182,7 +186,7 @@ func init_monster(m:MonsterType):
 				Global.get_monster_ability_by_name("Toughen Up"),
 				Global.get_monster_ability_by_name("Imprison")]
 			image = preload("res://art/characters/mimic.png")
-			coins_dropped = 5
+			coins_dropped = 3
 		MonsterType.YOYOKID:
 			max_health = 31
 			health = 31
@@ -193,7 +197,7 @@ func init_monster(m:MonsterType):
 				Global.get_monster_ability_by_name("Ollie"),
 				Global.get_monster_ability_by_name("180"),]
 			image = preload("res://art/characters/yoyokid.png")
-			coins_dropped = 5
+			coins_dropped = 3
 		MonsterType.BERSERKER:
 			max_health = 70
 			health = 70
@@ -205,7 +209,7 @@ func init_monster(m:MonsterType):
 				Global.get_monster_ability_by_name("Smash"),
 				Global.get_monster_ability_by_name("Toughen Up")]
 			image = preload("res://art/characters/viking.png")
-			coins_dropped = 5
+			coins_dropped = 3
 		MonsterType.GIANT:
 			max_health = 60
 			health = 30
@@ -214,7 +218,7 @@ func init_monster(m:MonsterType):
 				Global.get_monster_ability_by_name("Stomp"),
 				Global.get_monster_ability_by_name("Giant Regen")]
 			image = preload("res://art/characters/giant.png")
-			coins_dropped = 6
+			coins_dropped = 4
 		MonsterType.PYRO:
 			max_health = 12
 			health = 12
@@ -227,7 +231,7 @@ func init_monster(m:MonsterType):
 				Global.get_monster_ability_by_name("Fireball!!!"),
 				Global.get_monster_ability_by_name("Prep Spells")]
 			image = preload("res://art/characters/wizard.png")
-			coins_dropped = 6
+			coins_dropped = 4
 		MonsterType.YETI:
 			max_health = 36
 			health = 36
@@ -237,7 +241,7 @@ func init_monster(m:MonsterType):
 				Global.get_monster_ability_by_name("Snowball"),
 				Global.get_monster_ability_by_name("Snow Fort")]
 			image = preload("res://art/characters/yeti.png")
-			coins_dropped = 6
+			coins_dropped = 4
 		MonsterType.KRAKEN:
 			max_health = 38
 			health = 38
@@ -248,7 +252,7 @@ func init_monster(m:MonsterType):
 				Global.get_monster_ability_by_name("Octo Whip"),
 				Global.get_monster_ability_by_name("Entangle")]
 			image = preload("res://art/characters/squid.png")
-			coins_dropped = 6
+			coins_dropped = 4
 		MonsterType.GOOSE:
 			max_health = 36
 			health = 36
@@ -260,7 +264,7 @@ func init_monster(m:MonsterType):
 				Global.get_monster_ability_by_name("Fly"),
 				Global.get_monster_ability_by_name("Vicious Bite")]
 			image = preload("res://art/characters/goose.png")
-			coins_dropped = 7
+			coins_dropped = 4
 		MonsterType.HYPNOSNAIL:
 			max_health = 30
 			health = 30
@@ -271,7 +275,7 @@ func init_monster(m:MonsterType):
 				Global.get_monster_ability_by_name("Hypnotize"),
 				Global.get_monster_ability_by_name("Head Flail")]
 			image = preload("res://art/characters/snail.png")
-			coins_dropped = 7
+			coins_dropped = 4
 		MonsterType.BATWITHBAT:
 			max_health = 37
 			health = 37
@@ -282,11 +286,67 @@ func init_monster(m:MonsterType):
 				Global.get_monster_ability_by_name("Wind Up"),
 				Global.get_monster_ability_by_name("Homerun")]
 			image = preload("res://art/characters/batwithbat.png")
-			coins_dropped = 7
+			coins_dropped = 4
+		MonsterType.TWINDRAGON:
+			is_boss = true
+			can_breath_attack = true
+			max_health = 30
+			health = 30
+			name_ = "Two-headed Dragon"
+			starting_abilities = [
+				Global.get_monster_ability_by_name("Cold Breath"),
+				Global.get_monster_ability_by_name("Fire Breath")]
+			repeat_abilities = [
+				Global.get_monster_ability_by_name("Dragon Fear"),
+				Global.get_monster_ability_by_name("Flame Claws"),
+				Global.get_monster_ability_by_name("Fly"),
+				Global.get_monster_ability_by_name("Icy Tail")]
+			image = preload("res://art/characters/twoheaddragon.png")
+			coins_dropped = 5
+		MonsterType.PIRAT:
+			is_boss = true
+			max_health = 40
+			health = 40
+			name_ = "Pi-Rat-e"
+			starting_abilities = [
+				Global.get_monster_ability_by_name("Burlap Sack")]
+			repeat_abilities = [
+				Global.get_monster_ability_by_name("Trap"),
+				Global.get_monster_ability_by_name("Leftovers"),
+				Global.get_monster_ability_by_name("Steal"),
+				Global.get_monster_ability_by_name("Sneak")]
+			image = preload("res://art/characters/ratthief.png")
+			coins_dropped = 5
+		MonsterType.GUNHOLDER:
+			is_boss = true
+			max_health = 50
+			health = 50
+			name_ = "Gunholder"
+			starting_abilities = [
+				Global.get_monster_ability_by_name("All Seeing Eye")]
+			repeat_abilities = [
+				Global.get_monster_ability_by_name("Paralyze Gun"),
+				Global.get_monster_ability_by_name("Fear Gun"),
+				Global.get_monster_ability_by_name("Confuse Gun"),
+				Global.get_monster_ability_by_name("Big Gun"),
+				Global.get_monster_ability_by_name("Blind Gun"),
+				Global.get_monster_ability_by_name("Heal Gun")]
+			image = preload("res://art/characters/gunholder.png")
+			coins_dropped = 5
 	
 
 
-func get_next_move(turn: int) -> Ability:
+func get_next_move(turn: int, last_mode_used: int) -> Ability:
+	# bosses
+	if type == MonsterType.TWINDRAGON:
+		if turn == 0 || can_breath_attack:
+			return starting_abilities.pick_random()
+		return repeat_abilities.pick_random()
+	if type == MonsterType.GUNHOLDER:
+		if turn == 0:
+			return starting_abilities[0]
+		return repeat_abilities[last_mode_used]
+
 	if type == MonsterType.MIMIC:
 		if is_elite:
 			return Global.get_upgraded_monster_ability(repeat_abilities.pick_random())
@@ -303,9 +363,11 @@ func get_next_move(turn: int) -> Ability:
 	return ab
 
 func set_elite():
+	if is_boss:
+		return
 	is_elite = true
 	name_ += "+"
 	max_health *= 1.5
-	health = max_health
+	health *= 1.5
 	coins_dropped = floor(1.5 * coins_dropped)
 

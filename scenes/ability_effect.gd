@@ -49,11 +49,11 @@ func _init(target: int, type: int, value: String):
 	type_ = type;
 	value_ = value;
 
-func process_value(x:int, f:int, r:int, b:int) -> int:
+func process_value(x:int, f:int, r:int, b:int, l:int) -> int:
 	var expr = Expression.new()
-	expr.parse(value_, ["x", "f", "r", "b"])
+	expr.parse(value_, ["x", "f", "r", "b", "l"])
 	# todo replace other things
-	return expr.execute([x, f, r, b])
+	return expr.execute([x, f, r, b, l])
 
 func is_status_inflict() -> bool:
 	match type_:

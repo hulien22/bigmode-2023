@@ -1,0 +1,95 @@
+[gd_scene load_steps=6 format=3 uid="uid://dfq72f6agpc4k"]
+
+[ext_resource type="Script" path="res://scenes/bossloot.gd" id="1_p7l6p"]
+[ext_resource type="Texture2D" uid="uid://cpy0266ipvs8r" path="res://art/prototyping/realtabletest3.png" id="2_3eyir"]
+[ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="3_t6414"]
+[ext_resource type="PackedScene" uid="uid://x3clfwsacs1s" path="res://scenes/relicobj.tscn" id="5_fddba"]
+[ext_resource type="PackedScene" uid="uid://bedbnvcvmg5r0" path="res://scenes/postitbtn.tscn" id="6_mximh"]
+
+[node name="BossLootScreen" type="Node2D"]
+script = ExtResource("1_p7l6p")
+
+[node name="Realtabletest3" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(960, 540)
+texture = ExtResource("2_3eyir")
+
+[node name="Text" type="Label" parent="."]
+modulate = Color(0.121569, 0.117647, 0.121569, 1)
+offset_left = 201.0
+offset_top = 331.0
+offset_right = 1729.0
+offset_bottom = 697.0
+rotation = -0.00178233
+theme_override_fonts/font = ExtResource("3_t6414")
+theme_override_font_sizes/font_size = 50
+text = "You find some cool loot in the boss's treasure!
+
+Pick One:"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Relic1" type="Node2D" parent="."]
+position = Vector2(954, 663)
+rotation = -0.00178233
+
+[node name="relic" parent="Relic1" instance=ExtResource("5_fddba")]
+position = Vector2(2.13153, -3.86621)
+scale = Vector2(1.2, 1.2)
+
+[node name="RelicButton" type="Button" parent="Relic1"]
+modulate = Color(1, 1, 1, 0)
+offset_left = -80.8684
+offset_top = -73.8663
+offset_right = 75.1316
+offset_bottom = 70.1337
+focus_mode = 0
+mouse_filter = 1
+
+[node name="Relic2" type="Node2D" parent="."]
+position = Vector2(595, 663)
+rotation = -0.00178233
+
+[node name="relic" parent="Relic2" instance=ExtResource("5_fddba")]
+position = Vector2(2.13153, -3.86621)
+scale = Vector2(1.2, 1.2)
+
+[node name="RelicButton" type="Button" parent="Relic2"]
+modulate = Color(1, 1, 1, 0)
+offset_left = -80.8684
+offset_top = -73.8663
+offset_right = 75.1316
+offset_bottom = 70.1337
+focus_mode = 0
+mouse_filter = 1
+
+[node name="Relic3" type="Node2D" parent="."]
+position = Vector2(1294, 663)
+rotation = -0.00178233
+
+[node name="relic" parent="Relic3" instance=ExtResource("5_fddba")]
+position = Vector2(2.13153, -3.86621)
+scale = Vector2(1.2, 1.2)
+
+[node name="RelicButton" type="Button" parent="Relic3"]
+modulate = Color(1, 1, 1, 0)
+offset_left = -80.8684
+offset_top = -73.8663
+offset_right = 75.1316
+offset_bottom = 70.1337
+focus_mode = 0
+mouse_filter = 1
+
+[node name="NextButton" parent="." instance=ExtResource("6_mximh")]
+position = Vector2(958, 993)
+scale = Vector2(0.767455, 0.767455)
+
+[connection signal="mouse_entered" from="Relic1/RelicButton" to="." method="_on_relic_button_mouse_entered" binds= [1]]
+[connection signal="mouse_exited" from="Relic1/RelicButton" to="." method="_on_relic_button_mouse_exited" binds= [1]]
+[connection signal="pressed" from="Relic1/RelicButton" to="." method="_on_relic_button_pressed" binds= [1]]
+[connection signal="mouse_entered" from="Relic2/RelicButton" to="." method="_on_relic_button_mouse_entered" binds= [2]]
+[connection signal="mouse_exited" from="Relic2/RelicButton" to="." method="_on_relic_button_mouse_exited" binds= [2]]
+[connection signal="pressed" from="Relic2/RelicButton" to="." method="_on_relic_button_pressed" binds= [2]]
+[connection signal="mouse_entered" from="Relic3/RelicButton" to="." method="_on_relic_button_mouse_entered" binds= [3]]
+[connection signal="mouse_exited" from="Relic3/RelicButton" to="." method="_on_relic_button_mouse_exited" binds= [3]]
+[connection signal="pressed" from="Relic3/RelicButton" to="." method="_on_relic_button_pressed" binds= [3]]

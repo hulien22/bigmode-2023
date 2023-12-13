@@ -47,6 +47,19 @@ func _ready():
 	Events.connect("sacrificed_die", sacrificed_die)
 	
 	$GameoverScreen.connect("gg_go_home", return_to_main_menu)
+	
+	$DoorChoiceScreen.connect("door_selected", _on_door_selected)
+	$AbilityChoiceScreen.connect("gg_go_next", generate_next_door_scene)
+	$LootScreen.connect("gg_go_next", end_loot_screen)
+	$LootScreen.connect("add_coins", add_coins)
+	$DiceShopScreen.connect("gg_go_next", end_dice_shop)
+	$RestScreen.connect("gg_go_next", end_rest_scene)
+	$RestScreen.connect("begin_upgrade", process_upgrade)
+	$RestScreen.connect("begin_heal", process_heal)
+	$RitualScreen.connect("gg_go_next", end_ritual_scene)
+	$ChestScreen.connect("gg_go_next", generate_next_door_scene)
+	$VictoryScreen.connect("gg_go_home", return_to_main_menu)
+	$BossLootScreen.connect("gg_go_next", go_to_scene.bind(GameState.GameScene.SELECT_ABILITY))
 #	process_start_combat()
 
 
@@ -62,7 +75,6 @@ func go_to_scene(gs: GameState.GameScene):
 			var doors:Array[GameState.GameScene] = [GameState.GameScene.COMBAT]
 #			var doors:Array[GameState.GameScene] = [GameState.GameScene.SELECT_ABILITY]
 			$DoorChoiceScreen.init(doors, "After a long trek you finally made it to the dungeon entrance..\nYou take a deep breath and enter through the front door")
-			$DoorChoiceScreen.connect("door_selected", _on_door_selected)
 			$DoorChoiceScreen.show()
 			animate_abilities_slide(false)
 		GameState.GameScene.DOORS:
@@ -72,7 +84,6 @@ func go_to_scene(gs: GameState.GameScene):
 				$DoorChoiceScreen.init(doors, "You find yourself in front of a large door")
 			else:
 				$DoorChoiceScreen.init(doors, "You find yourself in front of two doors\nPick a door")
-			$DoorChoiceScreen.connect("door_selected", _on_door_selected)
 			$DoorChoiceScreen.show()
 			animate_abilities_slide(false)
 		GameState.GameScene.COMBAT:
@@ -86,40 +97,38 @@ func go_to_scene(gs: GameState.GameScene):
 		GameState.GameScene.SELECT_ABILITY:
 			var new_abs:Array[Ability] = Global.generate_abilities(3, GameState.level)
 			$AbilityChoiceScreen.init(ability_boxes, new_abs)
-			$AbilityChoiceScreen.connect("gg_go_next", generate_next_door_scene)
 			$AbilityChoiceScreen.show()
 			animate_abilities_slide(true)
 		GameState.GameScene.LOOT:
 			var c = 2 if monster == null else monster.coins_dropped
 			var r = null if !monster.is_elite else GameState.generate_new_relic()
 			$LootScreen.init(c, r)
-			$LootScreen.connect("gg_go_next", go_to_scene.bind(GameState.GameScene.SELECT_ABILITY))
-			$LootScreen.connect("add_coins", add_coins)
 			$LootScreen.show()
 			animate_abilities_slide(false)
+		GameState.GameScene.BOSSLOOT:
+			$BossLootScreen.init()
+			$BossLootScreen.show()
+			animate_abilities_slide(false)
 		GameState.GameScene.DICE_SHOP:
-			$DiceShopScreen.connect("gg_go_next", end_dice_shop)
 			$DiceShopScreen.show()
 			animate_abilities_slide(false)
 			#start dice rolls
 			init_dice_shop()
 		GameState.GameScene.REST:
-			$RestScreen.connect("gg_go_next", end_rest_scene)
 			$RestScreen.show()
-			$RestScreen.connect("begin_upgrade", process_upgrade)
-			$RestScreen.connect("begin_heal", process_heal)
 			animate_abilities_slide(false)
 		GameState.GameScene.RITUAL:
 			ritual_count = 0
-			$RitualScreen.connect("gg_go_next", end_ritual_scene)
 			$RitualScreen.show()
 			init_ritual_scene()
 			animate_abilities_slide(false)
 		GameState.GameScene.CHEST:
-			$ChestScreen.connect("gg_go_next", generate_next_door_scene)
 			$ChestScreen.init(GameState.generate_new_relic())
 			$ChestScreen.show()
 			animate_abilities_slide(false)
+		GameState.GameScene.VICTORY:
+			$VictoryScreen.show()
+			animate_abilities_slide(true)
 
 
 func hide_all_scenes():
@@ -128,10 +137,13 @@ func hide_all_scenes():
 	$DoorChoiceScreen.hide()
 	$AbilityChoiceScreen.hide()
 	$LootScreen.hide()
+	$BossLootScreen.hide()
 	$DiceShopScreen.hide()
 	$RestScreen.hide()
 	$RitualScreen.hide()
 	$ChestScreen.hide()
+	$VictoryScreen.hide()
+	$GameoverScreen.hide()
 
 
 func generate_next_door_scene():
@@ -166,10 +178,11 @@ func process_start_combat(is_elite: bool = false):
 	dice_mgr.mouse_handler.remove_on_select = false
 	dice_mgr.dice_box_rect = Rect2(-7, -1.5, 9.5, 5.5)
 	dice_mgr.connect("complete_roll", _on_complete_roll)
-	dice_mgr.dice.clear()
+	dice_mgr.clear_dice()
 	for d in GameState.player.dice:
 		dice_mgr.add_die(d[0], d[1])
 	turn_counter = -1
+	occurences = 0
 	rerolls = 3
 	statuses = [[], []]
 	GameState.player.block = 0
@@ -181,7 +194,7 @@ func process_start_combat(is_elite: bool = false):
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.CONFUSE, 99, true)
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BURN, 99, true)
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BLIND, 2, true)
-#	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.STRENGTH, 99, false)
+#	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.DAZZLED, 99, false)
 	
 	process_new_turn()
 	#todo timer between states? to play anims or smth
@@ -244,7 +257,7 @@ func process_new_turn():
 	
 	if has_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.DAZZLED):
 		var num_dice:int = dice_mgr.dice.size()
-		dice_mgr.dice.clear()
+		dice_mgr.clear_dice()
 		for i in num_dice:
 			dice_mgr.add_die(DiceConstructor.generate_random_die(), DiceConstructor.generate_random_die_color())
 	
@@ -296,7 +309,7 @@ func process_new_turn():
 		print(s.as_string())
 	
 	# select monster intent
-	monster_intent = monster.get_next_move(turn_counter)
+	monster_intent = monster.get_next_move(turn_counter, last_mode_used)
 	$MonsterUI/Intent/MonsterIntent.text = monster_intent.name_
 	_on_monster_intent_exited()
 #	print("monster intent: ", monster_intent.name_)
@@ -414,6 +427,15 @@ func _on_ability_clicked(val):
 		change_block(AbilityEffect.TARGET.PLAYER, fortify_val)
 		render_health()
 	
+	if has_status(AbilityEffect.TARGET.MONSTER, AbilityEffect.TYPE.BREATH_RECHARGE):
+		if last_mode_used == 5 || last_mode_used == 4:
+			monster.can_breath_attack = true
+			for i in statuses[AbilityEffect.TARGET.MONSTER].size():
+				if statuses[AbilityEffect.TARGET.MONSTER][i].type == AbilityEffect.TYPE.BREATH_RECHARGE:
+					statuses[AbilityEffect.TARGET.MONSTER].remove_at(i)
+					break
+			animate_status_changes()
+	
 	process_monster_turn()
 
 func process_monster_turn():
@@ -458,19 +480,19 @@ func process_effect(effect: AbilityEffect, face:int = 0) -> Dictionary:
 	var dict:Dictionary = {}
 	match effect.type_:
 		AbilityEffect.TYPE.DAMAGE:
-			var dmg = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var dmg = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			# process other statuses (eg strength, weaknesses)
 			inflict_damage(effect.target_, max(0, compute_damage(dmg, (effect.target_ + 1) % 2, effect.target_)))
 		AbilityEffect.TYPE.SHIELD:
-			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			# process other statuses (eg strength)
 			change_block(effect.target_, amt)
 		AbilityEffect.TYPE.VULNERABLE:
-			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			# process other statuses (eg strength)
 			add_status(effect.target_, AbilityEffect.TYPE.VULNERABLE, amt, true)
 		AbilityEffect.TYPE.STRENGTH:
-			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			# process other statuses (eg strength)
 			add_status(effect.target_, AbilityEffect.TYPE.STRENGTH, amt, false)
 #		AbilityEffect.TYPE.LIMITED_USES:
@@ -478,80 +500,85 @@ func process_effect(effect: AbilityEffect, face:int = 0) -> Dictionary:
 #			if effect.uses_left <= 0:
 #				dict["deplete_ability"] = true
 		AbilityEffect.TYPE.HEAL:
-			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			change_health(effect.target_, -1 * amt)
 		AbilityEffect.TYPE.SELF_DMG:
-			var dmg = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var dmg = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			# don't include strength, do include vulnerable
 			inflict_damage(effect.target_, max(0, compute_damage(dmg, AbilityEffect.TARGET.NOONE, effect.target_)))
 		AbilityEffect.TYPE.DISABLE_ABILITY1:
-			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			add_status(effect.target_, AbilityEffect.TYPE.DISABLE_ABILITY1, amt, true)
 		AbilityEffect.TYPE.DISABLE_ABILITY2:
-			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			add_status(effect.target_, AbilityEffect.TYPE.DISABLE_ABILITY2, amt, true)
 		AbilityEffect.TYPE.DISABLE_ABILITY3:
-			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			add_status(effect.target_, AbilityEffect.TYPE.DISABLE_ABILITY3, amt, true)
 		AbilityEffect.TYPE.DISABLE_ABILITY4:
-			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			add_status(effect.target_, AbilityEffect.TYPE.DISABLE_ABILITY4, amt, true)
 		AbilityEffect.TYPE.DISABLE_ABILITY5:
-			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			add_status(effect.target_, AbilityEffect.TYPE.DISABLE_ABILITY5, amt, true)
 		AbilityEffect.TYPE.DISABLE_ABILITY6:
-			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			add_status(effect.target_, AbilityEffect.TYPE.DISABLE_ABILITY6, amt, true)
 		AbilityEffect.TYPE.DISABLE_ABILITYR:
-			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			add_status(effect.target_, AbilityEffect.TYPE.DISABLE_ABILITYR, amt, true)
 		AbilityEffect.TYPE.CONFUSE:
-			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			add_status(effect.target_, AbilityEffect.TYPE.CONFUSE, amt, true)
 		AbilityEffect.TYPE.BURN:
-			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			add_status(effect.target_, AbilityEffect.TYPE.BURN, amt, true)
 		AbilityEffect.TYPE.FREEZE:
-			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			add_status(effect.target_, AbilityEffect.TYPE.FREEZE, amt, true)
 		AbilityEffect.TYPE.EVADE:
-			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			add_status(effect.target_, AbilityEffect.TYPE.EVADE, amt, true)
 		AbilityEffect.TYPE.FORTIFY:
-			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			add_status(effect.target_, AbilityEffect.TYPE.FORTIFY, amt, false)
 		AbilityEffect.TYPE.HASTE:
-			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			add_status(effect.target_, AbilityEffect.TYPE.HASTE, amt, false)
 		AbilityEffect.TYPE.LOOT:
-			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			add_coins(amt)
 		AbilityEffect.TYPE.SCAVENGE:
-			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			for i in amt:
 				dice_mgr.add_die(DiceConstructor.generate_random_die(), DiceConstructor.generate_random_die_color())
 		AbilityEffect.TYPE.RUMMAGE:
-			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			for i in amt:
 				dice_mgr.add_die([1,2,6,5,3,4], DiceConstructor.generate_random_die_color())
 		AbilityEffect.TYPE.STUNNED:
-			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			add_status(effect.target_, AbilityEffect.TYPE.STUNNED, amt, true)
 		AbilityEffect.TYPE.HEALTH_ON_LETHAL:
-			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			dict["health_on_lethal"] = amt
 		AbilityEffect.TYPE.EXHAUSTED:
-			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			add_status(effect.target_, AbilityEffect.TYPE.EXHAUSTED, amt, true)
 		AbilityEffect.TYPE.TRAPPED:
-			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			add_status(effect.target_, AbilityEffect.TYPE.TRAPPED, amt, true)
 		AbilityEffect.TYPE.DAZZLED:
-			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			add_status(effect.target_, AbilityEffect.TYPE.DAZZLED, amt, true)
 		AbilityEffect.TYPE.FORESIGHT:
-			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block)
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			add_status(effect.target_, AbilityEffect.TYPE.FORESIGHT, amt, false)
+		AbilityEffect.TYPE.BREATH_RECHARGE:
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
+			add_status(effect.target_, AbilityEffect.TYPE.BREATH_RECHARGE, amt, false)
+		AbilityEffect.TYPE.DIESTEAL:
+			dice_mgr.remove_random_die()
 	return dict
 
 func process_end_turn():
@@ -572,7 +599,7 @@ func combat_win():
 		ab.disconnect("ability_clicked", _on_ability_clicked)
 	$Combatscreen/RerollButton.disconnect("pressed", _on_reroll_button_pressed)
 	dice_mgr.disconnect("complete_roll", _on_complete_roll)
-	dice_mgr.dice.clear()
+	dice_mgr.clear_dice()
 	turn_counter = -1
 	rerolls = 3
 	statuses = [[], []]
@@ -695,19 +722,19 @@ func get_monster_desc() -> String:
 	if s.contains("[D]"):
 		for e in monster_intent.effects_:
 			if e.type_ == AbilityEffect.TYPE.DAMAGE && e.target_ == AbilityEffect.TARGET.PLAYER:
-				var dmg = e.process_value(0,0, rerolls, monster.block)
+				var dmg = e.process_value(0,0, rerolls, monster.block, dice_mgr.dice.size() - occurences)
 				s = s.replace("[D]", str(compute_damage(dmg, AbilityEffect.TARGET.MONSTER, AbilityEffect.TARGET.PLAYER)))
 				break
 	if s.contains("[B]"):
 		for e in monster_intent.effects_:
 			if e.type_ == AbilityEffect.TYPE.SHIELD && e.target_ == AbilityEffect.TARGET.MONSTER:
-				var v = e.process_value(0,0, rerolls, monster.block)
+				var v = e.process_value(0,0, rerolls, monster.block, dice_mgr.dice.size() - occurences)
 				s = s.replace("[B]", str(v))
 				break
 	if s.contains("[S]"):
 		for e in monster_intent.effects_:
 			if e.type_ == AbilityEffect.TYPE.STRENGTH && e.target_ == AbilityEffect.TARGET.MONSTER:
-				var v = e.process_value(0,0, rerolls, monster.block)
+				var v = e.process_value(0,0, rerolls, monster.block, dice_mgr.dice.size() - occurences)
 				s = s.replace("[S]", str(v))
 				break
 	return s
@@ -769,7 +796,7 @@ func init_dice_shop():
 	dice_mgr.dice_box_rect = Rect2(-7, -1.5, 4, 5.5)
 	dice_mgr.connect("complete_roll", dice_shop_on_complete_roll)
 	dice_mgr.mouse_handler.remove_on_select = true
-	dice_mgr.dice.clear()
+	dice_mgr.clear_dice()
 	for i in 5:
 		dice_mgr.add_die(DiceConstructor.generate_random_die(), DiceConstructor.generate_random_die_color())
 	dice_mgr.drop_all_dice()
@@ -781,7 +808,7 @@ func dice_shop_on_complete_roll(_results):
 
 func end_dice_shop():
 	dice_mgr.fade_away_dice()
-	dice_mgr.dice.clear()
+	dice_mgr.clear_dice()
 	generate_next_door_scene()
 
 func process_upgrade():
@@ -797,7 +824,7 @@ func process_heal():
 	dice_mgr.mouse_handler.remove_on_select = true
 	dice_mgr.dice_box_rect = Rect2(-7, -1.5, 4, 5.5)
 	dice_mgr.connect("complete_roll", rest_screen_on_roll_complete)
-	dice_mgr.dice.clear()
+	dice_mgr.clear_dice()
 	dice_mgr.add_die([1,2,6,5,3,4], Color.DARK_RED)
 	dice_mgr.add_die([1,2,6,5,3,4], Color.DARK_RED)
 	if GameState.player.has_relic(Relic.TYPE.DWARVEN_MEAD):
@@ -815,7 +842,7 @@ func show_preview(val):
 
 func end_rest_scene():
 	dice_mgr.fade_away_dice()
-	dice_mgr.dice.clear()
+	dice_mgr.clear_dice()
 	disable_abilities_and_rerollbtn()
 	for ab in ability_boxes:
 		if ab.is_connected("ability_clicked", show_preview):
@@ -830,7 +857,7 @@ func init_ritual_scene():
 	dice_mgr.dice_box_rect = Rect2(-7, -1.5, 9.5, 5.5)
 	dice_mgr.connect("complete_roll", ritual_screen_on_roll_complete)
 	dice_mgr.mouse_handler.remove_on_select = true
-	dice_mgr.dice.clear()
+	dice_mgr.clear_dice()
 	for d in GameState.player.dice:
 		dice_mgr.add_die(d[0], d[1])
 	dice_mgr.drop_all_dice()
@@ -844,11 +871,11 @@ func sacrificed_die(index:int):
 	$RitualScreen.sacrificed_die()
 	await wait_secs(0.2)
 	dice_mgr.fade_away_dice()
-	dice_mgr.dice.clear()
+	dice_mgr.clear_dice()
 
 func end_ritual_scene():
 	dice_mgr.fade_away_dice()
-	dice_mgr.dice.clear()
+	dice_mgr.clear_dice()
 	
 	if GameState.player.has_relic(Relic.TYPE.CULTIST_HEAD) && ritual_count < 2:
 		$RelicHolder.update_relic_type(Relic.TYPE.CULTIST_HEAD)
@@ -882,3 +909,9 @@ func return_to_main_menu():
 #	var s = MENU_SCENE.instantiate()
 #	get_tree().root.add_child(s)
 #	queue_free()
+
+func end_loot_screen():
+	if monster.is_boss:
+		go_to_scene(GameState.GameScene.BOSSLOOT)
+	else:
+		go_to_scene(GameState.GameScene.SELECT_ABILITY)
