@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://ccl2kenwh73ve"]
+[gd_scene load_steps=36 format=3 uid="uid://ccl2kenwh73ve"]
 
 [ext_resource type="Script" path="res://scenes/combat.gd" id="1_lnnkv"]
 [ext_resource type="Texture2D" uid="uid://yfhqg1amblqt" path="res://art/prototyping/realtabletest2.png" id="3_r2h8u"]
@@ -31,6 +31,7 @@
 [ext_resource type="PackedScene" uid="uid://dfq72f6agpc4k" path="res://scenes/bossloot.tscn" id="26_3wvgp"]
 [ext_resource type="PackedScene" uid="uid://7mthupf4e6fj" path="res://scenes/gameover.tscn" id="26_h1q8l"]
 [ext_resource type="PackedScene" uid="uid://ddfrg3vv8fds" path="res://scenes/victory.tscn" id="27_x1keb"]
+[ext_resource type="PackedScene" uid="uid://wr72q6ep1d3i" path="res://scenes/tutorial.tscn" id="29_kwtse"]
 
 [sub_resource type="Animation" id="Animation_2nawh"]
 resource_name = "intent"
@@ -374,6 +375,10 @@ z_index = 99
 
 [node name="VictoryScreen" parent="." instance=ExtResource("27_x1keb")]
 visible = false
+
+[node name="tutorial" parent="." instance=ExtResource("29_kwtse")]
+visible = false
+z_index = 99
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 z_index = 10

@@ -1,0 +1,85 @@
+[gd_scene load_steps=12 format=3 uid="uid://wr72q6ep1d3i"]
+
+[ext_resource type="Script" path="res://scenes/tutorial.gd" id="1_l0rri"]
+[ext_resource type="Texture2D" uid="uid://30c2jn02p750" path="res://art/tutorial/t1.png" id="2_oifo6"]
+[ext_resource type="Texture2D" uid="uid://b00xck8vkhn2y" path="res://art/tutorial/t2.png" id="3_wf77v"]
+[ext_resource type="Texture2D" uid="uid://dcbcct1ngayik" path="res://art/tutorial/t3.png" id="4_4phqc"]
+[ext_resource type="Texture2D" uid="uid://be6nirfqgfeit" path="res://art/tutorial/t4.png" id="5_bkk1l"]
+[ext_resource type="Texture2D" uid="uid://ddlmknnjen5w2" path="res://art/tutorial/t5.png" id="6_mn374"]
+[ext_resource type="Texture2D" uid="uid://dd438aprr24k7" path="res://art/tutorial/t6.png" id="7_d6hxv"]
+[ext_resource type="Texture2D" uid="uid://da4c8f8fy8noj" path="res://art/tutorial/t7.png" id="8_cphf7"]
+[ext_resource type="Texture2D" uid="uid://c5wlt02dmftkh" path="res://art/tutorial/t8.png" id="9_55rqk"]
+[ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="10_uyxif"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_t78ku"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_oifo6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_wf77v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_4phqc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_bkk1l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_mn374")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_d6hxv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_cphf7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_55rqk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="tutorial" type="Node2D"]
+script = ExtResource("1_l0rri")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(960, 540)
+sprite_frames = SubResource("SpriteFrames_t78ku")
+
+[node name="Label" type="Label" parent="."]
+modulate = Color(0, 0.27451, 0.666667, 1)
+offset_left = 117.0
+offset_top = 998.0
+offset_right = 653.0
+offset_bottom = 1087.0
+theme_override_fonts/font = ExtResource("10_uyxif")
+theme_override_font_sizes/font_size = 40
+text = "Click to continue"
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 1
+
+[node name="Label2" type="Label" parent="."]
+modulate = Color(0, 0.27451, 0.666667, 1)
+offset_left = 228.0
+offset_top = 112.0
+offset_right = 764.0
+offset_bottom = 201.0
+theme_override_fonts/font = ExtResource("10_uyxif")
+theme_override_font_sizes/font_size = 40
+text = "How To Play"
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 1
+
+[node name="Button" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_right = 1920.0
+offset_bottom = 1083.0
+focus_mode = 0
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

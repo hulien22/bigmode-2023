@@ -47,6 +47,7 @@ func _ready():
 	Events.connect("sacrificed_die", sacrificed_die)
 	
 	$GameoverScreen.connect("gg_go_home", return_to_main_menu)
+	$tutorial.connect("gg_go_next", close_tutorial)
 	
 	$DoorChoiceScreen.connect("door_selected", _on_door_selected)
 	$AbilityChoiceScreen.connect("gg_go_next", generate_next_door_scene)
@@ -92,9 +93,12 @@ func go_to_scene(gs: GameState.GameScene):
 			$DoorChoiceScreen.show()
 			animate_abilities_slide(false)
 		GameState.GameScene.COMBAT:
-			$MonsterUI.show()
-			$Combatscreen.show()
-			process_start_combat()
+			if GameState.games_played <= 1:
+				open_tutorial()
+			else:
+				$MonsterUI.show()
+				$Combatscreen.show()
+				process_start_combat()
 		GameState.GameScene.ELITE:
 			$MonsterUI.show()
 			$Combatscreen.show()
@@ -972,3 +976,12 @@ func end_loot_screen():
 		go_to_scene(GameState.GameScene.BOSSLOOT)
 	else:
 		go_to_scene(GameState.GameScene.SELECT_ABILITY)
+
+func close_tutorial():
+	$tutorial.hide()
+	$MonsterUI.show()
+	$Combatscreen.show()
+	process_start_combat()
+
+func open_tutorial():
+	$tutorial.show()
