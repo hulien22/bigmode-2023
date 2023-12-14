@@ -14,8 +14,12 @@ func _ready():
 #	$SubViewportContainer/SubViewport/DiceMgr.connect("complete_roll", complete_roll)
 #	$SubViewportContainer/SubViewport/DiceMgr.mouse_handler.remove_on_select = false
 #	$SubViewportContainer/SubViewport/DiceMgr.dice.clear()
-#	for i in 5:
-#		$SubViewportContainer/SubViewport/DiceMgr.add_die(DiceConstructor.generate_random_die(), DiceConstructor.generate_random_die_color())
+##	for i in 5:
+#	$SubViewportContainer/SubViewport/DiceMgr.add_die(DiceConstructor.generate_random_die(), Color.LIGHT_SEA_GREEN)
+#	$SubViewportContainer/SubViewport/DiceMgr.add_die(DiceConstructor.generate_random_die(), Color.CRIMSON)
+#	$SubViewportContainer/SubViewport/DiceMgr.add_die(DiceConstructor.generate_random_die(), Color.PURPLE)
+#	$SubViewportContainer/SubViewport/DiceMgr.add_die(DiceConstructor.generate_random_die(), Color.GOLD)
+#	$SubViewportContainer/SubViewport/DiceMgr.add_die(DiceConstructor.generate_random_die(), Color.LIGHT_GREEN)
 #	$SubViewportContainer/SubViewport/DiceMgr.drop_all_dice()
 #
 #func complete_roll(_v):
