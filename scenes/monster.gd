@@ -175,7 +175,7 @@ func init_monster(m:MonsterType):
 				Global.get_monster_ability_by_name("Haunt"),
 				Global.get_monster_ability_by_name("Wither Touch"),
 				Global.get_monster_ability_by_name("Hypnotize"),
-				Global.get_monster_ability_by_name("Nosegrind"),
+				Global.get_monster_ability_by_name("Nose Grind"),
 				Global.get_monster_ability_by_name("180"),
 				Global.get_monster_ability_by_name("Ollie"),
 				Global.get_monster_ability_by_name("Net Arrow"),
@@ -195,7 +195,7 @@ func init_monster(m:MonsterType):
 			name_ = "Yo-Yo Kid"
 			repeat_abilities = [
 				Global.get_monster_ability_by_name("Hypnotize"),
-				Global.get_monster_ability_by_name("Nosegrind"),
+				Global.get_monster_ability_by_name("Nose Grind"),
 				Global.get_monster_ability_by_name("Ollie"),
 				Global.get_monster_ability_by_name("180"),]
 			image = preload("res://art/characters/yoyokid.png")
@@ -335,7 +335,7 @@ func init_monster(m:MonsterType):
 				Global.get_monster_ability_by_name("Heal Gun")]
 			image = preload("res://art/characters/gunholder.png")
 			coins_dropped = 5
-	
+
 
 
 func get_next_move(turn: int, last_mode_used: int) -> Ability:
@@ -353,12 +353,12 @@ func get_next_move(turn: int, last_mode_used: int) -> Ability:
 		if is_elite:
 			return Global.get_upgraded_monster_ability(repeat_abilities.pick_random())
 		return repeat_abilities.pick_random()
-	
+
 	if turn < starting_abilities.size():
 		if is_elite:
 			return Global.get_upgraded_monster_ability(starting_abilities[turn])
 		return starting_abilities[turn]
-	
+
 	var ab:Ability = repeat_abilities[(turn - starting_abilities.size()) % repeat_abilities.size()]
 	if is_elite:
 		return Global.get_upgraded_monster_ability(ab)
@@ -372,4 +372,3 @@ func set_elite():
 	max_health *= 1.5
 	health *= 1.5
 	coins_dropped = floor(1.5 * coins_dropped)
-

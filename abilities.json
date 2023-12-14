@@ -56,12 +56,12 @@
 		], 2],
 		["Double Slap", "Attack twice for 1 damage", [
 			[1, 0, "1"],
-			[1, 0, "1"],
+			[1, 0, "1"]
 		], 1],
 		["Double Slap+", "Attack thrice for 1 damage", [
 			[1, 0, "1"],
 			[1, 0, "1"],
-			[1, 0, "1"],
+			[1, 0, "1"]
 		], 1],
 		["Haste", "Gain 1 Hastened", [
 			[0, 21, 1]
@@ -78,7 +78,7 @@
 			[0, 4, 1]
 		], 3],
 		["Shield Throw", "Deal damage equal to your block", [
-			[1, 0, "b"],
+			[1, 0, "b"]
 		], 2],
 		["Shield Throw+", "Gain 2 shield, Deal damage equal to your block", [
 			[0, 1, "2"],
@@ -155,10 +155,10 @@
 			[0, 1, "f + 2"]
 		], 1],
 		["Low Kick", "Deal 6-X damage", [
-			[1, 0, "6-x"],
+			[1, 0, "6-x"]
 		], 1],
 		["Low Kick+", "Deal 10-X damage", [
-			[1, 0, "10-x"],
+			[1, 0, "10-x"]
 		], 1],
 		["Evade", "Gain 1 Dodge (once per combat)", [
 			[0, 18, "1"],
@@ -167,7 +167,7 @@
 		["Evade+", "Gain X Dodge (once per combat)", [
 			[0, 18, "x"],
 			[0, 4, 1]
-		], 2],
+		], 2]
 	],
 	"monster_abilities" : [
 		["Bite", "Deal [D] damage", [
@@ -206,23 +206,23 @@
 		]],
 		["Engulf", "Disable top and bottom skills", [
 			[0, 7, 1],
-			[0, 12, 1],
+			[0, 12, 1]
 		]],
 		["Engulf+", "Disable top 2 and bottom 2 skills", [
 			[0, 7, 1],
 			[0, 8, 1],
 			[0, 11, 1],
-			[0, 12, 1],
+			[0, 12, 1]
 		]],
 		["Fly", "Disable bottom 2 skills", [
 			[0, 7, 1],
-			[0, 8, 1],
+			[0, 8, 1]
 		]],
 		["Fly+", "Disable bottom 4 skills", [
 			[0, 7, 1],
 			[0, 8, 1],
 			[0, 9, 1],
-			[0, 10, 1],
+			[0, 10, 1]
 		]],
 		["Fly-By", "Deal 2*[D] damage", [
 			[0, 0, 1],
@@ -354,12 +354,12 @@
 		["Subway Surf", "Disable even abilities", [
 			[0, 8, 1],
 			[0, 10, 1],
-			[0, 12, 1],
+			[0, 12, 1]
 		]],
 		["Subway Surf+", "Disable odd abilities", [
 			[0, 7, 1],
 			[0, 9, 1],
-			[0, 11, 1],
+			[0, 11, 1]
 		]],
 		["Cardboard Box", "Gain [B] block and 1 Dexterity", [
 			[1, 1, 4],
@@ -377,13 +377,13 @@
 		]],
 		["Duck", "Disable top 2 abilities", [
 			[0, 11, 1],
-			[0, 12, 1],
+			[0, 12, 1]
 		]],
 		["Duck+", "Disable top 4 abilities", [
 			[0, 9, 1],
 			[0, 10, 1],
 			[0, 11, 1],
-			[0, 12, 1],
+			[0, 12, 1]
 		]],
 		["Net Arrow", "Deal [D] damage and inflict 1 Stunned", [
 			[0, 0, 3],
@@ -449,13 +449,13 @@
 		]],
 		["Ollie", "Disable middle 2 abilities", [
 			[0, 9, 1],
-			[0, 10, 1],
+			[0, 10, 1]
 		]],
 		["Ollie+", "Disable middle 4 abilities", [
 			[0, 8, 1],
 			[0, 9, 1],
 			[0, 10, 1],
-			[0, 11, 1],
+			[0, 11, 1]
 		]],
 		["180", "Gain 1 Evade", [
 			[1, 18, 1]
@@ -535,11 +535,11 @@
 			[0, 0, 5],
 			[0, 15, 2]
 		]],
-		["Fireball!!", "Deal [D] damage and inflict 1 Burned", [
+		["Fireball!!!", "Deal [D] damage and inflict 1 Burned", [
 			[0, 0, 5],
 			[0, 15, 1]
 		]],
-		["Fireball!!+", "Deal [D] damage and inflict 2 Burned", [
+		["Fireball!!!+", "Deal [D] damage and inflict 2 Burned", [
 			[0, 0, 7],
 			[0, 15, 2]
 		]],
@@ -658,23 +658,23 @@
 		["Cold Breath", "Deal [D] damage, Inflict 2 Freeze", [
 			[0, 0, 7],
 			[0, 16, 2],
-			[1, 34, 1],
+			[1, 34, 1]
 		]],
 		["Fire Breath", "Deal [D] damage, Inflict 2 Burn", [
 			[0, 0, 7],
 			[0, 15, 2],
-			[1, 34, 1],
+			[1, 34, 1]
 		]],
 		["Dragon Fear", "Inflict 2 Frightened", [
 			[0, 13, 2]
 		]],
 		["Flame Claws", "Deal [D] damage, Inflict 1 Burn", [
 			[0, 0, 2],
-			[0, 15, 2],
+			[0, 15, 2]
 		]],
 		["Icy Tail", "Deal [D] damage, Inflict 1 Freeze", [
 			[0, 0, 2],
-			[0, 16, 2],
+			[0, 16, 2]
 		]],
 		["Burlap Sack", "Inflict 2 Blind", [
 			[0, 17, 2]
@@ -717,6 +717,6 @@
 		["Heal Gun", "Heal 10 health and gain 2 Strength", [
 			[1, 5, 10],
 			[1, 3, 1]
-		]],
+		]]
 	]
 }

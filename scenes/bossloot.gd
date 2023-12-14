@@ -13,10 +13,13 @@ func init():
 	var rels = GameState.generate_new_boss_relics()
 	$Relic1/relic.relic = rels[0]
 	$Relic1/relic.update_sprite()
+	$Relic1/relic._on_color_rect_mouse_exited()
 	$Relic2/relic.relic = rels[1]
 	$Relic2/relic.update_sprite()
+	$Relic2/relic._on_color_rect_mouse_exited()
 	$Relic3/relic.relic = rels[2]
 	$Relic3/relic.update_sprite()
+	$Relic3/relic._on_color_rect_mouse_exited()
 	$Relic1.show()
 	$Relic2.show()
 	$Relic3.show()

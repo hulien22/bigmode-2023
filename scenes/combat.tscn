@@ -315,7 +315,7 @@ position = Vector2(960, 540)
 position = Vector2(-793, -307)
 
 [node name="MonsterStatusHolder" parent="Combatscreen/Statuses" instance=ExtResource("7_kw3kg")]
-position = Vector2(823, -296)
+position = Vector2(797, -296)
 dir = -1
 
 [node name="RerollButton" parent="Combatscreen" instance=ExtResource("16_80rd5")]
