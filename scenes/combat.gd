@@ -215,7 +215,7 @@ func process_start_combat(is_elite: bool = false, is_boss:bool = false):
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.CONFUSE, 99, true)
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BURN, 99, true)
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BLIND, 2, true)
-#	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.HASTE, 99, false)
+#	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.STRENGTH, 99, false)
 	
 	process_new_turn()
 	#todo timer between states? to play anims or smth

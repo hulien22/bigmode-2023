@@ -38,19 +38,29 @@
 		["Dice Throw+", "Deal [(die face) + 2] damage", [
 			[1, 0, "f + 2"]
 		], 1],
-		["Healing Potion", "Heal 2 health (once per combat)", [
-			[0, 5, 2],
-			[0, 4, 1]
-		], 1],
-		["Healing Potion+", "Heal X health (once per combat)", [
+		["Face Off", "Both sides gain [die face] Strength", [
+			[0, 3, "f"],
+			[1, 3, "f"]
+		], 2],
+		["Face Off+", "Gain [2 * (die face)] Strength, enemy gains [die face] Strength", [
+			[0, 3, "2 * f"],
+			[1, 3, "f"]
+		], 2],
+		["Healing Potion", "Heal X health (once per combat)", [
 			[0, 5, "x"],
 			[0, 4, 1]
 		], 1],
-		["Loot", "Gain 1 gold (once per combat)", [
+		["Healing Potion+", "Heal 2*X health (once per combat)", [
+			[0, 5, "2 * x"],
+			[0, 4, 1]
+		], 1],
+		["Loot", "Deal X damage, Gain 1 gold (once per combat)", [
+			[1, 0, "x"],
 			[0, 22, 1],
 			[0, 4, 1]
 		], 2],
-		["Loot+", "Gain 2 gold (once per combat)", [
+		["Loot+", "Deal X+2 damage, Gain 2 gold (once per combat)", [
+			[1, 0, "x + 2"],
 			[0, 22, 2],
 			[0, 4, 1]
 		], 2],
@@ -92,22 +102,46 @@
 			[1, 0, "x-1"],
 			[0, 1, "x-1"]
 		], 1],
-		["Reckless Hit", "Deal X+3 damage, but take 2 damage", [
-			[1, 0, "x+1"],
+		["Reckless Hit", "Deal X+4 damage, but take 2 damage", [
+			[1, 0, "x+4"],
 			[0, 6, "2"]
 		], 1],
-		["Reckless Hit+", "Deal X+3 damage, but take 1 damage", [
-			[1, 0, "x+3"],
+		["Reckless Hit+", "Deal X+4 damage, but take 1 damage", [
+			[1, 0, "x+4"],
 			[0, 6, "1"]
 		], 1],
-		["Exploit Opening", "Inflict 3 Vulnerable (once per combat)", [
-			[1, 2, 3],
+		["Exploit Opening", "Inflict X Vulnerable (once per combat)", [
+			[1, 2, "x"],
 			[0, 4, 1]
 		], 2],
-		["Exploit Opening+", "Inflict X Vulnerable (once per combat)", [
-			[1, 2, 5],
+		["Exploit Opening+", "Inflict 2*X Vulnerable (once per combat)", [
+			[1, 2, "2 * x"],
 			[0, 4, 1]
 		], 2],
+		["Reposition", "Gain (X-3) Shield, Inflict 2 Vulnerable", [
+			[1, 2, "2"],
+			[0, 1, "x - 3"]
+		], 2],
+		["Reposition+", "Gain (X-1) Shield, Inflict 3 Vulnerable", [
+			[1, 2, "3"],
+			[0, 1, "x - 1"]
+		], 2],
+		["Parry", "Gain 2*X shield (once per combat)", [
+			[0, 1, "2 * x"],
+			[0, 4, 1]
+		], 1],
+		["Parry+", "Gain 3*X shield (once per combat)", [
+			[0, 1, "3 * x"],
+			[0, 4, 1]
+		], 1],
+		["Disarm", "Reduce enemy strength by 1 (once per combat)", [
+			[1, 3, "-1"],
+			[0, 4, 1]
+		], 3],
+		["Disarm+", "Reduce enemy strength by 2 (once per combat)", [
+			[1, 3, "-2"],
+			[0, 4, 1]
+		], 3],
 		["Scavenge", "Gain a random temp die (once per combat)", [
 			[0, 23, 1],
 			[0, 4, 1]
@@ -116,9 +150,9 @@
 			[0, 23, 2],
 			[0, 4, 1]
 		], 2],
-		["Rummage", "Gain a temp die (once per combat)", [
+		["Rummage", "Gain a temp die (twice per combat)", [
 			[0, 24, 1],
-			[0, 4, 1]
+			[0, 4, 2]
 		], 3],
 		["Rummage+", "Gain 2 temp dice (twice per combat)", [
 			[0, 24, 2],
@@ -130,7 +164,7 @@
 		], 3],
 		["Feast+", "Deal X+2 damage, if lethal gain 4 max health", [
 			[1, 0, "x+2"],
-			[0, 19, 3]
+			[0, 19, 4]
 		], 3],
 		["Enrage", "Take 2 damage, gain X Strength", [
 			[0, 3, "x"],
@@ -160,8 +194,8 @@
 		["Low Kick+", "Deal 10-X damage", [
 			[1, 0, "10-x"]
 		], 1],
-		["Evade", "Gain 1 Dodge (once per combat)", [
-			[0, 18, "1"],
+		["Evade", "Gain 3 Dodge (once per combat)", [
+			[0, 18, "3"],
 			[0, 4, 1]
 		], 2],
 		["Evade+", "Gain X Dodge (once per combat)", [
