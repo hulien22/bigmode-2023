@@ -292,16 +292,16 @@ func process_new_turn():
 				add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.DISABLE_ABILITY6, 1, true)
 	animate_status_changes()
 	
-	if has_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BLIND):
-		dice_mgr.blind_all_dice()
-	else :
-		dice_mgr.unblind_all_dice()
-	
 	if has_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.DAZZLED):
 		var num_dice:int = dice_mgr.dice.size()
 		dice_mgr.clear_dice()
 		for i in num_dice:
 			dice_mgr.add_die(DiceConstructor.generate_random_die(), DiceConstructor.generate_random_die_color())
+	
+	if has_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BLIND):
+		dice_mgr.blind_all_dice()
+	else :
+		dice_mgr.unblind_all_dice()
 	
 	# Reset disabled abilities
 	for i in 6:
