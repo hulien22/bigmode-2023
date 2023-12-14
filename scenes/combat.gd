@@ -215,7 +215,7 @@ func process_start_combat(is_elite: bool = false, is_boss:bool = false):
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.CONFUSE, 99, true)
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BURN, 99, true)
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BLIND, 2, true)
-#	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.STRENGTH, 99, false)
+#	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.HASTE, 99, false)
 	
 	process_new_turn()
 	#todo timer between states? to play anims or smth
@@ -415,11 +415,11 @@ func _on_reroll_button_pressed():
 			combat_loss()
 			return
 		elif GameState.player.has_relic(Relic.TYPE.MASOCHIST):
-			$RelicHolder.update_relic_type(Relic.TYPE.MASOCHIST)
 			var r: Relic = GameState.player.get_relic(Relic.TYPE.MASOCHIST)
 			r.value += 1
 			add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.STRENGTH, 1, false)
 			animate_status_changes()
+			$RelicHolder.update_relic_type(Relic.TYPE.MASOCHIST)
 	else:
 		rerolls -= 1
 		$Combatscreen/RerollButton.set_text("REROLL! (" + str(rerolls) + ")")
