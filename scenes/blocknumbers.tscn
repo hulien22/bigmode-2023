@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://bx7lnrip4qfwe"]
+
+[ext_resource type="Script" path="res://scenes/blocknumbers.gd" id="1_i2mgb"]
+[ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="2_j0ouh"]
+
+[node name="blocknumbers" type="Node2D"]
+script = ExtResource("1_i2mgb")
+
+[node name="Label" type="Label" parent="."]
+visible = false
+modulate = Color(0.0156863, 0.376471, 1, 1)
+offset_left = -272.0
+offset_top = -46.0
+offset_right = 264.0
+offset_bottom = 43.0
+theme_override_fonts/font = ExtResource("2_j0ouh")
+theme_override_font_sizes/font_size = 70
+text = "-10"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 1
+uppercase = true

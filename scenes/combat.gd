@@ -718,14 +718,25 @@ func change_health(target: AbilityEffect.TARGET, amount: int):
 	#animate?
 #	render_health()
 
+var BLOCK_NUMBER_SCENE = preload("res://scenes/blocknumbers.tscn")
 func change_block(target: AbilityEffect.TARGET, amount: int):
 	if amount > 0:
 		var dex_val: int = get_status_value(target, AbilityEffect.TYPE.DEXTERITY)
 		amount += dex_val
 	if target == AbilityEffect.TARGET.PLAYER:
 		GameState.player.block += amount
+		if amount > 0:
+			var bs = BLOCK_NUMBER_SCENE.instantiate()
+			bs.init(amount)
+			bs.position = Vector2(828,184)
+			add_child(bs)
 	else:
 		monster.block += amount
+		if amount > 0:
+			var bs = BLOCK_NUMBER_SCENE.instantiate()
+			bs.init(amount)
+			bs.position = Vector2(1104,184)
+			add_child(bs)
 	#animate?
 #	render_health()
 
