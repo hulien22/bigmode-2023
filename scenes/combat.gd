@@ -558,6 +558,10 @@ func process_effect(effect: AbilityEffect, face:int = 0) -> Dictionary:
 			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			# process other statuses (eg strength)
 			add_status(effect.target_, AbilityEffect.TYPE.STRENGTH, amt, false)
+		AbilityEffect.TYPE.DEXTERITY:
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
+			# process other statuses (eg strength)
+			add_status(effect.target_, AbilityEffect.TYPE.DEXTERITY, amt, false)
 #		AbilityEffect.TYPE.LIMITED_USES:
 #			effect.uses_left -= 1
 #			if effect.uses_left <= 0:
@@ -627,6 +631,9 @@ func process_effect(effect: AbilityEffect, face:int = 0) -> Dictionary:
 		AbilityEffect.TYPE.STUNNED:
 			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			add_status(effect.target_, AbilityEffect.TYPE.STUNNED, amt, true)
+		AbilityEffect.TYPE.BLIND:
+			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
+			add_status(effect.target_, AbilityEffect.TYPE.BLIND, amt, true)
 		AbilityEffect.TYPE.HEALTH_ON_LETHAL:
 			var amt = effect.process_value(occurences, face, rerolls, GameState.player.block, dice_mgr.dice.size() - occurences)
 			dict["health_on_lethal"] = amt

@@ -405,11 +405,11 @@
 			[0, 0, 2],
 			[0, 0, 2]
 		]],
-		["Vanish", "Gain 1 Evade", [
+		["Vanish", "Gain 2 Evade", [
 			[1, 18, 1]
 		]],
-		["Vanish+", "Gain 2 Evade", [
-			[1, 18, 2]
+		["Vanish+", "Gain 3 Evade", [
+			[1, 18, 3]
 		]],
 		["Haunt", "Inflict 1 Frightened", [
 			[0, 13, 1]
@@ -457,11 +457,11 @@
 			[0, 10, 1],
 			[0, 11, 1]
 		]],
-		["180", "Gain 1 Evade", [
-			[1, 18, 1]
-		]],
-		["180+", "Gain 2 Evade", [
+		["180", "Gain 2 Evade", [
 			[1, 18, 2]
+		]],
+		["180+", "Gain 3 Evade", [
+			[1, 18, 3]
 		]],
 		["Time To Rage", "Gain 3 Strength and 20 Vulnerable", [
 			[1, 2, 20],
@@ -577,11 +577,11 @@
 			[0, 17, 2],
 			[0, 0, 5]
 		]],
-		["Jet Off", "Gain 1 Evade", [
-			[1, 18, 1]
-		]],
-		["Jet Off+", "Gain 2 Evade", [
+		["Jet Off", "Gain 2 Evade", [
 			[1, 18, 2]
+		]],
+		["Jet Off+", "Gain 3 Evade", [
+			[1, 18, 3]
 		]],
 		["Octo Whip", "Deal 8*[D] damage", [
 			[0, 0, 1],
@@ -689,8 +689,8 @@
 			[1, 3, 2],
 			[0, 32, 1]
 		]],
-		["Sneak", "Gain 1 Evade", [
-			[1, 18, 1]
+		["Sneak", "Gain 2 Evade", [
+			[1, 18, 2]
 		]],
 		["All Seeing Eye", "Gain 1 Foresight", [
 			[1, 33, 1]
