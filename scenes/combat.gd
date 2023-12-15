@@ -376,11 +376,13 @@ func _on_complete_roll(results):
 			for i in range(1,5):
 				results[i] = results[i + 1]
 			results[5] = 0
+			add_dice_modifiers(AbilityEffect.TYPE.FREEZE)
 	elif has_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BURN):
 		results[5] += results[4]
 		for i in range(4,0, -1):
 			results[i] = results[i - 1]
 		results[0] = 0
+		add_dice_modifiers(AbilityEffect.TYPE.BURN)
 	
 	occurences = results.max()
 	var modes:Array = []
@@ -1015,3 +1017,33 @@ func close_tutorial():
 
 func open_tutorial():
 	$tutorial.show()
+
+var NUMBER_MODIFIER_SCENE = preload("res://scenes/numbermodifier.tscn")
+var dice_modifiers: Array[NumberModifier] = []
+func add_dice_modifiers(t: AbilityEffect.TYPE):
+	if t == AbilityEffect.TYPE.FREEZE:
+		var posn: Vector2 = Vector2(228, 315)
+		for d in dice_mgr.dice:
+			if d.get_top_val() > 1:
+				var ns = NUMBER_MODIFIER_SCENE.instantiate()
+				ns.init_freeze()
+				ns.position = posn
+				add_child(ns)
+				dice_modifiers.append(ns)
+			posn.x += 158
+			if posn.x > 1335:
+				posn.x = 228
+				posn.y += 158
+	elif t == AbilityEffect.TYPE.BURN:
+		var posn: Vector2 = Vector2(228, 315)
+		for d in dice_mgr.dice:
+			if d.get_top_val() < 6:
+				var ns = NUMBER_MODIFIER_SCENE.instantiate()
+				ns.init_burn()
+				ns.position = posn
+				add_child(ns)
+				dice_modifiers.append(ns)
+			posn.x += 158
+			if posn.x > 1335:
+				posn.x = 228
+				posn.y += 158

@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://ccl2kenwh73ve"]
+[gd_scene load_steps=37 format=3 uid="uid://ccl2kenwh73ve"]
 
 [ext_resource type="Script" path="res://scenes/combat.gd" id="1_lnnkv"]
 [ext_resource type="Texture2D" uid="uid://yfhqg1amblqt" path="res://art/prototyping/realtabletest2.png" id="3_r2h8u"]
@@ -32,6 +32,7 @@
 [ext_resource type="PackedScene" uid="uid://7mthupf4e6fj" path="res://scenes/gameover.tscn" id="26_h1q8l"]
 [ext_resource type="PackedScene" uid="uid://ddfrg3vv8fds" path="res://scenes/victory.tscn" id="27_x1keb"]
 [ext_resource type="PackedScene" uid="uid://wr72q6ep1d3i" path="res://scenes/tutorial.tscn" id="29_kwtse"]
+[ext_resource type="PackedScene" uid="uid://dimu5rehplum7" path="res://scenes/numbermodifier.tscn" id="33_vn8s0"]
 
 [sub_resource type="Animation" id="Animation_2nawh"]
 resource_name = "intent"
@@ -72,9 +73,8 @@ shader_parameter/brightness = 1.0
 shader_parameter/contrast = 1.0
 shader_parameter/saturation = 1.0
 
-[node name="combat" type="Node2D" node_paths=PackedStringArray("dice_mgr")]
+[node name="combat" type="Node2D"]
 script = ExtResource("1_lnnkv")
-dice_mgr = NodePath("SubViewportContainer/SubViewport/DiceMgr")
 
 [node name="BG" type="Node2D" parent="."]
 
@@ -404,6 +404,10 @@ render_target_update_mode = 4
 material = SubResource("ShaderMaterial_hvqtu")
 
 [node name="tooltip" parent="." instance=ExtResource("11_wnkdn")]
+
+[node name="numbermodifier" parent="." instance=ExtResource("33_vn8s0")]
+z_index = 100
+position = Vector2(228, 473)
 
 [connection signal="mouse_entered" from="MonsterUI/Intent/ColorRect" to="." method="_on_monster_intent_enter"]
 [connection signal="mouse_exited" from="MonsterUI/Intent/ColorRect" to="." method="_on_monster_intent_exited"]

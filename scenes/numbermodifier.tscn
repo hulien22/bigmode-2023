@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://dimu5rehplum7"]
+
+[ext_resource type="Script" path="res://scenes/numbermodifier.gd" id="1_amt26"]
+[ext_resource type="FontFile" uid="uid://bncijok7osr4i" path="res://fonts/CrayonLibre.ttf" id="2_c8wnp"]
+
+[node name="numbermodifier" type="Node2D"]
+script = ExtResource("1_amt26")
+
+[node name="Label" type="Label" parent="."]
+modulate = Color(0.0156863, 0.376471, 1, 1)
+offset_left = -272.0
+offset_top = -46.0
+offset_right = 264.0
+offset_bottom = 43.0
+theme_override_fonts/font = ExtResource("2_c8wnp")
+theme_override_font_sizes/font_size = 50
+text = "(-1)"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 1
+uppercase = true
