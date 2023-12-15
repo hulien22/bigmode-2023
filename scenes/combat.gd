@@ -484,6 +484,7 @@ func _on_ability_clicked(val):
 	if monster.health <= 0:
 		if health_on_lethal > 0:
 			GameState.player.max_health += health_on_lethal
+			GameState.player.health += health_on_lethal
 			render_health()
 		combat_win()
 		return
