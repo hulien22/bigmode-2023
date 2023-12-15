@@ -213,9 +213,11 @@ func process_start_combat(is_elite: bool = false, is_boss:bool = false):
 	$MonsterUI/Intent/AnimationPlayer.play("intent")
 	
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.CONFUSE, 99, true)
-#	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BURN, 99, true)
+#	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.FREEZE, 2, true)
+#	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BURN, 1, true)
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.BLIND, 2, true)
 #	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.STRENGTH, 99, false)
+#	add_status(AbilityEffect.TARGET.PLAYER, AbilityEffect.TYPE.DAZZLED, 99, true)
 	
 	process_new_turn()
 	#todo timer between states? to play anims or smth
@@ -427,9 +429,11 @@ func _on_reroll_button_pressed():
 		$Combatscreen/RerollButton.set_text("REROLL! (" + str(rerolls) + ")")
 	dice_mgr.drop_all_dice()
 	disable_abilities_and_rerollbtn()
+	clear_dice_modifiers()
 
 func _on_ability_clicked(val):
 	disable_abilities_and_rerollbtn()
+	clear_dice_modifiers()
 	dice_mgr.fade_away_dice()
 	if combat_state != CombatState.ROLLING:
 		return
@@ -661,6 +665,7 @@ func process_effect(effect: AbilityEffect, face:int = 0) -> Dictionary:
 
 func process_end_turn():
 	combat_state = CombatState.END_TURN
+	clear_dice_modifiers()
 	
 	var fortify_val: int = get_status_value(AbilityEffect.TARGET.MONSTER, AbilityEffect.TYPE.FORTIFY)
 	if fortify_val > 0:
@@ -1031,7 +1036,7 @@ func add_dice_modifiers(t: AbilityEffect.TYPE):
 				add_child(ns)
 				dice_modifiers.append(ns)
 			posn.x += 158
-			if posn.x > 1335:
+			if posn.x >= 1334:
 				posn.x = 228
 				posn.y += 158
 	elif t == AbilityEffect.TYPE.BURN:
@@ -1039,11 +1044,16 @@ func add_dice_modifiers(t: AbilityEffect.TYPE):
 		for d in dice_mgr.dice:
 			if d.get_top_val() < 6:
 				var ns = NUMBER_MODIFIER_SCENE.instantiate()
-				ns.init_burn()
+				ns.init_fire()
 				ns.position = posn
 				add_child(ns)
 				dice_modifiers.append(ns)
 			posn.x += 158
-			if posn.x > 1335:
+			if posn.x >= 1334:
 				posn.x = 228
 				posn.y += 158
+
+func clear_dice_modifiers():
+	for d in dice_modifiers:
+		d.queue_free()
+	dice_modifiers.clear()
