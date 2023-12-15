@@ -26,11 +26,11 @@
 		["Power Up+", "Gain (X-2) Strength", [
 			[0, 3, "x - 2"]
 		], 0],
-		["Rolling Tumble", "Deal [# of rerolls remaining] damage", [
-			[1, 0, "r"]
-		], 1],
-		["Rolling Tumble+", "Deal [(# of rerolls remaining) * 2] damage", [
+		["Rolling Tumble", "Deal [# of rerolls remaining * 2] damage", [
 			[1, 0, "2 * r"]
+		], 1],
+		["Rolling Tumble+", "Deal [(# of rerolls remaining) * 3] damage", [
+			[1, 0, "3 * r"]
 		], 1],
 		["Dice Throw", "Deal [die face] damage", [
 			[1, 0, "f"]
@@ -380,10 +380,10 @@
 			[0, 27, 2]
 		]],
 		["Crunch", "Deal [D] damage", [
-			[0, 0, 5]
+			[0, 0, 4]
 		]],
 		["Crunch+", "Deal [D] damage", [
-			[0, 0, 7]
+			[0, 0, 6]
 		]],
 		["Subway Surf", "Disable even abilities", [
 			[0, 8, 1],
@@ -395,13 +395,11 @@
 			[0, 9, 1],
 			[0, 11, 1]
 		]],
-		["Cardboard Box", "Gain [B] block and 1 Dexterity", [
-			[1, 1, 4],
-			[1, 26, 1]
+		["Cardboard Box", "Gain [B] block", [
+			[1, 1, 4]
 		]],
-		["Cardboard Box+", "Gain [B] block and 2 Dexterity", [
-			[1, 1, 6],
-			[1, 26, 2]
+		["Cardboard Box+", "Gain [B] block", [
+			[1, 1, 6]
 		]],
 		["He Shot First", "Deal [D] damage", [
 			[0, 0, 10]
@@ -420,11 +418,11 @@
 			[0, 12, 1]
 		]],
 		["Net Arrow", "Deal [D] damage and inflict 1 Stunned", [
-			[0, 0, 3],
+			[0, 0, 2],
 			[0, 25, 1]
 		]],
 		["Net Arrow+", "Deal [D] damage and inflict 2 Stunned", [
-			[0, 0, 5],
+			[0, 0, 3],
 			[0, 25, 2]
 		]],
 		["Barrage", "Deal 3*[D] damage", [
@@ -440,7 +438,7 @@
 			[0, 0, 2]
 		]],
 		["Vanish", "Gain 2 Evade", [
-			[1, 18, 1]
+			[1, 18, 2]
 		]],
 		["Vanish+", "Gain 3 Evade", [
 			[1, 18, 3]
@@ -673,7 +671,7 @@
 			[0, 0, 15]
 		]],
 		["Vicious Bite+", "Deal [D] damage", [
-			[0, 0, 22]
+			[0, 0, 20]
 		]],
 		["Shell Armor", "Gain 1 Fortify", [
 			[1, 20, 1]
@@ -685,9 +683,9 @@
 			[0, 0, 5],
 			[1, 6, "2"]
 		]],
-		["Head Flail+", "Deal [D] damage, take 2 damage", [
+		["Head Flail+", "Deal [D] damage, take 4 damage", [
 			[0, 0, 8],
-			[1, 6, "2"]
+			[1, 6, "4"]
 		]],
 		["Cold Breath", "Deal [D] damage, Inflict 2 Freeze", [
 			[0, 0, 7],
@@ -737,7 +735,7 @@
 			[0, 13, 1],
 			[0, 0, 5]
 		]],
-		["Confuse Gun", "Inflict 1 Frightened and [D] damage", [
+		["Confuse Gun", "Inflict 1 Confused and [D] damage", [
 			[0, 14, 1],
 			[0, 0, 5]
 		]],
